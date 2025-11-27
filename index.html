@@ -320,66 +320,79 @@
 
   <!-- ========= CONTACT ========= -->
   <section class="section" id="contact">
-    <div class="container contact-inner">
-      <div class="contact-text">
-        <p class="eyebrow">Get in touch</p>
-        <h2>Tell us about your project</h2>
-        <p>
-          Briefly describe what you want to build – Shopify store, WordPress site,
-          custom software, SEO or a full digital package – and we’ll get back with
-          an action plan.
-        </p>
-        <div class="contact-info">
-          <p><strong>Email:</strong> ronakjain980@gmail.com</p>
-          <p><strong>WhatsApp:</strong> +918264171623</p>
-          <p><strong>Location:</strong> Mumbai, India</p>
+  <div class="container contact-inner">
+
+    <div class="contact-text">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Tell us about your project</h2>
+      <p>
+        Briefly describe what you want to build – Shopify store, WordPress site,
+        custom software, SEO or a full digital package – and we’ll get back with
+        an action plan.
+      </p>
+      <div class="contact-info">
+        <p><strong>Email:</strong> ronakjain980@gmail.com</p>
+        <p><strong>WhatsApp:</strong> +918264171623</p>
+        <p><strong>Location:</strong> Mumbai, India</p>
+      </div>
+    </div>
+
+    <form class="contact-form" id="contactForm"
+          action="https://formsubmit.co/ronakjain980@gmail.com"
+          method="POST">
+
+      <!-- FormSubmit Hidden Fields -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input id="name" name="Name" type="text" placeholder="Your name" required />
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input id="email" name="Email" type="email" placeholder="you@example.com" required />
         </div>
       </div>
 
-      <form class="contact-form" id="contactForm">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Your name" required />
-          </div>
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="you@example.com" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-field">
-            <label for="service">Service</label>
-            <select id="service">
-              <option>Shopify Store</option>
-              <option>WordPress / WooCommerce</option>
-              <option>Custom Website / Software</option>
-              <option>SEO & Digital Marketing</option>
-              <option>Complete Digital Package</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="budget">Approx. Budget</label>
-            <select id="budget">
-              <option>Below ₹25,000</option>
-              <option>₹25,000 – ₹50,000</option>
-              <option>₹50,000 – ₹1,00,000</option>
-              <option>₹1,00,000+</option>
-            </select>
-          </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="service">Service</label>
+          <select id="service" name="Service">
+            <option>Shopify Store</option>
+            <option>WordPress / WooCommerce</option>
+            <option>Custom Website / Software</option>
+            <option>SEO & Digital Marketing</option>
+            <option>Complete Digital Package</option>
+          </select>
         </div>
 
         <div class="form-field">
-          <label for="message">Project Details</label>
-          <textarea id="message" rows="4" placeholder="Tell us about your idea..."></textarea>
+          <label for="budget">Approx. Budget</label>
+          <select id="budget" name="Budget">
+            <option>Below ₹25,000</option>
+            <option>₹25,000 – ₹50,000</option>
+            <option>₹50,000 – ₹1,00,000</option>
+            <option>₹1,00,000+</option>
+          </select>
         </div>
+      </div>
 
-        <button type="submit" class="btn btn-full">Send Enquiry</button>
-        <p class="form-note" id="formNote"></p>
-      </form>
-    </div>
-  </section>
+      <div class="form-field">
+        <label for="message">Project Details</label>
+        <textarea id="message" name="Message" rows="4" placeholder="Tell us about your idea..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-full">Send Enquiry</button>
+
+      <p class="form-note" id="formNote"></p>
+    </form>
+
+  </div>
+</section>
+
 
   <!-- ========= FOOTER WITH BIG LOGO ========= -->
   <footer class="footer">
