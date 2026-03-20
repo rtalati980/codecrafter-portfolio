@@ -19,15 +19,36 @@ if (navToggle && nav) {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // Simple fake submit handling (front-end only)
+// WhatsApp + Email submit
 const form = document.getElementById("contactForm");
-const formNote = document.getElementById("formNote");
 
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    formNote.textContent =
-      "Thank you! Your message has been recorded. We’ll get back to you shortly.";
-    formNote.style.color = "#16a34a";
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const service = document.getElementById("service").value;
+    const budget = document.getElementById("budget").value;
+    const message = document.getElementById("message").value;
+
+    // ✅ Send to Email (existing)
+    const formData = new FormData(form);
+    fetch("https://formsubmit.co/ronakjain980@gmail.com", {
+      method: "POST",
+      body: formData,
+    });
+
+    // ✅ Send to WhatsApp
+    const text = `New Lead:%0A
+Name: ${name}%0A
+Email: ${email}%0A
+Service: ${service}%0A
+Budget: ${budget}%0A
+Message: ${message}`;
+
+    window.open(`https://wa.me/918264171623?text=${text}`, "_blank");
+
     form.reset();
   });
 }
