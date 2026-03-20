@@ -556,6 +556,24 @@ textarea {
   color: #6b7280;
 }
 
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--cc-blue), var(--cc-blue-dark));
+  color: #fff;
+  padding: 0.7rem 0.9rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  z-index: 999;
+  box-shadow: 0 10px 25px rgba(0, 166, 231, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-3px);
+}
 /* Responsive */
 
 @media (max-width: 880px) {
