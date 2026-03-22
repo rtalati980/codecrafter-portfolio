@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FieldPro – Client Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c17;
+  --surface: #10172a;
+  --surface2: #16203a;
+  --surface3: #1c2b48;
+  --border: #1e2d47;
+  --accent: #00d4b1;
+  --accent2: #3b82f6;
+  --wa: #25d366;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --success: #10b981;
+  --text: #e8edf5;
+  --muted: #5d6e8a;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-xs: 6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:var(--accent);letter-spacing:-.5px}
+.logo span{color:var(--text)}
+.header-right{display:flex;align-items:center;gap:10px}
+.header-meta{font-size:10px;color:var(--muted);max-width:140px;text-align:right;line-height:1.3}
+.settings-btn{width:32px;height:32px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+
+.screen{display:none;padding:16px;max-width:480px;margin:0 auto;animation:fadeIn .2s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-label{font-family:'Syne',sans-serif;font-size:25px;font-weight:800;line-height:1.2;margin-bottom:5px;margin-top:8px}
+.hero-label em{color:var(--accent);font-style:normal}
+.hero-sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+
+.form-group{margin-bottom:14px}
+label{display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+select option{background:#10172a}
+textarea{resize:none;height:70px;font-size:12px;line-height:1.5}
+input[type=date]{color-scheme:dark}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+.sector-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all .15s;color:var(--muted)}
+.chip:hover,.chip.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+
+.btn{width:100%;padding:13px;border-radius:var(--radius);border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:500}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-sm{width:auto;padding:6px 13px;font-size:11px;border-radius:var(--radius-sm)}
+
+.loader-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:18px}
+.spinner{width:46px;height:46px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-text{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--muted);text-align:center}
+.loader-sub{font-size:11px;color:var(--muted);opacity:.55;text-align:center}
+
+.progress-bar-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:16px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .4s ease}
+.progress-stats{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:5px}
+
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:15px}
+.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 6px;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:19px;font-weight:800}
+.stat-lbl{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.c-visited{color:var(--success)}.c-followup{color:var(--warn)}.c-notavail{color:var(--danger)}.c-interested{color:var(--accent2)}
+
+.section-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.section-title .badge{background:var(--surface2);border-radius:10px;padding:2px 7px;font-size:9px;color:var(--muted)}
+
+.client-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;transition:all .2s;position:relative;overflow:hidden}
+.client-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);transition:background .2s}
+.client-card.visited{background:#0d2018;border-color:#1a3d2a}.client-card.visited::before{background:var(--success)}
+.client-card.followup{background:#1a1808;border-color:#2e2a10}.client-card.followup::before{background:var(--warn)}
+.client-card.notavailable{background:#1a0d0d;border-color:#2e1616}.client-card.notavailable::before{background:var(--danger)}
+.client-card.interested{background:#0d1e35;border-color:#0e2244}.client-card.interested::before{background:var(--accent2)}
+
+.card-seq{width:26px;height:26px;background:var(--surface3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:10px;font-weight:800;color:var(--accent);flex-shrink:0;margin-right:9px}
+.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;line-height:1.3}
+.card-type{font-size:11px;color:var(--muted);margin-top:1px}
+.card-addr{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+.status-pill{font-size:9px;font-weight:700;padding:3px 8px;border-radius:10px;white-space:nowrap;letter-spacing:.3px;flex-shrink:0}
+.pill-pending{background:#1a2a40;color:var(--muted)}
+.pill-visited{background:#0b2e1a;color:var(--success)}
+.pill-followup{background:#261e04;color:var(--warn)}
+.pill-notavail{background:#280a0a;color:var(--danger)}
+.pill-interested{background:#0a1e3a;color:var(--accent2)}
+
+.dist-dir-row{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap}
+.dist-badge{display:flex;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:11px;color:var(--text)}
+.dist-badge svg{width:11px;height:11px;flex-shrink:0}
+.dir-btn{display:flex;align-items:center;gap:5px;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:filter .15s;text-decoration:none}
+.dir-btn-nav{background:var(--accent2);color:#fff}
+.dir-btn-map{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
+.dir-btn:hover{filter:brightness(1.1)}
+.dir-btn svg{width:12px;height:12px}
+
+.card-detail-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:9px}
+.detail-tag{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);background:var(--surface2);padding:3px 7px;border-radius:5px}
+.detail-tag svg{width:10px;height:10px}
+
+.card-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:9px}
+.action-btn{padding:8px 5px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .15s;font-family:'DM Sans',sans-serif}
+.action-btn.active-visited{background:#0b2e1a;border-color:var(--success);color:var(--success)}
+.action-btn.active-followup{background:#261e04;border-color:var(--warn);color:var(--warn)}
+.action-btn.active-notavail{background:#280a0a;border-color:var(--danger);color:var(--danger)}
+.action-btn.active-interested{background:#0a1e3a;border-color:var(--accent2);color:var(--accent2)}
+
+.expand-toggle{font-size:11px;color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:4px;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif;font-weight:500}
+.expand-toggle .arr{transition:transform .2s;display:inline-block}
+.expand-toggle.open .arr{transform:rotate(180deg)}
+.expand-body{display:none;margin-top:10px}
+.expand-body.open{display:block}
+
+.contact-form{display:flex;flex-direction:column;gap:7px}
+.contact-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.contact-row input{font-size:12px;padding:9px 10px}
+.followup-row{display:flex;align-items:center;gap:8px}
+.followup-row label{margin:0;white-space:nowrap;font-size:9px;text-transform:uppercase;letter-spacing:.8px}
+.followup-row input[type=date]{flex:1;font-size:12px;padding:9px 10px}
+.save-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.remark-save{padding:9px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;cursor:pointer}
+.wa-save{padding:9px;background:var(--wa);border:none;border-radius:var(--radius-sm);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.remarks-display{font-size:11px;color:var(--muted);font-style:italic;margin-top:6px;padding:6px 9px;background:var(--surface2);border-radius:var(--radius-xs);border-left:2px solid var(--accent);line-height:1.5}
+.followup-display{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:var(--warn);background:#261e04;padding:2px 7px;border-radius:5px;margin-top:4px;font-weight:600}
+
+.route-header{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:15px;display:flex;align-items:center;gap:11px}
+.route-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.route-info h3{font-family:'Syne',sans-serif;font-size:13px;font-weight:700}
+.route-info p{font-size:10px;color:var(--muted);margin-top:2px}
+.loc-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);display:inline-block;margin-right:4px}
+.loc-dot.on{background:var(--success);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.filter-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:13px;-webkit-overflow-scrolling:touch}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-btn{flex-shrink:0;padding:5px 12px;border-radius:16px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:100;max-width:480px;margin:0 auto}
+.nav-item{flex:1;padding:9px 0 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:color .15s;color:var(--muted);border:none;background:none;font-family:'DM Sans',sans-serif}
+.nav-item.active{color:var(--accent)}
+.nav-item svg{width:18px;height:18px}
+.nav-item span{font-size:8px;letter-spacing:.3px;text-transform:uppercase}
+.main-content{padding-bottom:68px}
+
+.toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface2);border:1px solid var(--accent);color:var(--text);padding:9px 18px;border-radius:20px;font-size:12px;opacity:0;transition:all .25s;z-index:200;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:300;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:18px 16px 34px;width:100%;max-width:480px;animation:slideUp .22s ease;max-height:90vh;overflow-y:auto}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:38px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 15px}
+.modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:12px}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+
+.summary-hero{text-align:center;padding:24px 0 16px}
+.summary-icon{width:62px;height:62px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 13px;font-size:26px}
+.summary-title{font-family:'Syne',sans-serif;font-size:21px;font-weight:800}
+.summary-sub{color:var(--muted);font-size:12px;margin-top:4px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+.summary-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.summary-box .num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
+.summary-box .lbl{font-size:10px;color:var(--muted);margin-top:4px}
+
+.settings-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:15px;margin-bottom:13px}
+.settings-section-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.pl-row{display:flex;gap:6px;align-items:center;margin-bottom:7px}
+.pl-row input{flex:1;font-size:12px;padding:8px 10px}
+.add-link-btn{display:flex;align-items:center;justify-content:center;gap:5px;background:transparent;border:1px dashed var(--border);border-radius:var(--radius-sm);padding:9px;color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;transition:all .15s}
+.add-link-btn:hover{border-color:var(--accent)}
+.del-btn{width:28px;height:28px;background:#280a0a;border:1px solid #3d1212;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.del-btn svg{width:13px;height:13px;stroke:var(--danger)}
+
+.wa-preview{background:#0a1e14;border:1px solid #1a3d2a;border-radius:var(--radius-sm);padding:13px;margin:11px 0;font-size:11px;line-height:1.8;color:#9dd9bc;font-family:'Courier New',monospace;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow-y:auto}
+.divider{height:1px;background:var(--border);margin:13px 0}
+.empty-state{text-align:center;padding:34px 18px;color:var(--muted)}
+.empty-state .icon{font-size:36px;margin-bottom:10px}
+.empty-state h3{font-family:'Syne',sans-serif;font-size:15px;color:var(--text);margin-bottom:5px}
+.empty-state p{font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Field<span>Pro</span></div>
+  <div class="header-right">
+    <div class="header-meta" id="headerMeta">Client Finder</div>
+    <div class="settings-btn" onclick="navTo('settings')" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" width="15" height="15"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="main-content">
+
+<!-- SCREEN: SEARCH -->
+<div class="screen active" id="screen-search">
+  <div class="hero-label">Find your <em>next</em><br>clients fast</div>
+  <div class="hero-sub">Enter your sector and we'll build an optimised visit plan</div>
+
+  <div class="form-group">
+    <label>Your City / Area</label>
+    <input type="text" id="cityInput" placeholder="e.g. Mumbai, Pune, Delhi…"/>
+  </div>
+  <div class="form-group">
+    <label>Target Sector</label>
+    <input type="text" id="sectorInput" placeholder="e.g. Doctors, Clinics, Pharmacies…"/>
+    <div class="sector-chips">
+      <div class="chip" onclick="selectChip(this,'Doctors & Clinics')">🏥 Clinics</div>
+      <div class="chip" onclick="selectChip(this,'Pharmacies')">💊 Pharma</div>
+      <div class="chip" onclick="selectChip(this,'Dental Clinics')">🦷 Dental</div>
+      <div class="chip" onclick="selectChip(this,'Hospitals')">🏨 Hospitals</div>
+      <div class="chip" onclick="selectChip(this,'Diagnostic Labs')">🔬 Labs</div>
+      <div class="chip" onclick="selectChip(this,'Gyms & Fitness')">💪 Gyms</div>
+      <div class="chip" onclick="selectChip(this,'Schools')">📚 Schools</div>
+      <div class="chip" onclick="selectChip(this,'Restaurants')">🍽️ Restaurants</div>
+      <div class="chip" onclick="selectChip(this,'Hardware Shops')">🔧 Hardware</div>
+      <div class="chip" onclick="selectChip(this,'CA & Finance Offices')">💼 Finance</div>
+      <div class="chip" onclick="selectChip(this,'IT Companies')">💻 IT</div>
+      <div class="chip" onclick="selectChip(this,'Real Estate Offices')">🏢 Real Estate</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Number of Clients to Find</label>
+    <input type="number" id="countInput" min="3" max="25" value="8"/>
+  </div>
+  <div class="form-group">
+    <label>Your Product / Service &nbsp;<small style="color:var(--muted);font-size:9px;text-transform:none;letter-spacing:0">(optional)</small></label>
+    <input type="text" id="productInput" placeholder="e.g. Medical equipment, Software, Insurance…"/>
+  </div>
+  <button class="btn btn-primary" onclick="startSearch()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Find Clients &amp; Build Route
+  </button>
+</div>
+
+<!-- SCREEN: LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="loader-screen">
+    <div class="spinner"></div>
+    <div class="loader-text" id="loaderText">Scanning Google Maps…</div>
+    <div class="loader-sub" id="loaderSub">Finding best clients in your area</div>
+  </div>
+</div>
+
+<!-- SCREEN: CLIENTS -->
+<div class="screen" id="screen-clients">
+  <div class="route-header">
+    <div class="route-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" width="18" height="18"><path d="M3 12h18M3 12l4-4m-4 4l4 4M21 12l-4-4m4 4l-4 4"/></svg>
+    </div>
+    <div class="route-info" style="flex:1">
+      <h3 id="routeTitle">Optimised Visit Route</h3>
+      <p id="routeSubtitle">Loading…</p>
+      <div style="margin-top:3px;font-size:9px;color:var(--muted)">
+        <span class="loc-dot" id="locDot"></span>
+        <span id="locStatusText">Getting location…</span>
+      </div>
+    </div>
+    <button class="btn btn-sm btn-outline" onclick="openMapModal()" style="flex-shrink:0;font-size:10px">📍 Route</button>
+  </div>
+
+  <div class="progress-stats">
+    <span id="progressLabel">0 / 0 actioned</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="stats-strip">
+    <div class="stat-box"><div class="stat-num c-visited" id="statVisited">0</div><div class="stat-lbl">Visited</div></div>
+    <div class="stat-box"><div class="stat-num c-interested" id="statInterested">0</div><div class="stat-lbl">Interested</div></div>
+    <div class="stat-box"><div class="stat-num c-followup" id="statFollowup">0</div><div class="stat-lbl">Follow Up</div></div>
+    <div class="stat-box"><div class="stat-num c-notavail" id="statNotAvail">0</div><div class="stat-lbl">Not Avail</div></div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('pending',this)">Pending</button>
+    <button class="filter-btn" onclick="filterCards('visited',this)">Visited</button>
+    <button class="filter-btn" onclick="filterCards('interested',this)">Interested</button>
+    <button class="filter-btn" onclick="filterCards('followup',this)">Follow Up</button>
+    <button class="filter-btn" onclick="filterCards('notavailable',this)">Not Available</button>
+  </div>
+
+  <div id="clientList"></div>
+</div>
+
+<!-- SCREEN: SUMMARY -->
+<div class="screen" id="screen-summary">
+  <div class="summary-hero">
+    <div class="summary-icon">📊</div>
+    <div class="summary-title">Today's Summary</div>
+    <div class="summary-sub" id="summaryDate">—</div>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-box"><div class="num c-visited" id="sumVisited">0</div><div class="lbl">Visited</div></div>
+    <div class="summary-box"><div class="num c-interested" id="sumInterested">0</div><div class="lbl">Interested</div></div>
+    <div class="summary-box"><div class="num c-followup" id="sumFollowup">0</div><div class="lbl">Follow Up</div></div>
+    <div class="summary-box"><div class="num c-notavail" id="sumNotAvail">0</div><div class="lbl">Not Available</div></div>
+  </div>
+  <div class="divider"></div>
+  <div id="summaryClientList"></div>
+  <br>
+  <button class="btn btn-primary" onclick="newSearch()">+ Start New Search</button>
+  <br><br>
+  <button class="btn btn-outline" onclick="showScreen('clients')">← Back to Route</button>
+</div>
+
+<!-- SCREEN: SETTINGS -->
+<div class="screen" id="screen-settings">
+  <div class="hero-label" style="font-size:22px">⚙️ Your Profile</div>
+  <div class="hero-sub">Used in WhatsApp thank-you messages sent to clients after visits</div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">👤 Salesperson Details</div>
+    <div class="form-group"><label>Your Name</label><input type="text" id="set-name" placeholder="e.g. Rahul Sharma" oninput="liveWaPreview()"/></div>
+    <div class="form-group"><label>Designation</label><input type="text" id="set-designation" placeholder="e.g. Sales Manager" oninput="liveWaPreview()"/></div>
+    <div class="form-group"><label>Your WhatsApp Number</label><input type="tel" id="set-mobile" placeholder="e.g. 9876543210" oninput="liveWaPreview()"/></div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">🏢 Company Details</div>
+    <div class="form-group"><label>Company Name</label><input type="text" id="set-company" placeholder="e.g. MediTech Solutions Pvt. Ltd." oninput="liveWaPreview()"/></div>
+    <div class="form-group"><label>Company Website</label><input type="url" id="set-website" placeholder="https://www.yourcompany.in" oninput="liveWaPreview()"/></div>
+    <div class="form-group"><label>Company Phone / Landline</label><input type="tel" id="set-compphone" placeholder="e.g. 022-12345678" oninput="liveWaPreview()"/></div>
+    <div class="form-group"><label>Company Email</label><input type="email" id="set-email" placeholder="e.g. sales@yourcompany.in" oninput="liveWaPreview()"/></div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">🔗 Product / Catalogue Links</div>
+    <div id="productLinksList"></div>
+    <div class="add-link-btn" onclick="addProductLink()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Product / Catalogue Link
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">💬 WhatsApp Message Preview</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px">This is what your client will receive on WhatsApp after a visit.</div>
+    <div class="wa-preview" id="waPreview">Fill your details above to see a live preview…</div>
+    <br>
+    <button class="btn btn-primary" onclick="saveSettings()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Save Profile
+    </button>
+  </div>
+</div>
+
+</div><!-- /main-content -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav" style="display:none">
+  <button class="nav-item active" id="nav-search" onclick="navTo('search')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <span>Search</span>
+  </button>
+  <button class="nav-item" id="nav-clients" onclick="navTo('clients')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Clients</span>
+  </button>
+  <button class="nav-item" id="nav-summary" onclick="navTo('summary')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+    <span>Summary</span>
+  </button>
+  <button class="nav-item" id="nav-settings" onclick="navTo('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+    <span>Settings</span>
+  </button>
+</div>
+
+<!-- MODAL: ROUTE MAP -->
+<div class="modal-overlay" id="mapModal" onclick="closeModal('mapModal',event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📍 Visit Route Sequence</div>
+    <div id="mapClientList" style="max-height:52vh;overflow-y:auto"></div>
+    <br>
+    <button class="btn btn-primary" onclick="openFullGoogleMaps()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Open Full Route in Google Maps
+    </button>
+  </div>
+</div>
+
+<!-- MODAL: WHATSAPP -->
+<div class="modal-overlay" id="waModal" onclick="closeModal('waModal',event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <svg viewBox="0 0 24 24" fill="#25d366" width="18" height="18" style="vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.062.525 4.004 1.446 5.698L0 24l6.451-1.424A11.93 11.93 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.878 9.878 0 0 1-5.035-1.377l-.361-.214-3.728.822.838-3.647-.235-.374A9.869 9.869 0 0 1 2.106 12C2.106 6.53 6.53 2.106 12 2.106S21.894 6.53 21.894 12 17.47 21.894 12 21.894z"/></svg>
+      Send Thank You Message
+    </div>
+    <div class="modal-sub" id="waModalDesc">Sending to client via WhatsApp</div>
+    <div class="wa-preview" id="waModalPreview"></div>
+    <br>
+    <button class="btn btn-wa" onclick="sendWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.062.525 4.004 1.446 5.698L0 24l6.451-1.424A11.93 11.93 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.878 9.878 0 0 1-5.035-1.377l-.361-.214-3.728.822.838-3.647-.235-.374A9.869 9.869 0 0 1 2.106 12C2.106 6.53 6.53 2.106 12 2.106S21.894 6.53 21.894 12 17.47 21.894 12 21.894z"/></svg>
+      Open WhatsApp &amp; Send
+    </button>
+    <br>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="closeModal('waModal')">Cancel</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────
+let clients = [];
+let currentFilter = 'all';
+let userLat = null, userLng = null;
+let waTargetId = null;
+let profile = { name:'', mobile:'', designation:'', company:'', website:'', compphone:'', email:'', productLinks:[] };
+
+// ─── INIT ─────────────────────────────────────────────
+window.addEventListener('load', () => {
+  loadProfile();
+  requestLocation();
+  // Show nav immediately so settings is accessible
+  document.getElementById('bottomNav').style.display = 'flex';
+});
+
+function requestLocation() {
+  if (!navigator.geolocation) return setLocStatus(false);
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    setLocStatus(true);
+    if (clients.length) {
+      clients.forEach(c => { c.distKm = haversine(userLat, userLng, c.lat, c.lng); });
+      renderClientList();
+    }
+  }, () => setLocStatus(false), { timeout: 10000, enableHighAccuracy: true });
+}
+
+function setLocStatus(ok) {
+  const dot = document.getElementById('locDot');
+  const txt = document.getElementById('locStatusText');
+  if (!dot) return;
+  if (ok) { dot.classList.add('on'); txt.textContent = 'Live location active'; }
+  else { txt.textContent = 'Location not available'; }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function navTo(name) {
+  if (name === 'clients' && clients.length === 0) { showToast('Search for clients first!'); return; }
+  if (name === 'summary') updateSummaryScreen();
+  if (name === 'settings') renderSettingsScreen();
+  showScreen(name);
+  document.getElementById('bottomNav').style.display = 'flex';
+}
+
+function selectChip(el, val) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sectorInput').value = val;
+}
+
+// ─── SEARCH / AI ──────────────────────────────────────
+async function startSearch() {
+  const city = document.getElementById('cityInput').value.trim();
+  const sector = document.getElementById('sectorInput').value.trim();
+  const count = parseInt(document.getElementById('countInput').value) || 8;
+  const product = document.getElementById('productInput').value.trim();
+  if (!city) { showToast('Please enter your city/area'); return; }
+  if (!sector) { showToast('Please enter target sector'); return; }
+
+  showScreen('loading');
+  const msgs = [
+    ['Scanning Google Maps…','Finding businesses in your area'],
+    ['Verifying contacts…','Cross-checking addresses & details'],
+    ['Optimising visit route…','Clustering nearby areas together'],
+    ['Almost ready…','Preparing your field visit plan'],
+  ];
+  let mi = 0;
+  const iv = setInterval(() => {
+    if (mi < msgs.length) {
+      document.getElementById('loaderText').textContent = msgs[mi][0];
+      document.getElementById('loaderSub').textContent = msgs[mi][1];
+      mi++;
+    }
+  }, 1200);
+
+  const cityCenter = { lat: userLat || 19.076, lng: userLng || 72.877 };
+
+  try {
+    const prompt = `You are a B2B field sales route planner. Generate a realistic list of exactly ${count} ${sector} businesses in ${city}, India.
+
+Return ONLY a valid JSON array. No markdown, no explanation, no code fences. Example structure:
+[{"id":1,"name":"Business Name","type":"${sector}","contactPerson":"Name","phone":"9876543210","address":"Street address","area":"Neighbourhood","visitOrder":1,"rating":4.2,"timing":"9 AM - 7 PM","potential":"High","notes":"1-line insight","lat":${(cityCenter.lat + 0.01).toFixed(4)},"lng":${(cityCenter.lng + 0.01).toFixed(4)}}]
+
+Rules:
+- visitOrder 1 to ${count}, geographically optimised (nearby areas clustered)
+- potential: "High" | "Medium" | "Low"
+- lat/lng: realistic approximate coordinates for different neighbourhoods of ${city}
+- Use authentic Indian names, addresses, and area names for ${city}
+- Phone: 10 digits starting with 9/8/7/6
+${product ? `- Salesperson sells: ${product}. Tailor notes accordingly.` : ''}`;
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 3500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    clearInterval(iv);
+
+    let raw = data.content.map(b => b.text || '').join('').replace(/```[\w]*/g,'').trim();
+    const s = raw.indexOf('['), e = raw.lastIndexOf(']');
+    if (s === -1) throw new Error('No JSON');
+    clients = JSON.parse(raw.slice(s, e + 1));
+
+    clients.forEach(c => {
+      c.status = 'pending';
+      c.interested = null;
+      c.remarks = '';
+      c.contactPersonEdit = c.contactPerson || '';
+      c.phoneEdit = c.phone || '';
+      c.followupDate = '';
+      c.waSent = false;
+      c.distKm = userLat ? haversine(userLat, userLng, c.lat, c.lng) : null;
+    });
+    clients.sort((a, b) => a.visitOrder - b.visitOrder);
+
+    document.getElementById('routeTitle').textContent = `${sector} · ${city}`;
+    document.getElementById('routeSubtitle').textContent = `${clients.length} clients · Optimised sequence`;
+    document.getElementById('headerMeta').textContent = `${city} · ${sector}`;
+    renderClientList();
+    updateStats();
+    showScreen('clients');
+
+  } catch (err) {
+    clearInterval(iv);
+    console.error(err);
+    showToast('Error fetching clients. Please retry.');
+    showScreen('search');
+  }
+}
+
+// ─── HAVERSINE ────────────────────────────────────────
+function haversine(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lat2) return null;
+  const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1);
+}
+
+// ─── RENDER CARDS ─────────────────────────────────────
+function renderClientList() {
+  const container = document.getElementById('clientList');
+  const filtered = clients.filter(c => {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'pending') return c.status === 'pending';
+    if (currentFilter === 'interested') return c.interested === true;
+    return c.status === currentFilter;
+  });
+  if (!filtered.length) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><h3>No clients here</h3><p>Try a different filter</p></div>`;
+    return;
+  }
+  container.innerHTML = filtered.map(c => buildCard(c)).join('');
+}
+
+function buildCard(c) {
+  const cardClass = (c.interested === true ? 'interested' : '') || (c.status !== 'pending' ? c.status : '');
+  const potColor = { High:'#10b981', Medium:'#f59e0b', Low:'#ef4444' }[c.potential] || '#6b7a99';
+  const pillMap = { pending:'<span class="status-pill pill-pending">Pending</span>', visited:'<span class="status-pill pill-visited">✓ Visited</span>', followup:'<span class="status-pill pill-followup">↩ Follow Up</span>', notavailable:'<span class="status-pill pill-notavail">✕ Not Avail</span>' };
+  const statusPill = pillMap[c.status];
+  const intPill = c.interested === true ? '<span class="status-pill pill-interested" style="margin-left:3px">★ Interested</span>' : '';
+  const waBadge = c.waSent ? '<span style="font-size:9px;color:var(--wa);background:#0a2018;padding:2px 7px;border-radius:5px;font-weight:600;margin-left:3px">✓ WA Sent</span>' : '';
+
+  const mapsQ = encodeURIComponent(`${c.address}, ${c.area}`);
+  const dirUrl = userLat
+    ? `https://www.google.com/maps/dir/${userLat},${userLng}/${c.lat},${c.lng}`
+    : `https://www.google.com/maps/dir//${mapsQ}`;
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQ}`;
+
+  const distHtml = c.distKm
+    ? `<div class="dist-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" width="11" height="11"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${c.distKm} km away</div>`
+    : '';
+
+  const fuHtml = c.followupDate ? `<div class="followup-display">📅 Follow-up: ${formatDate(c.followupDate)}</div>` : '';
+
+  return `
+<div class="client-card ${cardClass}" id="card-${c.id}">
+  <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:10px">
+    <div class="card-seq">${c.visitOrder}</div>
+    <div style="flex:1;min-width:0">
+      <div class="card-name">${esc(c.name)}</div>
+      <div class="card-type">${esc(c.type)}</div>
+      <div class="card-addr">📍 ${esc(c.address)}, ${esc(c.area)}</div>
+      ${fuHtml}
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;margin-left:6px">
+      ${statusPill}${intPill}${waBadge}
+      <span style="font-size:9px;color:${potColor};font-weight:700">${c.potential} Potential</span>
+    </div>
+  </div>
+
+  <div class="dist-dir-row">
+    ${distHtml}
+    <a href="${dirUrl}" target="_blank" style="text-decoration:none">
+      <button class="dir-btn dir-btn-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        Directions
+      </button>
+    </a>
+    <a href="${mapUrl}" target="_blank" style="text-decoration:none">
+      <button class="dir-btn dir-btn-map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        View Map
+      </button>
+    </a>
+  </div>
+
+  <div class="card-detail-row">
+    <div class="detail-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13 19.79 19.79 0 0 1 1.07 4.18 2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6z"/></svg>
+      <a href="tel:${esc(c.phoneEdit)}" style="color:var(--accent);text-decoration:none">${esc(c.phoneEdit)}</a>
+    </div>
+    <div class="detail-tag">⏰ ${esc(c.timing)}</div>
+    <div class="detail-tag">⭐ ${c.rating}</div>
+  </div>
+
+  ${c.notes ? `<div style="font-size:10px;color:var(--muted);margin-bottom:9px;padding:5px 8px;background:var(--surface2);border-radius:5px;line-height:1.5">💡 ${esc(c.notes)}</div>` : ''}
+
+  <div class="card-actions">
+    <button class="action-btn ${c.status==='visited'?'active-visited':''}" onclick="setStatus(${c.id},'visited')">✓ Visited</button>
+    <button class="action-btn ${c.interested===true?'active-interested':''}" onclick="toggleInterested(${c.id})">★ Interested</button>
+    <button class="action-btn ${c.status==='followup'?'active-followup':''}" onclick="setStatus(${c.id},'followup')">↩ Follow Up</button>
+    <button class="action-btn ${c.status==='notavailable'?'active-notavail':''}" onclick="setStatus(${c.id},'notavailable')">✕ Not Available</button>
+  </div>
+
+  <div>
+    <button class="expand-toggle" id="etoggle-${c.id}" onclick="toggleExpand(${c.id})">
+      <span class="arr">▾</span>&nbsp; Contact Details, Remarks &amp; Follow-up Date
+    </button>
+    <div class="expand-body" id="expand-${c.id}">
+      <div class="contact-form">
+        <div class="contact-row">
+          <input type="text" id="cp-${c.id}" value="${esc(c.contactPersonEdit)}" placeholder="Contact Person"/>
+          <input type="tel" id="ph-${c.id}" value="${esc(c.phoneEdit)}" placeholder="WhatsApp Number"/>
+        </div>
+        <textarea id="rm-${c.id}" placeholder="Remarks / outcome of this visit…">${esc(c.remarks)}</textarea>
+        <div class="followup-row">
+          <label for="fu-${c.id}">📅 Follow-up</label>
+          <input type="date" id="fu-${c.id}" value="${c.followupDate}"/>
+        </div>
+        <div class="save-actions">
+          <button class="remark-save" onclick="saveContact(${c.id},false)">💾 Save Details</button>
+          <button class="wa-save" onclick="saveContact(${c.id},true)">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.062.525 4.004 1.446 5.698L0 24l6.451-1.424A11.93 11.93 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.878 9.878 0 0 1-5.035-1.377l-.361-.214-3.728.822.838-3.647-.235-.374A9.869 9.869 0 0 1 2.106 12C2.106 6.53 6.53 2.106 12 2.106S21.894 6.53 21.894 12 17.47 21.894 12 21.894z"/></svg>
+            Save &amp; WhatsApp
+          </button>
+        </div>
+      </div>
+      ${c.remarks ? `<div class="remarks-display">"${esc(c.remarks)}"</div>` : ''}
+    </div>
+  </div>
+</div>`;
+}
+
+// ─── CARD ACTIONS ─────────────────────────────────────
+function setStatus(id, status) {
+  const c = clients.find(x => x.id === id);
+  if (!c) return;
+  c.status = c.status === status ? 'pending' : status;
+  renderClientList(); updateStats();
+  showToast(c.status === 'pending' ? 'Status cleared' : `Marked: ${status}`);
+}
+
+function toggleInterested(id) {
+  const c = clients.find(x => x.id === id);
+  if (!c) return;
+  c.interested = c.interested === true ? null : true;
+  renderClientList(); updateStats();
+  showToast(c.interested ? '★ Marked Interested' : 'Interest cleared');
+}
+
+function toggleExpand(id) {
+  document.getElementById('expand-' + id).classList.toggle('open');
+  document.getElementById('etoggle-' + id).classList.toggle('open');
+}
+
+function saveContact(id, sendWa) {
+  const c = clients.find(x => x.id === id);
+  if (!c) return;
+  c.contactPersonEdit = document.getElementById('cp-' + id).value.trim();
+  c.phoneEdit = document.getElementById('ph-' + id).value.trim();
+  c.remarks = document.getElementById('rm-' + id).value.trim();
+  c.followupDate = document.getElementById('fu-' + id).value;
+  renderClientList();
+  showToast('✓ Details saved');
+  if (sendWa) openWaModal(id);
+}
+
+// ─── WHATSAPP ─────────────────────────────────────────
+function buildWaMsg(c) {
+  const p = profile;
+  const name = p.name || 'Your Sales Representative';
+  const company = p.company || 'Our Company';
+  const links = (p.productLinks || []).filter(l => l.url).map(l => `  • ${l.label || 'Product'}: ${l.url}`).join('\n');
+
+  let m = `Dear ${c.contactPersonEdit || c.contactPerson},\n\n`;
+  m += `Thank you so much for taking out time to meet with me today! 🙏\n\n`;
+  m += `It was a pleasure visiting *${esc(c.name)}*`;
+  if (p.company) m += ` and introducing you to *${company}*`;
+  m += `. I truly appreciate your valuable time.\n\n`;
+  if (links) m += `🔗 *Our Products & Catalogues:*\n${links}\n\n`;
+  m += `📞 *Reach Us Anytime:*\n`;
+  if (p.name) m += `👤 ${name}${p.designation ? ', ' + p.designation : ''}\n`;
+  if (p.compphone) m += `📱 ${p.compphone}\n`;
+  if (p.mobile) m += `💬 WhatsApp: +91 ${p.mobile}\n`;
+  if (p.email) m += `📧 ${p.email}\n`;
+  if (p.website) m += `🌐 ${p.website}\n`;
+  if (c.followupDate) m += `\n📅 I will follow up with you on *${formatDate(c.followupDate)}*.\n`;
+  m += `\nLooking forward to a long and fruitful association! 😊\n\nWarm regards,\n${name}`;
+  if (company && company !== 'Our Company') m += `\n${company}`;
+  return m;
+}
+
+function openWaModal(id) {
+  waTargetId = id;
+  const c = clients.find(x => x.id === id);
+  if (!c) return;
+  if (!profile.name && !profile.company) {
+    showToast('⚠️ Set your profile in Settings first!');
+    navTo('settings');
+    return;
+  }
+  document.getElementById('waModalDesc').textContent = `To: ${c.contactPersonEdit || c.contactPerson} · ${c.phoneEdit}`;
+  document.getElementById('waModalPreview').textContent = buildWaMsg(c);
+  document.getElementById('waModal').classList.add('open');
+}
+
+function sendWhatsApp() {
+  const c = clients.find(x => x.id === waTargetId);
+  if (!c) return;
+  const msg = buildWaMsg(c);
+  const phone = c.phoneEdit.replace(/\D/g,'');
+  const intl = phone.startsWith('91') ? phone : '91' + phone;
+  window.open(`https://wa.me/${intl}?text=${encodeURIComponent(msg)}`, '_blank');
+  c.waSent = true;
+  closeModal('waModal');
+  renderClientList();
+  showToast('✅ WhatsApp opened!');
+}
+
+// ─── FILTERS & STATS ──────────────────────────────────
+function filterCards(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderClientList();
+}
+
+function updateStats() {
+  const v = clients.filter(c => c.status === 'visited').length;
+  const i = clients.filter(c => c.interested === true).length;
+  const f = clients.filter(c => c.status === 'followup').length;
+  const n = clients.filter(c => c.status === 'notavailable').length;
+  const total = clients.length, done = clients.filter(c => c.status !== 'pending').length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('statVisited').textContent = v;
+  document.getElementById('statInterested').textContent = i;
+  document.getElementById('statFollowup').textContent = f;
+  document.getElementById('statNotAvail').textContent = n;
+  document.getElementById('progressLabel').textContent = `${done} / ${total} actioned`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ─── SUMMARY ──────────────────────────────────────────
+function updateSummaryScreen() {
+  const v = clients.filter(c => c.status === 'visited').length;
+  const i = clients.filter(c => c.interested === true).length;
+  const f = clients.filter(c => c.status === 'followup').length;
+  const n = clients.filter(c => c.status === 'notavailable').length;
+  ['sumVisited','sumInterested','sumFollowup','sumNotAvail'].forEach((id, idx) => {
+    document.getElementById(id).textContent = [v,i,f,n][idx];
+  });
+  document.getElementById('summaryDate').textContent = new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const list = clients.filter(c => c.status !== 'pending' || c.interested !== null || c.remarks || c.followupDate);
+  const cont = document.getElementById('summaryClientList');
+  if (!list.length) { cont.innerHTML = '<div class="empty-state"><div class="icon">📋</div><h3>No activities yet</h3><p>Start visiting clients</p></div>'; return; }
+  cont.innerHTML = `<div class="section-title">Actioned Clients <span class="badge">${list.length}</span></div>` +
+    list.map(c => `
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px">${esc(c.name)}</div>
+          <div style="font-size:10px;color:var(--muted)">${esc(c.area)} · ${esc(c.contactPersonEdit||c.contactPerson)} · ${esc(c.phoneEdit)}</div>
+          ${c.followupDate ? `<div style="font-size:10px;color:var(--warn);margin-top:3px">📅 Follow-up: ${formatDate(c.followupDate)}</div>` : ''}
+          ${c.remarks ? `<div style="font-size:10px;color:var(--accent);margin-top:3px;font-style:italic">"${esc(c.remarks)}"</div>` : ''}
+          ${c.waSent ? `<div style="font-size:10px;color:var(--wa);margin-top:2px">✓ WhatsApp thank-you sent</div>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+          ${c.status !== 'pending' ? `<span class="status-pill pill-${c.status==='notavailable'?'notavail':c.status}">${{visited:'✓ Visited',followup:'↩ Follow Up',notavailable:'✕ Not Avail'}[c.status]}</span>` : ''}
+          ${c.interested === true ? '<span class="status-pill pill-interested">★ Interested</span>' : ''}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── MAP MODAL ────────────────────────────────────────
+function openMapModal() {
+  document.getElementById('mapClientList').innerHTML = clients.map(c => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:10px;font-weight:800;color:#000;flex-shrink:0">${c.visitOrder}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${esc(c.name)}</div>
+        <div style="font-size:10px;color:var(--muted)">${esc(c.area)}${c.distKm ? ' · ' + c.distKm + ' km' : ''}</div>
+        ${c.followupDate ? `<div style="font-size:9px;color:var(--warn)">📅 ${formatDate(c.followupDate)}</div>` : ''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+        <span class="status-pill pill-${c.status==='notavailable'?'notavail':c.status==='pending'?'pending':c.status}">${{visited:'✓',followup:'↩',notavailable:'✕',pending:'•'}[c.status]}</span>
+      </div>
+    </div>`).join('');
+  document.getElementById('mapModal').classList.add('open');
+}
+
+function openFullGoogleMaps() {
+  if (!clients.length) return;
+  const origin = userLat ? `${userLat},${userLng}` : encodeURIComponent(clients[0].address + ', ' + clients[0].area);
+  const dest = encodeURIComponent(clients[clients.length-1].address + ', ' + clients[clients.length-1].area);
+  const wp = clients.slice(1,-1).map(c => encodeURIComponent(c.address + ', ' + c.area)).join('|');
+  window.open(`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&waypoints=${wp}&travelmode=driving`, '_blank');
+  closeModal('mapModal');
+}
+
+// ─── SETTINGS ─────────────────────────────────────────
+function loadProfile() {
+  try {
+    const s = localStorage.getItem('fieldpro_profile_v2');
+    if (s) profile = { ...profile, ...JSON.parse(s) };
+    if (!Array.isArray(profile.productLinks)) profile.productLinks = [];
+  } catch(e) {}
+}
+
+function saveSettings() {
+  profile.name = document.getElementById('set-name').value.trim();
+  profile.mobile = document.getElementById('set-mobile').value.trim();
+  profile.designation = document.getElementById('set-designation').value.trim();
+  profile.company = document.getElementById('set-company').value.trim();
+  profile.website = document.getElementById('set-website').value.trim();
+  profile.compphone = document.getElementById('set-compphone').value.trim();
+  profile.email = document.getElementById('set-email').value.trim();
+  profile.productLinks = [];
+  document.querySelectorAll('.pl-lbl').forEach((el, i) => {
+    const url = document.getElementById('pl-url-' + i)?.value.trim();
+    if (url) profile.productLinks.push({ label: el.value.trim(), url });
+  });
+  try { localStorage.setItem('fieldpro_profile_v2', JSON.stringify(profile)); } catch(e) {}
+  showToast('✓ Profile saved!');
+  liveWaPreview();
+}
+
+function renderSettingsScreen() {
+  const f = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  f('set-name', profile.name); f('set-mobile', profile.mobile); f('set-designation', profile.designation);
+  f('set-company', profile.company); f('set-website', profile.website);
+  f('set-compphone', profile.compphone); f('set-email', profile.email);
+  renderProductLinks();
+  liveWaPreview();
+}
+
+function renderProductLinks() {
+  const list = document.getElementById('productLinksList');
+  list.innerHTML = (profile.productLinks || []).map((pl, i) => `
+    <div class="pl-row">
+      <input class="pl-lbl" type="text" placeholder="Label (e.g. Main Catalogue)" value="${esc(pl.label||'')}" oninput="liveWaPreview()"/>
+      <input id="pl-url-${i}" type="url" placeholder="https://…" value="${esc(pl.url||'')}" oninput="liveWaPreview()"/>
+      <div class="del-btn" onclick="removeLink(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>`).join('');
+}
+
+function addProductLink() {
+  profile.productLinks.push({ label:'', url:'' });
+  renderProductLinks();
+}
+
+function removeLink(i) {
+  profile.productLinks.splice(i, 1);
+  renderProductLinks();
+  liveWaPreview();
+}
+
+function liveWaPreview() {
+  const snap = {
+    name: document.getElementById('set-name')?.value || profile.name,
+    company: document.getElementById('set-company')?.value || profile.company,
+    website: document.getElementById('set-website')?.value || profile.website,
+    compphone: document.getElementById('set-compphone')?.value || profile.compphone,
+    email: document.getElementById('set-email')?.value || profile.email,
+    mobile: document.getElementById('set-mobile')?.value || profile.mobile,
+    designation: document.getElementById('set-designation')?.value || profile.designation,
+    productLinks: []
+  };
+  document.querySelectorAll('.pl-lbl').forEach((el, i) => {
+    const url = document.getElementById('pl-url-' + i)?.value.trim();
+    if (url) snap.productLinks.push({ label: el.value.trim(), url });
+  });
+  const old = profile; profile = snap;
+  const sampleC = { contactPersonEdit:'Dr. Priya Sharma', name:'City Multispeciality Clinic', followupDate: '' };
+  const prev = document.getElementById('waPreview');
+  if (prev) prev.textContent = buildWaMsg(sampleC);
+  profile = old;
+}
+
+// ─── UTILS ────────────────────────────────────────────
+function closeModal(id, evt) {
+  if (!evt || evt.target === document.getElementById(id)) document.getElementById(id).classList.remove('open');
+}
+function newSearch() {
+  clients = [];
+  showScreen('search');
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d + 'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+  catch { return d; }
+}
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
