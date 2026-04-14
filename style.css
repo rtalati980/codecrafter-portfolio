@@ -472,6 +472,49 @@ a {
   box-shadow: var(--cc-shadow-soft);
 }
 
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+
+  padding: 20px 30px;
+  border-radius: 40px;
+
+  background: linear-gradient(135deg, #e6f0f8, #f8fbff);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+
+  max-width: 600px;
+}
+
+/* Each stat */
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+/* Number */
+.stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a2540;
+}
+
+/* Label */
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Divider between items */
+.stat:not(:last-child) {
+  border-right: 1px solid rgba(0,0,0,0.08);
+  padding-right: 20px;
+}
 /* Contact */
 
 .contact-inner {
