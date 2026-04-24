@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HomeNest Interiors — Budget Home Interiors Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --orange: #f97316; --orange-dark: #c2410c; --warm: #fef3c7; --brown: #78350f; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: #1c0a00; background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #d1fae5; font-weight: 700; text-decoration: underline; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid #fed7aa; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-area { display: flex; align-items: center; gap: 0.7rem; }
+    .logo-icon { font-size: 2rem; }
+    .logo-name { font-size: 1.2rem; font-weight: 700; color: var(--orange-dark); }
+    .logo-sub { font-size: 0.72rem; color: #92400e; }
+    .site-nav a { margin-left: 1.5rem; font-size: 0.88rem; font-weight: 500; color: #451a03; }
+    .site-nav a:hover { color: var(--orange); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.5rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: transform 0.16s; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: #fff; box-shadow: 0 10px 25px rgba(249,115,22,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 2px solid var(--orange); color: var(--orange-dark); }
+
+    .hero { background: linear-gradient(135deg, var(--warm), #fffbeb, #fff7ed); padding: 5rem 1.5rem 4rem; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--orange); margin-bottom: 0.8rem; display: block; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; margin-bottom: 1rem; color: var(--brown); }
+    .hero h1 span { color: var(--orange); }
+    .hero p { font-size: 0.98rem; color: #6b3a1f; margin-bottom: 2rem; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+    .hero-promo { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 15px 40px rgba(249,115,22,0.15); border: 2px solid #fed7aa; }
+    .promo-tag { background: var(--orange); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; display: inline-block; margin-bottom: 1rem; }
+    .promo-title { font-size: 1.2rem; font-weight: 700; color: var(--brown); margin-bottom: 0.3rem; }
+    .promo-sub { font-size: 0.85rem; color: #92400e; margin-bottom: 1.2rem; }
+    .promo-price { font-size: 2rem; font-weight: 700; color: var(--orange-dark); margin-bottom: 0.3rem; }
+    .promo-note { font-size: 0.78rem; color: #92400e; margin-bottom: 1.3rem; }
+    .promo-items { list-style: none; padding: 0; margin-bottom: 1.3rem; }
+    .promo-items li { font-size: 0.85rem; color: #451a03; padding: 0.25rem 0; }
+    .promo-items li::before { content: "✓ "; color: var(--orange); font-weight: 700; }
+    .countdown { background: var(--warm); border-radius: 10px; padding: 0.7rem 1rem; text-align: center; font-size: 0.8rem; color: var(--orange-dark); font-weight: 600; margin-bottom: 1rem; }
+
+    .section { padding: 5rem 1.5rem; }
+    .section-warm { background: var(--warm); }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--orange); }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0.4rem 0 0.6rem; color: var(--brown); }
+    .section-header p { color: #92400e; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .package-card { background: #fff; border-radius: 20px; padding: 2rem; border: 2px solid #fed7aa; box-shadow: 0 10px 25px rgba(249,115,22,0.07); transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; }
+    .package-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(249,115,22,0.14); border-color: var(--orange); }
+    .package-card.featured { border-color: var(--orange); background: linear-gradient(135deg, #fff7ed, #fff); }
+    .package-badge { background: var(--orange); color: #fff; font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; display: inline-block; margin-bottom: 0.8rem; }
+    .package-name { font-size: 1.1rem; font-weight: 700; color: var(--brown); margin-bottom: 0.4rem; }
+    .package-desc { font-size: 0.85rem; color: #92400e; margin-bottom: 1rem; }
+    .package-price { font-size: 1.8rem; font-weight: 700; color: var(--orange-dark); }
+    .package-unit { font-size: 0.8rem; color: #92400e; font-weight: 400; }
+    .package-features { list-style: none; padding: 0; margin: 1rem 0 1.5rem; }
+    .package-features li { font-size: 0.84rem; color: #451a03; padding: 0.3rem 0; border-bottom: 1px solid #fed7aa; }
+    .package-features li::before { content: "✓ "; color: var(--orange); font-weight: 700; }
+
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .portfolio-item { border-radius: 10px; overflow: hidden; background: linear-gradient(135deg,#3d1f00,#7c3d00); height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; cursor: pointer; transition: transform 0.2s; }
+    .portfolio-item:hover { transform: scale(1.03); }
+    .p-label { position: absolute; bottom: 0.7rem; left: 0.7rem; background: rgba(0,0,0,0.65); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px; }
+
+    .ba-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; max-width: 750px; margin: 0 auto; }
+    .ba-box { background: #fff; border-radius: 16px; padding: 2rem; text-align: center; border: 1px solid #fed7aa; box-shadow: 0 6px 18px rgba(249,115,22,0.08); }
+    .ba-emoji { font-size: 3rem; margin-bottom: 0.8rem; }
+    .ba-box h3 { color: var(--brown); margin-bottom: 0.4rem; font-size: 1rem; }
+    .ba-box p { font-size: 0.83rem; color: #92400e; }
+    .ba-arrow { color: var(--orange); font-size: 2rem; text-align: center; }
+
+    .testi-card { background: #fff; border-radius: 16px; padding: 1.6rem; border: 1px solid #fed7aa; box-shadow: 0 8px 20px rgba(249,115,22,0.07); }
+    .stars { color: #f59e0b; margin-bottom: 0.6rem; }
+    .testi-text { font-size: 0.9rem; color: #451a03; line-height: 1.6; margin-bottom: 0.8rem; font-style: italic; }
+    .testi-author { font-weight: 600; font-size: 0.85rem; color: var(--orange-dark); }
+    .testi-role { font-size: 0.75rem; color: #92400e; }
+
+    .cta-section { background: linear-gradient(135deg, var(--orange-dark), #7c1d0c); color: #fff; padding: 4rem 1.5rem; text-align: center; }
+    .cta-section h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+    .cta-section p { color: #fed7aa; margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .get-website-bar { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #1c0a00; color: #92400e; padding: 2rem 1.5rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } .portfolio-grid { grid-template-columns: 1fr 1fr; } .site-nav { display: none; } .ba-grid { grid-template-columns: 1fr; } .ba-arrow { transform: rotate(90deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Budget interior website starting ₹15,000 · <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20budget%20interiors%20website%20like%20HomeNest">💬 WhatsApp Now</a>
+  </div>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">🛋️</div>
+      <div>
+        <div class="logo-name">HomeNest Interiors</div>
+        <div class="logo-sub">Beautiful Homes on a Budget · Mumbai & Thane</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#packages">Packages</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#contact">Get Quote</a>
+    </nav>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20free%20home%20interior%20quote%20from%20HomeNest" class="btn btn-primary" target="_blank">Get Free Quote</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <span class="hero-eyebrow">🏠 Budget-Friendly · Premium Quality</span>
+        <h1>Your Dream Home,<br><span>Your Budget.</span></h1>
+        <p>We believe beautiful interiors shouldn't cost a fortune. HomeNest delivers premium design, quality materials, and stunning results — starting at just ₹999/sq.ft.</p>
+        <div class="hero-btns">
+          <a href="#packages" class="btn btn-primary">View Packages</a>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20discuss%20my%20home%20interior%20budget%20with%20HomeNest" class="btn btn-wa" target="_blank">💬 Free Consultation</a>
+        </div>
+      </div>
+      <div class="hero-promo">
+        <div class="promo-tag">🔥 LIMITED TIME OFFER</div>
+        <div class="promo-title">Complete 2BHK Interior</div>
+        <div class="promo-sub">Everything included. No hidden costs.</div>
+        <div class="promo-price">₹3.5 Lakh <span style="font-size:1rem;font-weight:400;text-decoration:line-through;color:#92400e;">₹5 Lakh</span></div>
+        <div class="promo-note">EMI starts at ₹8,000/month · No Cost EMI available</div>
+        <ul class="promo-items">
+          <li>Modular kitchen (complete)</li>
+          <li>2 bedroom wardrobes</li>
+          <li>Living room TV unit & furniture</li>
+          <li>Bathroom tiles & fittings</li>
+          <li>False ceiling & lighting</li>
+        </ul>
+        <div class="countdown">⏰ Offer ends: 30 April 2026 · Only 5 slots left!</div>
+        <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%202BHK%20package%20offer%20from%20HomeNest" class="btn btn-primary" style="width:100%; justify-content:center;" target="_blank">Grab This Offer Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="packages">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Packages</p>
+        <h2>Simple Pricing. No Surprises.</h2>
+        <p>Choose a package that fits your budget and we'll deliver the home of your dreams.</p>
+      </div>
+      <div class="grid-3">
+        <div class="package-card">
+          <div class="package-badge">Starter</div>
+          <div class="package-name">Essential Home</div>
+          <div class="package-desc">Perfect for furnished apartments — quick, clean, functional.</div>
+          <div class="package-price">₹999<span class="package-unit">/sq.ft</span></div>
+          <ul class="package-features">
+            <li>Living + bedroom furniture</li>
+            <li>Basic modular kitchen</li>
+            <li>Paint & minor wall treatment</li>
+            <li>3D design presentation</li>
+            <li>45-day delivery</li>
+          </ul>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%20Essential%20Home%20package%20from%20HomeNest" class="btn btn-outline" style="width:100%; justify-content:center;" target="_blank">Get Quote</a>
+        </div>
+        <div class="package-card featured">
+          <div class="package-badge">⭐ Most Popular</div>
+          <div class="package-name">Complete Home</div>
+          <div class="package-desc">Our bestseller — full interiors, premium materials, everything done.</div>
+          <div class="package-price">₹1,499<span class="package-unit">/sq.ft</span></div>
+          <ul class="package-features">
+            <li>Complete modular kitchen</li>
+            <li>All bedroom wardrobes</li>
+            <li>False ceiling with lighting</li>
+            <li>Bathroom tiles & fittings</li>
+            <li>5-year warranty on woodwork</li>
+            <li>Dedicated project manager</li>
+          </ul>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%20Complete%20Home%20package%20from%20HomeNest" class="btn btn-primary" style="width:100%; justify-content:center;" target="_blank">Get Quote →</a>
+        </div>
+        <div class="package-card">
+          <div class="package-badge">Premium</div>
+          <div class="package-name">Luxury Budget</div>
+          <div class="package-desc">Premium design at a fair price — best materials, unique finishes.</div>
+          <div class="package-price">₹1,999<span class="package-unit">/sq.ft</span></div>
+          <ul class="package-features">
+            <li>Everything in Complete Home</li>
+            <li>PU finish furniture</li>
+            <li>Italian laminates</li>
+            <li>Smart home basic setup</li>
+            <li>Imported hardware & fittings</li>
+            <li>10-year warranty</li>
+          </ul>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%20Luxury%20Budget%20package%20from%20HomeNest" class="btn btn-outline" style="width:100%; justify-content:center;" target="_blank">Get Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-warm" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Our Work</p>
+        <h2>Projects We've Completed</h2>
+        <p>Real projects from real clients — across Mumbai, Thane & Navi Mumbai.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#7c3d00,#c2410c);">🪑<div class="p-label">Living Room · Thane</div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#451a03,#92400e);">🍳<div class="p-label">Kitchen · Borivali</div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#3d1f00,#78350f);">🛏️<div class="p-label">Bedroom · Navi Mumbai</div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#1c0a00,#451a03);">🚿<div class="p-label">Bathroom · Andheri</div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#7c2d12,#c2410c);">🪴<div class="p-label">Balcony · Kandivali</div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#431407,#7c1d0c);">🖥️<div class="p-label">Study Room · Mira Road</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ba">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Transformations</p>
+        <h2>Before & After</h2>
+        <p>See what HomeNest can do with your space.</p>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-box"><div class="ba-emoji">🏚️</div><h3>Before</h3><p>Plain builder flat. No personality. Empty and boring.</p></div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-box"><div class="ba-emoji">🏠</div><h3>After HomeNest</h3><p>Warm, modern, fully furnished home everyone will love.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-warm" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Client Reviews</p>
+        <h2>Families Who Love Their New Homes</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Got my 2BHK done for ₹3.5L. The quality is far better than what I expected. Kitchen, wardrobes, living room — everything looks premium. Delivery was on time!"</p><div class="testi-author">Vinay Joshi</div><div class="testi-role">Government Employee · Thane</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"I was worried about budget but HomeNest gave me everything at my price point without cutting corners. The 3D design helped me visualize everything. Amazing team!"</p><div class="testi-author">Archana Patil</div><div class="testi-role">Homemaker · Borivali</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"EMI option made it so easy. Didn't have to break any FDs. Got a beautiful home and paid slowly. The 5-year warranty on woodwork gave me full peace of mind."</p><div class="testi-author">Deepak Kumar</div><div class="testi-role">Salaried · Navi Mumbai</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="contact">
+    <h2>Get a Free Quote in 24 Hours</h2>
+    <p>Share your flat details & we'll send a customized plan with exact pricing. No obligation.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20free%20interior%20quote%20from%20HomeNest.%20My%20flat%20is%20a%202BHK." class="btn btn-wa" target="_blank">💬 WhatsApp for Free Quote</a>
+      <a href="#packages" class="btn btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.5);">View Packages</a>
+    </div>
+    <p style="margin-top:1.2rem; font-size:0.82rem; color:#fed7aa;">📍 Offices in Borivali & Thane · Serving entire MMR</p>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO by <strong>Code Crafters</strong>. Get this website for your interior business!</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20budget%20interiors%20website%20like%20HomeNest.%20Price%3F" class="btn btn-outline" style="color:#fff; border-color:#ffffff60;" target="_blank">Get This Website — Starting ₹15,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 HomeNest Interiors · Demo by <a href="../../index.html" style="color:var(--orange);">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20free%20home%20interior%20quote" class="wa-float" target="_blank">💬 Free Quote</a>
+</body>
+</html>

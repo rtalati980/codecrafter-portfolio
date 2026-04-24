@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SpaceWorks Studio — Office Interior Design Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --slate: #0f172a; --blue: #3b82f6; --blue-dark: #1e3a8a; --silver: #e2e8f0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: var(--slate); background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #d1fae5; font-weight: 700; text-decoration: underline; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(15,23,42,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(59,130,246,0.2); padding: 0.9rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-area { display: flex; align-items: center; gap: 0.8rem; }
+    .logo-icon { font-size: 1.8rem; }
+    .logo-name { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; }
+    .logo-sub { font-size: 0.7rem; color: rgba(148,163,184,0.8); }
+    .site-nav a { margin-left: 1.8rem; font-size: 0.85rem; color: rgba(226,232,240,0.8); letter-spacing: 0.03em; transition: color 0.2s; }
+    .site-nav a:hover { color: var(--blue); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.5rem; border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: transform 0.16s; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; box-shadow: 0 8px 20px rgba(59,130,246,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; border-radius: 999px; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid rgba(59,130,246,0.5); color: var(--blue); border-radius: 6px; }
+
+    .hero { background: linear-gradient(135deg, var(--slate) 0%, #1e293b 60%, #0f172a 100%); color: #fff; padding: 5rem 2rem 4rem; min-height: 85vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); }
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; padding: 0.3rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.4rem; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; margin-bottom: 1.2rem; color: #f1f5f9; }
+    .hero h1 span { color: var(--blue); }
+    .hero p { font-size: 1rem; color: #94a3b8; line-height: 1.8; margin-bottom: 2rem; }
+    .hero-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+    .hero-stats-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem; }
+    .hero-stats-card h3 { color: #fff; margin-bottom: 1.5rem; font-size: 1rem; }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: #64748b; font-size: 0.83rem; }
+    .stat-val { color: var(--blue); font-weight: 700; font-size: 1rem; }
+
+    .section { padding: 5rem 2rem; }
+    .section-slate { background: var(--slate); color: #fff; }
+    .section-light { background: #f8fafc; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-header .eyebrow { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; color: var(--blue); display: block; margin-bottom: 0.5rem; }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: 0.6rem; }
+    .section-header.dark h2 { color: #fff; }
+    .section-header p { color: #64748b; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .section-header.dark p { color: #475569; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+
+    .project-card { border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); transition: transform 0.2s, border-color 0.2s; }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.4); }
+    .project-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .project-img.p1 { background: linear-gradient(135deg,#1e3a8a,#0f172a); }
+    .project-img.p2 { background: linear-gradient(135deg,#0c1a3d,#1e3a8a); }
+    .project-img.p3 { background: linear-gradient(135deg,#0f172a,#1e293b); }
+    .project-info { padding: 1.2rem 1.3rem; }
+    .project-type { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 0.3rem; }
+    .project-name { font-weight: 700; color: #fff; margin-bottom: 0.3rem; font-size: 0.95rem; }
+    .project-detail { font-size: 0.8rem; color: #64748b; }
+    .project-scope { font-size: 0.78rem; color: #94a3b8; margin-top: 0.3rem; }
+
+    .service-card { background: #fff; border-radius: 12px; padding: 1.6rem; border: 1px solid #e2e8f0; border-left: 4px solid var(--blue); box-shadow: 0 6px 18px rgba(15,23,42,0.06); transition: transform 0.15s; }
+    .service-card:hover { transform: translateY(-3px); }
+    .service-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+    .service-card h3 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--blue-dark); }
+    .service-card p { font-size: 0.85rem; color: #64748b; }
+
+    .testi-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.8rem; }
+    .stars { color: #fbbf24; margin-bottom: 0.7rem; }
+    .testi-text { font-size: 0.9rem; color: #94a3b8; line-height: 1.7; font-style: italic; margin-bottom: 1rem; }
+    .testi-author { font-weight: 700; color: #e2e8f0; font-size: 0.88rem; }
+    .testi-role { font-size: 0.75rem; color: var(--blue); }
+
+    .inquiry-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; }
+    .inquiry-form h3 { color: #fff; margin-bottom: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-field label { display: block; font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.3rem; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0.65rem 0.9rem; color: #fff; font-size: 0.88rem; font-family: inherit; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--blue); }
+    .form-field textarea { resize: vertical; min-height: 90px; }
+
+    .cta-bar { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); padding: 4rem 2rem; text-align: center; color: #fff; }
+    .cta-bar h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+    .cta-bar p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .get-website-bar { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #060b18; color: #334155; padding: 2rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .site-nav { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Office interior website starting ₹18,000 · <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20office%20interior%20design%20website%20like%20SpaceWorks">💬 WhatsApp Now</a>
+  </div>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">🏢</div>
+      <div>
+        <div class="logo-name">SPACEWORKS STUDIO</div>
+        <div class="logo-sub">Office & Commercial Interior Design</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div style="display:flex; gap:0.7rem;">
+      <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20discuss%20an%20office%20interior%20project%20with%20SpaceWorks" class="btn btn-wa" target="_blank">💬 Get Quote</a>
+      <a href="#contact" class="btn btn-primary">Start Project</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">Office & Commercial Interiors</div>
+        <h1>Workspaces That <span>Inspire</span> Performance</h1>
+        <p>We design high-performance office environments for startups, enterprises and co-working spaces. Spaces that attract talent, impress clients, and boost productivity.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary">Get Project Quote</a>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20office%20interior%20quote%20from%20SpaceWorks" class="btn btn-wa" target="_blank">💬 WhatsApp Us</a>
+        </div>
+      </div>
+      <div class="hero-stats-card">
+        <h3>Our Track Record</h3>
+        <div class="stat-row"><span class="stat-label">Projects Completed</span><span class="stat-val">180+</span></div>
+        <div class="stat-row"><span class="stat-label">Sq. Ft. Designed</span><span class="stat-val">5 Lakh+</span></div>
+        <div class="stat-row"><span class="stat-label">Client Retention Rate</span><span class="stat-val">94%</span></div>
+        <div class="stat-row"><span class="stat-label">Average Delivery Time</span><span class="stat-val">6 Weeks</span></div>
+        <div class="stat-row"><span class="stat-label">Cities Served</span><span class="stat-val">8</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-slate" id="projects">
+    <div class="container">
+      <div class="section-header dark">
+        <span class="eyebrow">Portfolio</span>
+        <h2>Recent Office Projects</h2>
+        <p>A selection of our finest commercial interior work.</p>
+      </div>
+      <div class="grid-3">
+        <div class="project-card"><div class="project-img p1">💼</div><div class="project-info"><div class="project-type">Tech Startup</div><div class="project-name">Zenith Tech HQ</div><div class="project-detail">3,500 sq.ft · Open work + cabins</div><div class="project-scope">Full fitout · Andheri East</div></div></div>
+        <div class="project-card"><div class="project-img p2">🏦</div><div class="project-info"><div class="project-type">Finance Office</div><div class="project-name">Apex Capital Office</div><div class="project-detail">2,200 sq.ft · Premium executive</div><div class="project-scope">Full fitout · BKC Mumbai</div></div></div>
+        <div class="project-card"><div class="project-img p3">🎓</div><div class="project-info"><div class="project-type">Co-working Space</div><div class="project-name">WorkHub Community</div><div class="project-detail">6,000 sq.ft · Multi-zone design</div><div class="project-scope">Full fitout · Powai</div></div></div>
+        <div class="project-card"><div class="project-img" style="background:linear-gradient(135deg,#0c1a3d,#0f172a);">🏪</div><div class="project-info"><div class="project-type">Retail Brand</div><div class="project-name">Luxe Showroom</div><div class="project-detail">1,800 sq.ft · Luxury retail</div><div class="project-scope">Full fitout · Juhu</div></div></div>
+        <div class="project-card"><div class="project-img" style="background:linear-gradient(135deg,#1e3a8a,#0f172a);">⚕️</div><div class="project-info"><div class="project-type">Medical Office</div><div class="project-name">Advanced Diagnostics</div><div class="project-detail">4,500 sq.ft · Clinical corporate</div><div class="project-scope">Full fitout · Navi Mumbai</div></div></div>
+        <div class="project-card"><div class="project-img" style="background:linear-gradient(135deg,#0a0f1e,#1e3a8a);">🎨</div><div class="project-info"><div class="project-type">Creative Agency</div><div class="project-name">Colorbox Studio</div><div class="project-detail">1,500 sq.ft · Creative open space</div><div class="project-scope">Full fitout · Lower Parel</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Services</span>
+        <h2>What We Offer</h2>
+        <p>End-to-end office interior solutions — from concept to handover.</p>
+      </div>
+      <div class="grid-3">
+        <div class="service-card"><div class="service-icon">📐</div><h3>Space Planning & Design</h3><p>Efficient layouts maximizing every square foot. Balancing open areas, cabins, meeting rooms and breakout zones.</p></div>
+        <div class="service-card"><div class="service-icon">🏗️</div><h3>Full Turnkey Fitout</h3><p>We handle everything — civil, electrical, carpentry, furniture, A/C, and IT infra. One vendor, zero headache.</p></div>
+        <div class="service-card"><div class="service-icon">🖥️</div><h3>3D Design Presentation</h3><p>Photorealistic renders before work begins. Get exact sign-off on the look before spending a rupee on execution.</p></div>
+        <div class="service-card"><div class="service-icon">🔌</div><h3>Smart Office Setup</h3><p>Automated lighting, video conferencing rooms, workphone systems and server room setup included.</p></div>
+        <div class="service-card"><div class="service-icon">🛋️</div><h3>Office Furniture</h3><p>Ergonomic workstations, executive seating, collaborative zone furniture sourced from premium brands.</p></div>
+        <div class="service-card"><div class="service-icon">🎨</div><h3>Brand Identity in Interiors</h3><p>We integrate your brand colours, logo wall art, and brand values into the physical workspace design.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-slate" id="testimonials">
+    <div class="container">
+      <div class="section-header dark">
+        <span class="eyebrow">Client Reviews</span>
+        <h2>What Our Clients Say</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"SpaceWorks transformed our head office into a world-class workspace. Our employees are 30% more productive and clients are always impressed. Excellent investment!"</p><div class="testi-author">Ashish Kumar</div><div class="testi-role">CEO · Zenith Technologies</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Delivered our 3,500 sq.ft office in exactly 6 weeks. Quality was outstanding. The project manager kept us informed daily. Will definitely use SpaceWorks for our next branch too."</p><div class="testi-author">Priya Bansal</div><div class="testi-role">COO · Apex Capital</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Our co-working space design by SpaceWorks has become a landmark in Powai. Footfall increased 3x after the renovation. Outstanding design and flawless execution."</p><div class="testi-author">Rohan Tiwari</div><div class="testi-role">Founder · WorkHub</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-slate" id="contact">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+        <div>
+          <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--blue);font-weight:600;">Contact Us</span>
+          <h2 style="color:#fff; font-size:2rem; margin:0.5rem 0 1rem;">Ready to Transform Your Workspace?</h2>
+          <p style="color:#64748b; line-height:1.7; margin-bottom:1.5rem;">Share your project requirements — floor area, budget, timeline — and we'll send a detailed proposal in 24 hours.</p>
+          <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
+            <div style="color:#94a3b8; font-size:0.88rem;">📞 +91 82641 71623</div>
+            <div style="color:#94a3b8; font-size:0.88rem;">📧 info@spaceworksstudio.in</div>
+            <div style="color:#94a3b8; font-size:0.88rem;">📍 BKC, Mumbai — serving all major cities</div>
+          </div>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20office%20interior%20proposal%20from%20SpaceWorks%20Studio" class="btn btn-wa" target="_blank">💬 WhatsApp for Instant Quote</a>
+        </div>
+        <div class="inquiry-form">
+          <h3>Send Project Details</h3>
+          <div class="form-grid">
+            <div class="form-field"><label>Your Name</label><input type="text" placeholder="Ashish Kumar" /></div>
+            <div class="form-field"><label>Company</label><input type="text" placeholder="Your Company Ltd." /></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-field"><label>Phone</label><input type="text" placeholder="+91 XXXXX XXXXX" /></div>
+            <div class="form-field"><label>Office Area (sq.ft)</label><select><option>500–1000 sq.ft</option><option>1000–2500 sq.ft</option><option>2500–5000 sq.ft</option><option>5000+ sq.ft</option></select></div>
+          </div>
+          <div class="form-field" style="margin-bottom:1rem;"><label>Project Details</label><textarea placeholder="Briefly describe your project — type of office, location, requirements..."></textarea></div>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20quote%20for%20my%20office%20interior%20project" class="btn btn-primary" style="width:100%; justify-content:center;" target="_blank">Send Inquiry →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO by <strong>Code Crafters</strong>. Get this office interior design website!</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20office%20interior%20website%20like%20SpaceWorks.%20Price%3F" class="btn btn-outline" style="color:#fff; border-color:#ffffff60;" target="_blank">Get This Website — Starting ₹18,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 SpaceWorks Studio · Demo by <a href="../../index.html" style="color:var(--blue);">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20office%20interior%20quote" class="wa-float" target="_blank">💬 Get Quote</a>
+</body>
+</html>

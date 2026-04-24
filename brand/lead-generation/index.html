@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LeadBoost — Service Lead Generation Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --blue: #2563eb; --blue-dark: #1e3a8a; --yellow: #fbbf24; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: #0f172a; background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #003a75, #031525); color: #bae6fd; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #7dd3fc; font-weight: 700; text-decoration: underline; }
+
+    .site-header { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .logo-name { font-size: 1.3rem; font-weight: 800; color: var(--blue); letter-spacing: -0.03em; }
+    .logo-tag { font-size: 0.7rem; color: #64748b; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; border: none; transition: transform 0.16s, box-shadow 0.16s; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; box-shadow: 0 12px 30px rgba(37,99,235,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-yellow { background: var(--yellow); color: #0f172a; font-weight: 800; box-shadow: 0 12px 30px rgba(251,191,36,0.4); }
+    .btn-yellow:hover { transform: translateY(-2px); }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; border-radius: 999px; }
+    .btn-large { padding: 1.1rem 2.5rem; font-size: 1rem; border-radius: 10px; }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #eff6ff 100%); padding: 5rem 1.5rem; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
+    .hero-eyebrow { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 0.8rem; }
+    .hero h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.1; font-weight: 800; margin-bottom: 1.2rem; color: #0f172a; }
+    .hero h1 span { color: var(--blue); }
+    .hero p { font-size: 1.05rem; color: #475569; margin-bottom: 1rem; line-height: 1.7; }
+    .hero-social-proof { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 2rem; }
+    .avatars { display: flex; }
+    .avatar { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; border: 2px solid #fff; margin-right: -8px; }
+    .hero-social-proof p { font-size: 0.82rem; color: #475569; }
+    .hero-social-proof strong { color: var(--blue); }
+    .hero-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+    /* Lead Form */
+    .lead-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(37,99,235,0.15); border: 1px solid #dbeafe; }
+    .lead-card-header { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; padding: 1.2rem 1.5rem; border-radius: 12px 12px 0 0; margin: -2rem -2rem 1.5rem; text-align: center; }
+    .lead-card-header h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .lead-card-header p { font-size: 0.8rem; color: #93c5fd; }
+    .form-field { margin-bottom: 0.9rem; }
+    .form-field label { display: block; font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.3rem; }
+    .form-field input, .form-field select { width: 100%; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color 0.15s; }
+    .form-field input:focus, .form-field select:focus { border-color: var(--blue); }
+    .form-note { font-size: 0.75rem; text-align: center; color: #64748b; margin-top: 0.7rem; }
+
+    .section { padding: 5rem 1.5rem; }
+    .section-light { background: #f8fafc; }
+    .section-dark { background: #0f172a; color: #fff; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header .eyebrow { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--blue); display: block; margin-bottom: 0.5rem; }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 800; margin-bottom: 0.5rem; }
+    .section-header.dark h2 { color: #fff; }
+    .section-header p { color: #64748b; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .section-header.dark p { color: #475569; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
+
+    .benefit-card { background: #fff; border-radius: 16px; padding: 1.6rem; border: 1px solid #e2e8f0; box-shadow: 0 6px 18px rgba(15,23,42,0.05); transition: transform 0.15s; }
+    .benefit-card:hover { transform: translateY(-4px); }
+    .benefit-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+    .benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .benefit-card p { font-size: 0.85rem; color: #64748b; }
+
+    .stat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.6rem; text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--yellow); display: block; }
+    .stat-lbl { font-size: 0.82rem; color: #64748b; }
+
+    .testi-card { background: #fff; border-radius: 16px; padding: 1.6rem; border: 1px solid #e2e8f0; box-shadow: 0 6px 18px rgba(15,23,42,0.05); }
+    .stars { color: var(--yellow); margin-bottom: 0.6rem; }
+    .testi-text { font-size: 0.88rem; color: #334155; line-height: 1.6; margin-bottom: 0.8rem; font-style: italic; }
+    .testi-author { font-weight: 700; font-size: 0.85rem; color: #0f172a; }
+    .testi-role { font-size: 0.75rem; color: #64748b; }
+
+    .proc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .proc-step { text-align: center; }
+    .proc-num { width: 48px; height: 48px; background: var(--blue); color: #fff; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; margin: 0 auto 0.8rem; box-shadow: 0 8px 20px rgba(37,99,235,0.3); }
+    .proc-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .proc-step p { font-size: 0.82rem; color: #64748b; }
+
+    .cta-section { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; padding: 5rem 1.5rem; text-align: center; }
+    .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.8rem; }
+    .cta-section p { color: #93c5fd; margin-bottom: 2rem; font-size: 1.05rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-note { margin-top: 1rem; font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+
+    .get-website-bar { background: linear-gradient(135deg, #003a75, #031525); color: #bae6fd; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #060b18; color: #334155; padding: 2rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Lead gen landing pages from ₹10,000 · <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20lead%20generation%20landing%20page%20like%20LeadBoost">💬 WhatsApp Now</a>
+  </div>
+
+  <header class="site-header">
+    <div>
+      <div class="logo-name">LeadBoost</div>
+      <div class="logo-tag">Digital Growth Partner</div>
+    </div>
+    <a href="tel:+918264171623" style="font-size:0.85rem; font-weight:600; color:#0f172a;">📞 +91 82641 71623</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="hero-eyebrow">🎯 #1 Lead Generation Service in Mumbai</p>
+        <h1>Get 50+ Hot Leads<br><span>Every Month</span> — Guaranteed.</h1>
+        <p>We run hyper-targeted Google & Meta advertising campaigns that bring ready-to-buy customers straight to your inbox. No contracts. Cancel anytime.</p>
+        <div class="hero-social-proof">
+          <div class="avatars"><div class="avatar">R</div><div class="avatar">P</div><div class="avatar">A</div><div class="avatar">S</div></div>
+          <p>Joined by <strong>200+ happy businesses</strong> last month</p>
+        </div>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-yellow btn-large">🚀 Book Free Strategy Call</a>
+          <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20grow%20my%20leads%20with%20LeadBoost" class="btn btn-wa" target="_blank">💬 WhatsApp Us</a>
+        </div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-card-header">
+          <h3>📞 Get a Free Strategy Call</h3>
+          <p>We'll audit your business and map a growth plan — FREE!</p>
+        </div>
+        <div class="form-field"><label>Your Name *</label><input type="text" placeholder="Ronak Jain" /></div>
+        <div class="form-field"><label>Business Type *</label><select><option>Clinic / Doctor</option><option>Interior Designer</option><option>Real Estate</option><option>Education</option><option>D2C / E-commerce</option><option>Other</option></select></div>
+        <div class="form-field"><label>WhatsApp Number *</label><input type="text" placeholder="+91 XXXXX XXXXX" /></div>
+        <div class="form-field"><label>Monthly Budget for Ads</label><select><option>₹10,000 – ₹25,000</option><option>₹25,000 – ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>₹1 Lakh+</option></select></div>
+        <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20free%20strategy%20call%20for%20lead%20generation" class="btn btn-yellow" style="width:100%;" target="_blank">🚀 Book Free Call Now →</a>
+        <p class="form-note">🔒 100% Confidential · No Spam · No Obligation</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header dark">
+        <span class="eyebrow">Our Results</span>
+        <h2>Numbers That Speak</h2>
+      </div>
+      <div class="grid-4">
+        <div class="stat-card"><span class="stat-num">200+</span><span class="stat-lbl">Businesses Served</span></div>
+        <div class="stat-card"><span class="stat-num">3.5x</span><span class="stat-lbl">Average ROAS Achieved</span></div>
+        <div class="stat-card"><span class="stat-num">₹80</span><span class="stat-lbl">Average Cost Per Lead</span></div>
+        <div class="stat-card"><span class="stat-num">92%</span><span class="stat-lbl">Client Retention Rate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="benefits">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Why Us</span>
+        <h2>Why 200+ Businesses Choose LeadBoost</h2>
+      </div>
+      <div class="grid-3">
+        <div class="benefit-card"><div class="benefit-icon">🎯</div><h3>Hyper-Targeted Ads</h3><p>We target only the people most likely to buy from you — by location, interest, behaviour and intent.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">📊</div><h3>Full Transparency</h3><p>Access your live dashboard 24/7. See exactly how every rupee is being spent — no black boxes.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">🔄</div><h3>Leads Direct to WhatsApp</h3><p>Every lead gets auto-sent to your WhatsApp instantly. No delays. No leads falling through the cracks.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">⚡</div><h3>Go Live in 48 Hours</h3><p>We set up your entire campaign in 48 hours — landing page, creatives, ad launch. No wait times.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">📞</div><h3>Dedicated Account Manager</h3><p>A real person on WhatsApp, always available to discuss performance and strategy.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">✅</div><h3>Lead Quality Guaranteed</h3><p>We filter fake leads. If lead quality drops below our commitment, we run extra campaigns at no cost.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">How It Works</span>
+        <h2>From Zero to Leads — In 4 Steps</h2>
+      </div>
+      <div class="proc-grid">
+        <div class="proc-step"><div class="proc-num">1</div><h3>Strategy Call</h3><p>We understand your business, target audience and goals</p></div>
+        <div class="proc-step"><div class="proc-num">2</div><h3>Campaign Setup</h3><p>We build your landing page, creatives and ad targeting in 48 hrs</p></div>
+        <div class="proc-step"><div class="proc-num">3</div><h3>Ads Go Live</h3><p>Your campaigns launch on Google & Meta. Leads start flowing in</p></div>
+        <div class="proc-step"><div class="proc-num">4</div><h3>Optimize & Scale</h3><p>We continuously optimize for lower CPL and higher quality leads</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Client Results</span>
+        <h2>What Our Clients Achieved</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"We were spending ₹50,000 on ads with very poor results. LeadBoost revamped our campaign and now we get 80+ leads/month at ₹600 per lead. ROI is incredible!"</p><div class="testi-author">Dr. Kavita M.</div><div class="testi-role">Dermatologist, Andheri</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Our real estate business was struggling. LeadBoost generated 120 qualified buyer leads in 60 days. Closed 3 deals worth ₹45L from their leads. Best investment ever!"</p><div class="testi-author">Suresh R.</div><div class="testi-role">Real Estate Agent, Thane</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Got 65 leads in the first month for my interior business. Qualified inquiries only — no time-wasters. Closed 4 projects worth ₹20L total. Absolutely outstanding!"</p><div class="testi-author">Priya D.</div><div class="testi-role">Interior Designer, Bandra</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="contact">
+    <h2>Ready to Get 50+ Leads a Month?</h2>
+    <p>Book a FREE 30-minute strategy call. We'll show you exactly how we'll grow your business.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20book%20a%20free%20strategy%20call%20for%20lead%20generation" class="btn btn-yellow btn-large" target="_blank">🚀 Book Free Strategy Call</a>
+      <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20grow%20my%20leads%20with%20LeadBoost" class="btn btn-wa btn-large" target="_blank">💬 WhatsApp Us Now</a>
+    </div>
+    <p class="cta-note">✅ No contract · Cancel anytime · Results in 30 days or your money back</p>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO landing page by <strong>Code Crafters</strong>. Get this for your business!</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20lead%20generation%20landing%20page%20like%20LeadBoost.%20Price%3F" class="btn btn-outline" style="color:#7dd3fc; border-color:#7dd3fc;" target="_blank">Get This Page — Starting ₹10,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 LeadBoost Services · Demo by <a href="../../index.html" style="color:var(--blue);">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20more%20leads%20for%20my%20business" class="wa-float" target="_blank">💬 Get More Leads</a>
+</body>
+</html>
