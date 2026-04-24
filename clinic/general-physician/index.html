@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dr. Sharma's Clinic — Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --green: #047857; --green-light: #10b981; --teal: #0d9488; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: #0f172a; background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #047857, #022c22); color: #d1fae5; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #6ee7b7; font-weight: 700; text-decoration: underline; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid #d1fae5; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-area { display: flex; align-items: center; gap: 0.7rem; }
+    .logo-icon { font-size: 1.8rem; }
+    .logo-name { font-size: 1.1rem; font-weight: 700; color: var(--green); }
+    .logo-sub { font-size: 0.72rem; color: var(--teal); }
+    .site-nav a { margin-left: 1.5rem; font-size: 0.88rem; font-weight: 500; color: #064e3b; }
+    .site-nav a:hover { color: var(--green-light); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.4rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: transform 0.16s; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--green-light), var(--green)); color: #fff; box-shadow: 0 10px 25px rgba(4,120,87,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1.5px solid #a7f3d0; color: var(--green); }
+
+    .hero { background: linear-gradient(135deg, #e8fff4, #d1fae5, #f0fdfa); padding: 5rem 1.5rem 4rem; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.18; margin-bottom: 1rem; }
+    .grad { background: linear-gradient(135deg, var(--green-light), var(--green)); -webkit-background-clip: text; color: transparent; }
+    .hero p { font-size: 1rem; color: #374151; margin-bottom: 2rem; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+    .hero-card { background: #fff; border-radius: 20px; padding: 1.8rem; box-shadow: 0 20px 50px rgba(4,120,87,0.12); border: 1px solid #d1fae5; }
+    .hero-card h3 { color: var(--green); margin-bottom: 1rem; }
+    .info-row { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.7rem; }
+    .info-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .info-text strong { display: block; font-size: 0.87rem; }
+    .info-text span { font-size: 0.8rem; color: #64748b; }
+
+    .section { padding: 5rem 1.5rem; }
+    .section-alt { background: #f0fdf9; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--green); }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0.4rem 0 0.6rem; }
+    .section-header p { color: #64748b; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .condition-card { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #d1fae5; box-shadow: 0 6px 18px rgba(4,120,87,0.06); transition: transform 0.15s; display: flex; gap: 1rem; align-items: flex-start; }
+    .condition-card:hover { transform: translateY(-3px); }
+    .cond-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .cond-info h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .cond-info p { font-size: 0.83rem; color: #64748b; }
+
+    .doctor-bio { background: linear-gradient(135deg, #022c22, #047857); color: #fff; border-radius: 24px; padding: 3rem; display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; align-items: center; max-width: 900px; margin: 0 auto; }
+    .doctor-photo { background: rgba(255,255,255,0.1); border-radius: 20px; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 6rem; border: 2px solid rgba(255,255,255,0.2); }
+    .doctor-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .doctor-title { color: #6ee7b7; font-size: 0.9rem; margin-bottom: 1rem; }
+    .doctor-creds { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .cred-item { font-size: 0.83rem; color: #d1fae5; }
+    .cred-item::before { content: "✓ "; color: #6ee7b7; font-weight: 700; }
+
+    .testimonial-card { background: #fff; border-radius: 16px; padding: 1.6rem; border: 1px solid #d1fae5; box-shadow: 0 8px 20px rgba(4,120,87,0.06); }
+    .stars { color: #f59e0b; margin-bottom: 0.6rem; }
+    .testi-text { font-size: 0.9rem; color: #334155; line-height: 1.6; margin-bottom: 0.8rem; font-style: italic; }
+    .testi-author { font-weight: 600; font-size: 0.85rem; color: var(--green); }
+    .testi-role { font-size: 0.75rem; color: #64748b; }
+
+    .booking-cta { background: linear-gradient(135deg, #022c22, #047857); color: #fff; padding: 4rem 1.5rem; text-align: center; }
+    .booking-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+    .booking-cta p { color: #a7f3d0; margin-bottom: 2rem; }
+    .booking-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .get-website-bar { background: linear-gradient(135deg, #047857, #022c22); color: #fff; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #022c22; color: #6ee7b7; padding: 2rem 1.5rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } .doctor-bio { grid-template-columns: 1fr; text-align: center; } .site-nav { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Get this website for your clinic · <a href="https://wa.me/918264171623?text=I%20want%20a%20GP%20clinic%20website%20like%20the%20Dr.%20Sharma%20demo">💬 WhatsApp Now</a> · Starting ₹12,000
+  </div>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">🩺</div>
+      <div>
+        <div class="logo-name">Dr. Sharma's Clinic</div>
+        <div class="logo-sub">General Physician & Family Doctor · Kandivali, Mumbai</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#services">Services</a>
+      <a href="#doctor">About Doctor</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#book">Book Now</a>
+    </nav>
+    <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20want%20to%20book%20an%20appointment" class="btn btn-wa" target="_blank">💬 Book Appointment</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <p style="font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--green); margin-bottom:0.7rem;">Trusted Family Doctor · Kandivali</p>
+        <h1>Your Trusted<br><span class="grad">Family Doctor</span><br>in Kandivali</h1>
+        <p>25+ years of experience in general medicine and family healthcare. Treating patients with care, patience, and expertise.</p>
+        <div class="hero-btns">
+          <a href="#book" class="btn btn-primary">Book Appointment</a>
+          <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20need%20an%20appointment" class="btn btn-wa" target="_blank">💬 WhatsApp Now</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>📍 Clinic Information</h3>
+        <div class="info-row">
+          <div class="info-icon">🕐</div>
+          <div class="info-text"><strong>Clinic Hours</strong><span>Mon–Sat: 9AM–1PM & 5PM–9PM<br>Sun: 10AM–12PM</span></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div class="info-text"><strong>Location</strong><span>Shop 3, Sai Complex, Kandivali West,<br>Mumbai – 400067</span></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📞</div>
+          <div class="info-text"><strong>Contact</strong><span>+91 82641 71623</span></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🏥</div>
+          <div class="info-text"><strong>Fees</strong><span>Consultation: ₹400 | Follow-up: ₹200</span></div>
+        </div>
+        <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20want%20to%20book%20an%20appointment" class="btn btn-wa" style="margin-top:1rem; width:100%; justify-content:center;" target="_blank">💬 Book on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Services</p>
+        <h2>Conditions We Treat</h2>
+        <p>Managing all common and complex health conditions with the right diagnosis and treatment.</p>
+      </div>
+      <div class="grid-2">
+        <div class="condition-card"><div class="cond-icon">🤒</div><div class="cond-info"><h3>Fever & Viral Infections</h3><p>Fast diagnosis and treatment for fever, cold, flu and seasonal viral infections.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">🫀</div><div class="cond-info"><h3>Blood Pressure & Diabetes</h3><p>Long-term management of hypertension and diabetes with regular monitoring.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">🫁</div><div class="cond-info"><h3>Respiratory Issues</h3><p>Asthma, bronchitis, COPD and other respiratory conditions treated with care.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">🤢</div><div class="cond-info"><h3>Digestive Problems</h3><p>Acidity, IBS, gastritis and other digestive issues managed effectively.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">🦴</div><div class="cond-info"><h3>Joint & Muscle Pain</h3><p>Arthritis, back pain and musculoskeletal conditions treated with medication and lifestyle advice.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">👶</div><div class="cond-info"><h3>Paediatric Care</h3><p>Vaccinations, growth monitoring and treatment for children of all ages.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">🔬</div><div class="cond-info"><h3>Health Check-ups</h3><p>Comprehensive annual check-ups with blood work, ECG and health counselling.</p></div></div>
+        <div class="condition-card"><div class="cond-icon">💉</div><div class="cond-info"><h3>Vaccinations & Immunization</h3><p>All adult and child vaccines including flu shots and travel vaccinations.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="doctor">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">About Doctor</p>
+        <h2>25+ Years of Trust & Expertise</h2>
+      </div>
+      <div class="doctor-bio">
+        <div class="doctor-photo">👨‍⚕️</div>
+        <div>
+          <div class="doctor-name">Dr. Ramesh Sharma</div>
+          <div class="doctor-title">MBBS, MD (General Medicine) · Senior Consultant Physician</div>
+          <div class="doctor-creds">
+            <div class="cred-item">MBBS — Government Medical College, Aurangabad (1995)</div>
+            <div class="cred-item">MD General Medicine — KEM Hospital, Mumbai (1999)</div>
+            <div class="cred-item">Life Member — Indian Medical Association (IMA)</div>
+            <div class="cred-item">25+ Years of Clinical Practice in Kandivali</div>
+            <div class="cred-item">Treated 50,000+ patients across Mumbai</div>
+          </div>
+          <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20want%20to%20book%20an%20appointment" class="btn btn-wa" target="_blank">💬 Book Appointment</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Patient Reviews</p>
+        <h2>What Patients Say About Dr. Sharma</h2>
+        <p>4.8 stars on Google · 400+ reviews from our community</p>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Dr. Sharma has been my family doctor for 12 years. He listens patiently and always gives the right diagnosis. I trust no one else with my family's health."</p>
+          <div class="testi-author">Suresh Yadav</div>
+          <div class="testi-role">Businessman, Kandivali West</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"My mother's diabetes and BP have been perfectly managed by Dr. Sharma for 8 years. Very knowledgeable and affordable. Highly recommend to all!"</p>
+          <div class="testi-author">Deepika R.</div>
+          <div class="testi-role">Teacher, Borivali East</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Got treated for severe typhoid. Dr. Sharma monitored closely and got me back on my feet quickly. Genuinely caring doctor. My go-to for all health concerns."</p>
+          <div class="testi-author">Amit Joshi</div>
+          <div class="testi-role">Engineer, Malad West</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking-cta" id="book">
+    <h2>Book Your Appointment Today</h2>
+    <p>Same-day appointments available. Walk-ins also welcome during clinic hours.</p>
+    <div class="booking-btns">
+      <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20want%20to%20book%20an%20appointment" class="btn btn-wa" target="_blank">💬 Book via WhatsApp</a>
+      <a href="tel:+918264171623" class="btn btn-outline" style="color:#fff; border-color:#6ee7b760;">📞 Call Now</a>
+    </div>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO by <strong>Code Crafters</strong>. Get this website for your clinic!</p>
+    <a href="https://wa.me/918264171623?text=I%20want%20a%20GP%20clinic%20website%20like%20Dr%20Sharma's%20demo.%20Starting%20price%3F" class="btn btn-outline" style="color:#fff; border-color:#ffffff60;" target="_blank">Get This Website — Starting ₹12,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 Dr. Sharma's Clinic · Demo by <a href="../../index.html" style="color:#6ee7b7;">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%20Dr.%20Sharma%2C%20I%20want%20an%20appointment" class="wa-float" target="_blank">💬 Book Appointment</a>
+</body>
+</html>

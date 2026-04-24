@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MediPlus Hospital — Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --blue: #00a6e7; --blue-dark: #003a75; --red: #dc2626; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: #0f172a; background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #003a75, #031525); color: #bae6fd; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #7dd3fc; font-weight: 700; text-decoration: underline; }
+
+    .emergency-bar { background: var(--red); color: #fff; text-align: center; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-area { display: flex; align-items: center; gap: 0.7rem; }
+    .logo-icon { font-size: 2rem; }
+    .logo-name { font-size: 1.2rem; font-weight: 700; color: var(--blue-dark); }
+    .logo-sub { font-size: 0.72rem; color: #64748b; }
+    .site-nav a { margin-left: 1.3rem; font-size: 0.86rem; font-weight: 500; color: #334155; }
+    .site-nav a:hover { color: var(--blue); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.4rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: transform 0.16s; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; box-shadow: 0 10px 25px rgba(0,166,231,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1.5px solid #cbd5e1; color: #334155; }
+
+    .hero { background: linear-gradient(135deg, #eef2ff, #e0f6ff, #f0fdf4); padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: "🏥"; position: absolute; font-size: 20rem; opacity: 0.04; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .hero-badge { display: inline-flex; align-content: center; gap: 0.4rem; background: rgba(0,166,231,0.1); color: var(--blue-dark); padding: 0.3rem 1rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.18; margin-bottom: 1rem; }
+    .grad { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); -webkit-background-clip: text; color: transparent; }
+    .hero p { font-size: 1rem; color: #475569; max-width: 600px; margin: 0 auto 2rem; }
+    .hero-btns { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+    .hero-trust { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+    .trust-item { text-align: center; }
+    .trust-num { font-size: 1.8rem; font-weight: 700; color: var(--blue-dark); display: block; }
+    .trust-lbl { font-size: 0.75rem; color: #64748b; }
+
+    .section { padding: 5rem 1.5rem; }
+    .section-alt { background: #f8fafc; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--blue); }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0.4rem 0 0.6rem; }
+    .section-header p { color: #64748b; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
+
+    .dept-card { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #e2e8f0; box-shadow: 0 6px 18px rgba(15,23,42,0.05); text-align: center; transition: transform 0.15s, box-shadow 0.15s; }
+    .dept-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,166,231,0.12); border-color: #bae6fd; }
+    .dept-icon { font-size: 2.5rem; margin-bottom: 0.7rem; }
+    .dept-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--blue-dark); }
+    .dept-card p { font-size: 0.8rem; color: #64748b; }
+
+    .doctor-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 8px 25px rgba(15,23,42,0.06); transition: transform 0.15s; }
+    .doctor-card:hover { transform: translateY(-4px); }
+    .doctor-avatar { background: linear-gradient(135deg, #e0f6ff, #eef2ff); height: 130px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .doctor-info { padding: 1.1rem 1.2rem; }
+    .doctor-name { font-weight: 700; font-size: 0.95rem; }
+    .doctor-spec { font-size: 0.78rem; color: var(--blue); font-weight: 600; }
+    .doctor-qual { font-size: 0.76rem; color: #64748b; margin-top: 0.2rem; }
+    .doctor-exp { font-size: 0.76rem; color: #16a34a; font-weight: 500; margin-top: 0.4rem; }
+    .doctor-avail { font-size: 0.74rem; color: #475569; margin-top: 0.3rem; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 6px; display: inline-block; }
+
+    .testimonial-card { background: #fff; border-radius: 16px; padding: 1.6rem; border: 1px solid #e2e8f0; box-shadow: 0 8px 20px rgba(15,23,42,0.05); }
+    .stars { color: #f59e0b; margin-bottom: 0.6rem; }
+    .testi-text { font-size: 0.9rem; color: #334155; line-height: 1.6; margin-bottom: 0.8rem; font-style: italic; }
+    .testi-author { font-weight: 600; font-size: 0.85rem; }
+    .testi-role { font-size: 0.75rem; color: #64748b; }
+
+    .booking-cta { background: linear-gradient(135deg, #003a75, #031525); color: #fff; padding: 4rem 1.5rem; text-align: center; }
+    .booking-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+    .booking-cta p { color: #93c5fd; margin-bottom: 2rem; }
+    .booking-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .get-website-bar { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #031525; color: #4b5563; padding: 2rem 1.5rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 700px) { .site-nav { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Hospital website starting ₹25,000 · <a href="https://wa.me/918264171623?text=I%20want%20a%20multi-speciality%20hospital%20website%20like%20MediPlus">💬 WhatsApp Now</a>
+  </div>
+
+  <div class="emergency-bar">🚨 24×7 Emergency: +91 82641 71623 · Ambulance Available</div>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">🏥</div>
+      <div>
+        <div class="logo-name">MediPlus Hospital</div>
+        <div class="logo-sub">Multi-Speciality Healthcare · Andheri, Mumbai</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#departments">Departments</a>
+      <a href="#doctors">Doctors</a>
+      <a href="#facilities">Facilities</a>
+      <a href="#book">Book OPD</a>
+    </nav>
+    <div style="display:flex; gap:0.7rem;">
+      <a href="tel:+918264171623" class="btn btn-red">🚨 Emergency</a>
+      <a href="https://wa.me/918264171623?text=I%20want%20to%20book%20an%20OPD%20appointment%20at%20MediPlus%20Hospital" class="btn btn-wa" target="_blank">💬 Book OPD</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge">🏥 NABH Accredited · ISO Certified</div>
+    <h1>Advanced Healthcare<br>for <span class="grad">Every Family</span></h1>
+    <p>Mumbai's trusted multi-speciality hospital with 20+ departments, 50+ specialist doctors and 200+ bed capacity. Comprehensive care under one roof.</p>
+    <div class="hero-btns">
+      <a href="#book" class="btn btn-primary">Book OPD Appointment</a>
+      <a href="https://wa.me/918264171623?text=I%20want%20to%20book%20an%20OPD%20appointment%20at%20MediPlus" class="btn btn-wa" target="_blank">💬 WhatsApp Us</a>
+      <a href="tel:+918264171623" class="btn btn-red">🚨 Emergency</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><span class="trust-num">50,000+</span><span class="trust-lbl">Patients Treated</span></div>
+      <div class="trust-item"><span class="trust-num">50+</span><span class="trust-lbl">Specialist Doctors</span></div>
+      <div class="trust-item"><span class="trust-num">20+</span><span class="trust-lbl">Departments</span></div>
+      <div class="trust-item"><span class="trust-num">24×7</span><span class="trust-lbl">Emergency Care</span></div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="departments">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Departments</p>
+        <h2>20+ Speciality Departments</h2>
+        <p>Expert care across all specialities — from cardiology to orthopaedics and beyond.</p>
+      </div>
+      <div class="grid-4">
+        <div class="dept-card"><div class="dept-icon">❤️</div><h3>Cardiology</h3><p>Heart health & cardiac surgery</p></div>
+        <div class="dept-card"><div class="dept-icon">🧠</div><h3>Neurology</h3><p>Brain & nervous system care</p></div>
+        <div class="dept-card"><div class="dept-icon">🦴</div><h3>Orthopaedics</h3><p>Bones, joints & sports injuries</p></div>
+        <div class="dept-card"><div class="dept-icon">👶</div><h3>Paediatrics</h3><p>Child health & neonatology</p></div>
+        <div class="dept-card"><div class="dept-icon">🤰</div><h3>Gynaecology</h3><p>Women's health & maternity</p></div>
+        <div class="dept-card"><div class="dept-icon">🦷</div><h3>Dental</h3><p>Complete dental care</p></div>
+        <div class="dept-card"><div class="dept-icon">👁️</div><h3>Ophthalmology</h3><p>Eye care & LASIK surgery</p></div>
+        <div class="dept-card"><div class="dept-icon">🫁</div><h3>Pulmonology</h3><p>Lung & respiratory diseases</p></div>
+        <div class="dept-card"><div class="dept-icon">🔬</div><h3>Oncology</h3><p>Cancer diagnosis & treatment</p></div>
+        <div class="dept-card"><div class="dept-icon">💉</div><h3>Nephrology</h3><p>Kidney care & dialysis</p></div>
+        <div class="dept-card"><div class="dept-icon">🩺</div><h3>General Medicine</h3><p>Primary & preventive care</p></div>
+        <div class="dept-card"><div class="dept-icon">🧬</div><h3>Endocrinology</h3><p>Diabetes & hormonal disorders</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="doctors">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Our Doctors</p>
+        <h2>50+ Specialist Doctors</h2>
+        <p>Highly qualified and experienced specialists — trained at India's top medical institutions.</p>
+      </div>
+      <div class="grid-3">
+        <div class="doctor-card">
+          <div class="doctor-avatar">👨‍⚕️</div>
+          <div class="doctor-info">
+            <div class="doctor-name">Dr. Vikram Nair</div>
+            <div class="doctor-spec">Senior Cardiologist</div>
+            <div class="doctor-qual">MBBS, MD, DM Cardiology · AIIMS New Delhi</div>
+            <div class="doctor-exp">✅ 22 Years Experience</div>
+            <div class="doctor-avail">🕐 Mon, Wed, Fri: 10AM–2PM</div>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-avatar">👩‍⚕️</div>
+          <div class="doctor-info">
+            <div class="doctor-name">Dr. Anita Desai</div>
+            <div class="doctor-spec">Gynaecologist & Obstetrician</div>
+            <div class="doctor-qual">MBBS, MS Gynaecology · KEM Hospital Mumbai</div>
+            <div class="doctor-exp">✅ 18 Years Experience</div>
+            <div class="doctor-avail">🕐 Tue, Thu, Sat: 9AM–1PM</div>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-avatar">👨‍⚕️</div>
+          <div class="doctor-info">
+            <div class="doctor-name">Dr. Suresh Gupta</div>
+            <div class="doctor-spec">Orthopaedic Surgeon</div>
+            <div class="doctor-qual">MBBS, MS Orthopaedics · Lokmanya Tilak Mumbai</div>
+            <div class="doctor-exp">✅ 20 Years Experience</div>
+            <div class="doctor-avail">🕐 Daily: 11AM–3PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="facilities">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Facilities</p>
+        <h2>World-Class Medical Facilities</h2>
+      </div>
+      <div class="grid-4">
+        <div class="dept-card"><div class="dept-icon">🔬</div><h3>Advanced Lab</h3><p>Same-day pathology reports</p></div>
+        <div class="dept-card"><div class="dept-icon">📡</div><h3>Digital Radiology</h3><p>MRI, CT Scan, X-Ray & USG</p></div>
+        <div class="dept-card"><div class="dept-icon">🏨</div><h3>200+ Bed Capacity</h3><p>ICU, NICU & private rooms</p></div>
+        <div class="dept-card"><div class="dept-icon">🚑</div><h3>24×7 Ambulance</h3><p>Advanced life support units</p></div>
+        <div class="dept-card"><div class="dept-icon">🩺</div><h3>Telemedicine</h3><p>Online consultations available</p></div>
+        <div class="dept-card"><div class="dept-icon">💊</div><h3>In-Hospital Pharmacy</h3><p>All medicines available on-site</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Patient Reviews</p>
+        <h2>Stories of Recovery & Trust</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"My father had a heart attack at 2AM. The emergency team was ready within 10 minutes. The cardiac care here is simply world-class. Forever grateful!"</p>
+          <div class="testi-author">Rahul Khandelwal</div>
+          <div class="testi-role">IT Professional, Andheri</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Delivered my baby at MediPlus. The maternity ward is excellent. Dr. Anita and the nurses were so supportive. I recommend this hospital to every expecting mother!"</p>
+          <div class="testi-author">Sunitha R.</div>
+          <div class="testi-role">Teacher, Juhu</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Knee replacement surgery by Dr. Gupta was a life-changing experience. Zero complications. Back to walking normally in 6 weeks. Excellent hospital, excellent care!"</p>
+          <div class="testi-author">Ramkumar S.</div>
+          <div class="testi-role">Retired, Santacruz</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking-cta" id="book">
+    <h2>Book an OPD Appointment</h2>
+    <p>Choose your specialist and book in minutes. No waiting. Instant confirmation on WhatsApp.</p>
+    <div class="booking-btns">
+      <a href="https://wa.me/918264171623?text=I%20want%20to%20book%20an%20OPD%20appointment%20at%20MediPlus%20Hospital" class="btn btn-wa" target="_blank">💬 Book via WhatsApp</a>
+      <a href="tel:+918264171623" class="btn btn-primary">📞 Call Reception</a>
+      <a href="tel:+918264171623" class="btn btn-red">🚨 Emergency</a>
+    </div>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO by <strong>Code Crafters</strong>. Get this hospital website for your practice!</p>
+    <a href="https://wa.me/918264171623?text=I%20want%20a%20multi-speciality%20hospital%20website%20like%20MediPlus.%20Starting%20price%3F" class="btn btn-outline" style="color:#fff; border-color:#ffffff60;" target="_blank">Get This Website — Starting ₹25,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 MediPlus Hospital · Demo by <a href="../../index.html" style="color:#7dd3fc;">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=I%20want%20to%20book%20an%20OPD%20at%20MediPlus" class="wa-float" target="_blank">💬 Book OPD</a>
+</body>
+</html>

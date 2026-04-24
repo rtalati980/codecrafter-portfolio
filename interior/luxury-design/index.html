@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Aura Interiors — Luxury Interior Design Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #c8a04a; --dark: #0d0a08; --cream: #f5f0e8; --brown: #3d2b1f; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: var(--dark); background: var(--cream); scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #d1fae5; font-weight: 700; text-decoration: underline; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(13,10,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,160,74,0.2); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-area { display: flex; align-items: center; gap: 0.8rem; }
+    .logo-icon { font-size: 1.6rem; }
+    .logo-name { font-family: "Playfair Display", serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 0.08em; }
+    .logo-sub { font-size: 0.68rem; color: rgba(200,160,74,0.6); letter-spacing: 0.15em; text-transform: uppercase; }
+    .site-nav a { margin-left: 1.8rem; font-size: 0.82rem; font-weight: 400; color: rgba(245,240,232,0.8); letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .site-nav a:hover { color: var(--gold); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.6rem; border-radius: 3px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; transition: transform 0.16s, background 0.16s; font-family: inherit; letter-spacing: 0.08em; text-transform: uppercase; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), #a07832); color: #fff; box-shadow: 0 8px 20px rgba(200,160,74,0.4); }
+    .btn-gold:hover { transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+    .btn-outline:hover { background: var(--gold); color: #fff; }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; border-radius: 999px; text-transform: none; }
+    .btn-wa:hover { transform: translateY(-2px); }
+
+    .hero { height: 100vh; min-height: 600px; background: linear-gradient(135deg, #1a0d05 0%, #3d2b1f 50%, #0d0a08 100%); display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(200,160,74,0.15) 0%, transparent 60%); }
+    .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .hero h1 { font-family: "Playfair Display", serif; font-size: clamp(2.5rem, 7vw, 5rem); color: var(--cream); line-height: 1.1; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { font-size: 1rem; color: rgba(245,240,232,0.7); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .section { padding: 6rem 2rem; }
+    .section-dark { background: var(--dark); color: var(--cream); }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header .eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+    .section-header h2 { font-family: "Playfair Display", serif; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.8rem; }
+    .section-header p { color: rgba(255,255,255,0.5); font-size: 0.95rem; max-width: 550px; margin: 0 auto; }
+    .section-header.light-header p { color: #6b5a4a; }
+    .section-header.light-header h2 { color: var(--brown); }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Portfolio Grid */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .portfolio-item { border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; background: linear-gradient(135deg, #3d2b1f, #1a0d05); display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; cursor: pointer; transition: transform 0.2s; }
+    .portfolio-item:hover { transform: scale(1.02); }
+    .portfolio-item.tall { grid-row: span 2; aspect-ratio: auto; }
+    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,8,0.8) 0%, transparent 50%); opacity: 0; transition: opacity 0.2s; display: flex; align-items: flex-end; padding: 1.2rem; }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-label { color: #fff; font-size: 0.85rem; font-weight: 600; }
+    .portfolio-sub { color: var(--gold); font-size: 0.75rem; margin-top: 0.2rem; }
+
+    /* Stats */
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 2rem; background: var(--brown); }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: "Playfair Display", serif; font-size: 2.5rem; color: var(--gold); display: block; }
+    .stat-lbl { font-size: 0.78rem; color: rgba(245,240,232,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* Services */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .service-item { border-left: 3px solid var(--gold); padding: 0 0 0 1.5rem; }
+    .service-item h3 { font-family: "Playfair Display", serif; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--cream); }
+    .service-item p { font-size: 0.87rem; color: rgba(245,240,232,0.6); line-height: 1.7; }
+    .service-num { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; font-weight: 600; margin-bottom: 0.4rem; }
+
+    /* Before/After */
+    .ba-container { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 1rem; align-items: center; max-width: 900px; margin: 0 auto; }
+    .ba-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(200,160,74,0.2); border-radius: 8px; padding: 2.5rem; text-align: center; }
+    .ba-emoji { font-size: 4rem; margin-bottom: 1rem; }
+    .ba-box h3 { font-family: "Playfair Display", serif; color: var(--cream); margin-bottom: 0.5rem; }
+    .ba-box p { font-size: 0.85rem; color: rgba(245,240,232,0.5); }
+    .ba-arrow { text-align: center; font-size: 2.5rem; color: var(--gold); }
+
+    /* Testimonials */
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .testi-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(200,160,74,0.15); border-radius: 6px; padding: 2rem; }
+    .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .testi-text { font-size: 0.9rem; color: rgba(245,240,232,0.7); line-height: 1.7; font-style: italic; margin-bottom: 1.2rem; }
+    .testi-author { font-weight: 600; color: var(--cream); font-size: 0.88rem; }
+    .testi-role { font-size: 0.75rem; color: rgba(200,160,74,0.7); }
+
+    .cta-section { background: linear-gradient(135deg, var(--gold), #7c5c2a); padding: 5rem 2rem; text-align: center; }
+    .cta-section h2 { font-family: "Playfair Display", serif; font-size: clamp(2rem, 4vw, 2.8rem); color: var(--dark); margin-bottom: 0.8rem; }
+    .cta-section p { color: rgba(13,10,8,0.7); margin-bottom: 2rem; font-size: 1rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .get-website-bar { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #060402; color: rgba(200,160,74,0.4); padding: 2rem; text-align: center; font-size: 0.8rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 900px) { .portfolio-grid { grid-template-columns: 1fr 1fr; } .stats-bar { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .site-nav { display: none; } .portfolio-grid { grid-template-columns: 1fr; } .stats-bar { grid-template-columns: 1fr 1fr; } .ba-container { grid-template-columns: 1fr; } .ba-arrow { transform: rotate(90deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Get this luxury interior website · <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20luxury%20interior%20design%20website%20like%20Aura%20Interiors">💬 WhatsApp Now</a> · Starting ₹18,000
+  </div>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-icon">🏡</div>
+      <div>
+        <div class="logo-name">AURA INTERIORS</div>
+        <div class="logo-sub">Luxury Home & Living Spaces</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20discuss%20my%20interior%20project%20with%20Aura%20Interiors" class="btn btn-gold" target="_blank">Start Your Project</a>
+  </header>
+
+  <section class="hero">
+    <div style="position:relative; z-index:1; padding: 0 1.5rem;">
+      <p class="hero-eyebrow">Luxury Interior Design · Mumbai</p>
+      <h1>Where Every Space<br>Tells <em>Your Story</em></h1>
+      <p>We create interiors that go beyond aesthetics — spaces that feel alive, elevate your lifestyle, and reflect your truest self.</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn btn-gold">View Our Portfolio</a>
+        <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20discuss%20a%20luxury%20interior%20project" class="btn btn-wa" target="_blank">💬 Get Free Estimate</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-num">200+</span><span class="stat-lbl">Projects Completed</span></div>
+    <div class="stat-item"><span class="stat-num">8+</span><span class="stat-lbl">Years of Design Excellence</span></div>
+    <div class="stat-item"><span class="stat-num">₹50Cr+</span><span class="stat-lbl">Of Interiors Delivered</span></div>
+    <div class="stat-item"><span class="stat-num">98%</span><span class="stat-lbl">Client Satisfaction</span></div>
+  </div>
+
+  <section class="section section-dark" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Selected Work</span>
+        <h2 style="color:var(--cream);">Our Portfolio</h2>
+        <p>A curated selection of our finest residential and commercial projects.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item tall" style="background:linear-gradient(160deg,#2d1a0a,#4a2c14);">
+          🛋️
+          <div class="portfolio-overlay"><div><div class="portfolio-label">The Mehta Residence</div><div class="portfolio-sub">4BHK Luxury Home · Juhu</div></div></div>
+        </div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#1a1a2e,#3d2b1f);">🏠<div class="portfolio-overlay"><div><div class="portfolio-label">Modern Villa</div><div class="portfolio-sub">Modern Minimalist · Bandra</div></div></div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#2d1a0a,#5c3b22);">🪑<div class="portfolio-overlay"><div><div class="portfolio-label">Gallery Living Room</div><div class="portfolio-sub">Art-Deco Style · Worli</div></div></div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#0d1a0d,#1a3d2b);">🌿<div class="portfolio-overlay"><div><div class="portfolio-label">Biophilic Kitchen</div><div class="portfolio-sub">Nature-Inspired · Powai</div></div></div></div>
+        <div class="portfolio-item" style="background:linear-gradient(135deg,#1f1a2e,#3d2b5c);">🛏️<div class="portfolio-overlay"><div><div class="portfolio-label">Master Suite</div><div class="portfolio-sub">Opulent Bedroom · Andheri</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="ba">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Transformations</span>
+        <h2 style="color:var(--cream);">Before & After</h2>
+        <p>The power of great design. See the transformation our clients experience.</p>
+      </div>
+      <div class="ba-container">
+        <div class="ba-box"><div class="ba-emoji">🏚️</div><h3>Before</h3><p>Plain, empty flat with builder-grade finishes and no personality</p></div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-box"><div class="ba-emoji">🏰</div><h3>After Aura</h3><p>A stunning, magazine-worthy luxury home that guests can't stop admiring</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Our Services</span>
+        <h2 style="color:var(--cream);">What We Design</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-item"><div class="service-num">01</div><h3>Residential Interiors</h3><p>Complete home interiors — from single rooms to full bungalow makeovers. Every material, every texture, personally curated.</p></div>
+        <div class="service-item"><div class="service-num">02</div><h3>Turnkey Projects</h3><p>We handle everything — design, procurement, execution, and handover. You walk into a ready home.</p></div>
+        <div class="service-item"><div class="service-num">03</div><h3>Kitchen & Wardrobe</h3><p>Fully custom modular kitchens and wardrobes designed for your space, your taste, your budget.</p></div>
+        <div class="service-item"><div class="service-num">04</div><h3>3D Visualization</h3><p>Photorealistic 3D renders so you can see exactly how your space will look before a single nail is hammered.</p></div>
+        <div class="service-item"><div class="service-num">05</div><h3>Renovation & Redesign</h3><p>Transform your dated space into something modern, functional, and breathtaking without moving.</p></div>
+        <div class="service-item"><div class="service-num">06</div><h3>Villa & Penthouse Design</h3><p>Exclusive high-end design for premium residences. Only the best materials, craftsmen, and ideas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Client Stories</span>
+        <h2 style="color:var(--cream);">What Our Clients Say</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"Aura Interiors transformed our 4BHK into a home we never want to leave. The attention to detail is extraordinary. Every corner tells a story. Worth every rupee."</p><div class="testi-author">Rohit Mehta</div><div class="testi-role">CEO · Juhu, Mumbai</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"We expected great results but Aura delivered beyond our imagination. The 3D visualization process was incredible — we knew exactly what to expect. Absolute professionals."</p><div class="testi-author">Priya & Karan Malhotra</div><div class="testi-role">Entrepreneurs · Bandra West</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"From design concept to final handover, the team was flawless. Timely delivery, premium quality, and a design that has made our home the envy of our friends!"</p><div class="testi-author">Sunaina Kapoor</div><div class="testi-role">Interior Enthusiast · Worli</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="contact">
+    <h2>Ready to Create Your Dream Space?</h2>
+    <p>Book a free consultation with our design team. No obligation. Just ideas.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20to%20start%20a%20luxury%20interior%20project%20with%20Aura%20Interiors" class="btn btn-wa" target="_blank">💬 WhatsApp for Free Estimate</a>
+      <a href="#portfolio" class="btn btn-outline" style="border-color:var(--dark); color:var(--dark);">View More Work</a>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.82rem; opacity:0.6;">📍 Studio in Bandra, Mumbai · Serving clients across India</p>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO by <strong>Code Crafters</strong>. Get this luxury interior website for your design studio!</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20luxury%20interior%20design%20website%20like%20Aura%20Interiors.%20Price%3F" class="btn btn-outline" style="color:#fff; border-color:#ffffff60; border-radius:999px; text-transform:none;" target="_blank">Get This Website — Starting ₹18,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 Aura Interiors · Demo Website by <a href="../../index.html" style="color:var(--gold);">Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20a%20free%20interior%20design%20estimate" class="wa-float" target="_blank">💬 Free Estimate</a>
+</body>
+</html>

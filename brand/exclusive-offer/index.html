@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MEGA SALE — Exclusive Offer Funnel Demo by Code Crafters</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --red: #dc2626; --red-dark: #7f1d1d; --yellow: #fbbf24; --orange: #f97316; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; color: #0f172a; background: #fff; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    .demo-banner { background: linear-gradient(135deg, #003a75, #031525); color: #bae6fd; text-align: center; padding: 0.55rem 1rem; font-size: 0.78rem; }
+    .demo-banner a { color: #7dd3fc; font-weight: 700; text-decoration: underline; }
+
+    /* Announcement */
+    .announcement { background: var(--yellow); color: #0f172a; text-align: center; padding: 0.6rem 1rem; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.03em; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem 2.5rem; border-radius: 8px; font-size: 1rem; font-weight: 800; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: inherit; letter-spacing: 0.02em; }
+    .btn-red { background: linear-gradient(135deg, var(--red), var(--red-dark)); color: #fff; box-shadow: 0 16px 40px rgba(220,38,38,0.4); }
+    .btn-red:hover { transform: translateY(-3px); box-shadow: 0 22px 50px rgba(220,38,38,0.5); }
+    .btn-yellow { background: var(--yellow); color: #0f172a; box-shadow: 0 16px 40px rgba(251,191,36,0.35); }
+    .btn-yellow:hover { transform: translateY(-3px); }
+    .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; border-radius: 999px; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .pulse { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 16px 40px rgba(220,38,38,0.4); } 50% { box-shadow: 0 20px 60px rgba(220,38,38,0.65); } }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%); color: #fff; padding: 4rem 1.5rem 3rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.15) 0%, transparent 60%); }
+    .hero-z { position: relative; z-index: 1; }
+    .hero-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.78rem; font-weight: 800; padding: 0.4rem 1.2rem; border-radius: 999px; margin-bottom: 1.5rem; letter-spacing: 0.08em; text-transform: uppercase; animation: flash 1s steps(1) infinite; }
+    @keyframes flash { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .hero h1 { font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 0.5rem; }
+    .hero h1 .red { color: var(--red); }
+    .hero h1 .yellow { color: var(--yellow); }
+    .hero-off { font-size: clamp(4rem, 12vw, 8rem); font-weight: 900; line-height: 1; color: var(--yellow); text-shadow: 0 0 60px rgba(251,191,36,0.5); display: block; margin: 0.3rem 0; }
+    .hero-was { font-size: 1.1rem; color: #64748b; margin-bottom: 0.3rem; }
+    .hero-was span { text-decoration: line-through; }
+    .hero-now { font-size: 1rem; color: #94a3b8; margin-bottom: 2rem; }
+    .hero-now strong { font-size: 1.8rem; color: var(--yellow); }
+
+    /* Countdown */
+    .countdown-bar { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); border-radius: 12px; padding: 1rem 2rem; display: inline-flex; gap: 1.5rem; align-items: center; margin-bottom: 2rem; }
+    .countdown-label { font-size: 0.8rem; color: #94a3b8; margin-right: 0.5rem; }
+    .countdown-unit { text-align: center; }
+    .count-num { font-size: 2rem; font-weight: 900; color: #fff; display: block; line-height: 1; }
+    .count-lbl { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
+    .countdown-sep { font-size: 1.5rem; color: var(--red); font-weight: 900; align-self: center; }
+
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .stock-bar { font-size: 0.82rem; color: #f87171; font-weight: 600; }
+
+    /* Trust Strip */
+    .trust-strip { background: #0f172a; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 1rem 1.5rem; }
+    .trust-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 0.8rem; }
+    .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #94a3b8; }
+    .trust-item .icon { font-size: 1rem; }
+
+    /* Section */
+    .section { padding: 5rem 1.5rem; }
+    .section-dark { background: #0f172a; color: #fff; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header .eyebrow { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--red); display: block; margin-bottom: 0.5rem; }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 0.5rem; }
+    .section-header.light h2 { color: #fff; }
+    .section-header p { font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+    .section-header.light p { color: #64748b; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    /* What You Get */
+    .get-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.6rem; transition: border-color 0.2s; }
+    .get-card:hover { border-color: rgba(220,38,38,0.3); }
+    .get-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+    .get-card h3 { color: #fff; font-size: 1rem; margin-bottom: 0.3rem; }
+    .get-card p { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+    .get-value { font-size: 0.8rem; color: var(--yellow); font-weight: 700; margin-top: 0.5rem; }
+
+    /* Offer Stack */
+    .offer-stack { background: rgba(255,255,255,0.04); border: 1px solid rgba(251,191,36,0.2); border-radius: 20px; padding: 2.5rem; max-width: 700px; margin: 0 auto; }
+    .offer-line { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .offer-line:last-of-type { border-bottom: none; }
+    .offer-name { font-size: 0.92rem; color: #e2e8f0; }
+    .offer-val { font-size: 0.9rem; color: #94a3b8; text-decoration: line-through; }
+    .offer-total-row { margin-top: 1.2rem; padding: 1.2rem; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .offer-total-label { font-weight: 700; color: #fff; font-size: 1rem; }
+    .offer-total-val { font-size: 1.5rem; font-weight: 900; color: var(--yellow); }
+    .offer-total-was { font-size: 0.85rem; color: #64748b; text-decoration: line-through; }
+
+    /* Testimonials */
+    .testi-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.6rem; }
+    .stars { color: var(--yellow); margin-bottom: 0.6rem; }
+    .testi-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; font-style: italic; margin-bottom: 0.8rem; }
+    .testi-author { font-weight: 700; color: #e2e8f0; font-size: 0.85rem; }
+    .testi-role { font-size: 0.75rem; color: #64748b; }
+
+    /* FAQ */
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); padding: 1.2rem 0; }
+    .faq-q { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; cursor: pointer; }
+    .faq-a { font-size: 0.87rem; color: #64748b; margin-top: 0.5rem; line-height: 1.7; }
+
+    /* Final CTA */
+    .final-cta { background: linear-gradient(135deg, var(--red-dark), #3d0a0a); color: #fff; padding: 5rem 1.5rem; text-align: center; }
+    .final-cta-num { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; color: var(--yellow); line-height: 1; display: block; }
+    .final-cta h2 { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; margin: 0.5rem 0 0.8rem; }
+    .final-cta p { color: #fca5a5; margin-bottom: 2rem; }
+    .urgency-line { color: #fca5a5; font-size: 0.82rem; margin-top: 1rem; }
+
+    .get-website-bar { background: linear-gradient(135deg, #003a75, #031525); color: #bae6fd; text-align: center; padding: 1.2rem 1.5rem; }
+    .get-website-bar p { margin: 0 0 0.7rem; font-weight: 600; }
+    .site-footer { background: #060b18; color: #334155; padding: 2rem; text-align: center; font-size: 0.82rem; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; padding: 0.8rem 1.1rem; border-radius: 999px; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 30px rgba(37,211,102,0.4); transition: transform 0.2s; }
+    .wa-float:hover { transform: translateY(-3px); }
+
+    @media (max-width: 600px) { .countdown-bar { flex-wrap: wrap; justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    🎨 DEMO by <a href="../../index.html">Code Crafters</a> · Offer funnel pages from ₹10,000 · <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20offer%20funnel%20page%20like%20this%20demo">💬 WhatsApp Now</a>
+  </div>
+
+  <div class="announcement">🔥 MEGA SALE ENDS IN 24 HOURS · Use code <strong>FLASH50</strong> for extra 10% OFF!</div>
+
+  <section class="hero">
+    <div class="hero-z">
+      <div class="hero-tag">⚡ FLASH SALE — LIMITED TIME ONLY!</div>
+      <h1>Get <span class="red">Everything</span> You Need<br>for <span class="yellow">Half the Price</span></h1>
+      <span class="hero-off">50% OFF</span>
+      <p class="hero-was">Regular price: <span>₹49,999</span></p>
+      <p class="hero-now">Your price today: <strong>₹24,999</strong></p>
+
+      <div class="countdown-bar">
+        <span class="countdown-label">⏰ Offer expires in:</span>
+        <div class="countdown-unit"><span class="count-num" id="hours">23</span><span class="count-lbl">Hours</span></div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-unit"><span class="count-num" id="mins">47</span><span class="count-lbl">Mins</span></div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-unit"><span class="count-num" id="secs">30</span><span class="count-lbl">Secs</span></div>
+      </div>
+
+      <div class="hero-btns">
+        <a href="#order" class="btn btn-red pulse">🛒 CLAIM 50% OFF NOW →</a>
+        <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%2050%25%20off%20deal" class="btn btn-wa" target="_blank">💬 Order on WhatsApp</a>
+      </div>
+      <p class="stock-bar">🔴 Only 12 spots left at this price! 67 people are viewing this right now</p>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item"><span class="icon">✅</span><span>Genuine 50% Discount</span></div>
+      <div class="trust-item"><span class="icon">🔒</span><span>100% Secure Checkout</span></div>
+      <div class="trust-item"><span class="icon">↩️</span><span>7-Day Refund Policy</span></div>
+      <div class="trust-item"><span class="icon">⚡</span><span>Instant Access on Purchase</span></div>
+      <div class="trust-item"><span class="icon">📞</span><span>24/7 Support</span></div>
+    </div>
+  </div>
+
+  <section class="section section-dark" id="what-you-get">
+    <div class="container">
+      <div class="section-header light">
+        <span class="eyebrow">What's Included</span>
+        <h2>Everything You Get for Just ₹24,999</h2>
+        <p>This package normally sells for ₹49,999. You save ₹25,000 — today only.</p>
+      </div>
+      <div class="grid-3">
+        <div class="get-card"><div class="get-icon">🌐</div><h3>Premium 8-Page Website</h3><p>Fully responsive, SEO-optimized website with custom design. Mobile-first, fast-loading.</p><div class="get-value">Value: ₹20,000</div></div>
+        <div class="get-card"><div class="get-icon">💬</div><h3>WhatsApp Automation Setup</h3><p>Auto-reply bot, lead capture, appointment booking — fully configured and live.</p><div class="get-value">Value: ₹12,000</div></div>
+        <div class="get-card"><div class="get-icon">📊</div><h3>Google Business Setup</h3><p>Complete Google My Business profile optimized for local search and reviews.</p><div class="get-value">Value: ₹5,000</div></div>
+        <div class="get-card"><div class="get-icon">📱</div><h3>Social Media Templates</h3><p>20 branded Instagram & FB post templates. Canva files included — edit anytime.</p><div class="get-value">Value: ₹6,000</div></div>
+        <div class="get-card"><div class="get-icon">🔍</div><h3>3-Month SEO Setup</h3><p>On-page SEO, meta tags, schema, and monthly keyword reporting.</p><div class="get-value">Value: ₹9,000</div></div>
+        <div class="get-card"><div class="get-icon">🎓</div><h3>30-Day Free Support</h3><p>Priority WhatsApp support for edits, changes, and questions after launch.</p><div class="get-value">Value: ₹3,000</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="value">
+    <div class="container">
+      <div class="section-header light">
+        <span class="eyebrow">The Math</span>
+        <h2>What You're Getting vs. What You're Paying</h2>
+      </div>
+      <div class="offer-stack">
+        <div class="offer-line"><span class="offer-name">🌐 8-Page Website</span><span class="offer-val">₹20,000</span></div>
+        <div class="offer-line"><span class="offer-name">💬 WhatsApp Automation</span><span class="offer-val">₹12,000</span></div>
+        <div class="offer-line"><span class="offer-name">📊 Google Business Setup</span><span class="offer-val">₹5,000</span></div>
+        <div class="offer-line"><span class="offer-name">📱 Social Media Templates</span><span class="offer-val">₹6,000</span></div>
+        <div class="offer-line"><span class="offer-name">🔍 3-Month SEO Setup</span><span class="offer-val">₹9,000</span></div>
+        <div class="offer-line"><span class="offer-name">🎓 30-Day Free Support</span><span class="offer-val">₹3,000</span></div>
+        <div class="offer-total-row">
+          <div>
+            <div class="offer-total-label">🎉 Your Price Today</div>
+            <div class="offer-total-was">Total value: ₹55,000</div>
+          </div>
+          <div class="offer-total-val">₹24,999</div>
+        </div>
+        <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%2050%25%20off%20package%20for%20%E2%82%B924%2C999" class="btn btn-red pulse" style="width:100%; margin-top:1.5rem;" target="_blank">🛒 CLAIM THIS DEAL NOW →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="reviews">
+    <div class="container">
+      <div class="section-header light">
+        <span class="eyebrow">Social Proof</span>
+        <h2>Who's Already Taken This Deal?</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Best decision I made for my business! Got everything — website, WhatsApp bot, social templates — for under ₹25,000. My clinic bookings went up 300% in 2 months!"</p><div class="testi-author">Dr. Ritu S.</div><div class="testi-role">Dermatologist · Mumbai</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"I was quoted ₹80,000 by other agencies. This deal is unreal. The quality is premium, delivery was on time, and the WhatsApp bot alone has saved me 3 hours a day!"</p><div class="testi-author">Akash P.</div><div class="testi-role">Interior Designer · Pune</div></div>
+        <div class="testi-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="testi-text">"Grabbed this deal on the last day and it saved ₹30,000! My restaurant website + WhatsApp ordering is live. Getting 20+ online orders a day now. Absolutely WOW!"</p><div class="testi-author">Manish R.</div><div class="testi-role">Restaurant Owner · Thane</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="faq">
+    <div class="container" style="max-width:700px;">
+      <div class="section-header light">
+        <span class="eyebrow">FAQ</span>
+        <h2>Common Questions Answered</h2>
+      </div>
+      <div class="faq-item"><div class="faq-q">Is this price really only for today?</div><div class="faq-a">Yes! This flash sale price of ₹24,999 is strictly for 24 hours. Once the timer runs out, the price returns to ₹49,999. Don't miss it!</div></div>
+      <div class="faq-item"><div class="faq-q">What if I'm not satisfied?</div><div class="faq-a">We offer a 7-day refund policy. If you're not happy for any reason, just WhatsApp us and we'll process a full refund with no questions asked.</div></div>
+      <div class="faq-item"><div class="faq-q">When will my website go live?</div><div class="faq-a">Your complete package will be delivered within 7–10 business days from when you confirm and share your business details.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I also get it on EMI?</div><div class="faq-a">Yes! We offer no-cost EMI options. Ask us on WhatsApp for EMI details. We'll set up a plan that works for you.</div></div>
+    </div>
+  </section>
+
+  <section class="final-cta" id="order">
+    <span class="final-cta-num">50%</span>
+    <h2>Last Chance — Grab Your Discount!</h2>
+    <p>The offer expires when the timer hits zero. Don't miss your chance to save ₹25,000.</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%2050%25%20off%20package%20NOW%20for%20%E2%82%B924%2C999" class="btn btn-yellow pulse" style="font-size:1.1rem; padding:1.2rem 3rem;" target="_blank">🔥 CLAIM 50% OFF RIGHT NOW →</a>
+    <p class="urgency-line">⚠️ Only 12 spots left · 67 people viewing this right now · Price goes up at midnight</p>
+  </section>
+
+  <div class="get-website-bar">
+    <p>💡 This is a DEMO offer funnel by <strong>Code Crafters</strong>. Get this for your flash sale!</p>
+    <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20an%20offer%20funnel%20page%20like%20the%20Flash%20Sale%20demo.%20Price%3F" class="btn btn-outline" style="color:#7dd3fc; border-color:#7dd3fc;" target="_blank">Get This Page — Starting ₹10,000</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 Code Crafters · Demo Offer Funnel · <a href="../../index.html" style="color:var(--red);">Back to Code Crafters</a></p>
+  </footer>
+
+  <a href="https://wa.me/918264171623?text=Hi%2C%20I%20want%20the%2050%25%20off%20deal" class="wa-float" target="_blank">🔥 Claim 50% OFF</a>
+
+  <script>
+    // Countdown Timer
+    function updateCountdown() {
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(23, 59, 59, 999);
+      let diff = midnight - now;
+      if (diff < 0) diff = 0;
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById("hours").textContent = String(h).padStart(2,"0");
+      document.getElementById("mins").textContent  = String(m).padStart(2,"0");
+      document.getElementById("secs").textContent  = String(s).padStart(2,"0");
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
