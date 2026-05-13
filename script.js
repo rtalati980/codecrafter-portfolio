@@ -72,3 +72,35 @@ if (form) {
     form.reset();
   });
 }
+
+// FAQ Accordion
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach((item) => {
+  const question = item.querySelector(".faq-question");
+  const answer   = item.querySelector(".faq-answer");
+
+  if (!question || !answer) return;
+
+  question.addEventListener("click", () => {
+    const isOpen = question.getAttribute("aria-expanded") === "true";
+
+    // Close all others
+    faqItems.forEach((otherItem) => {
+      const otherQ = otherItem.querySelector(".faq-question");
+      const otherA = otherItem.querySelector(".faq-answer");
+      if (otherQ && otherA) {
+        otherQ.setAttribute("aria-expanded", "false");
+        otherA.classList.remove("open");
+        otherItem.classList.remove("active");
+      }
+    });
+
+    // Toggle current
+    if (!isOpen) {
+      question.setAttribute("aria-expanded", "true");
+      answer.classList.add("open");
+      item.classList.add("active");
+    }
+  });
+});
