@@ -1144,6 +1144,176 @@
       color: var(--text-muted);
       font-size: 13.5px;
     }
+
+    .chips-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 4px 0;
+      width: 100%;
+    }
+    .chips-container::-webkit-scrollbar {
+      display: none;
+    }
+    .chip {
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       MOBILE RESPONSIVENESS OVERRIDES (State-of-the-Art UX)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .workspace-main {
+        padding: 16px 12px;
+      }
+
+      /* Stats Grid Layout on mobile */
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+      }
+      
+      .stat {
+        padding: 10px 12px;
+      }
+      
+      .stat-num {
+        font-size: 20px;
+      }
+      
+      /* Card forms and filter sections */
+      .card {
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+
+      .btn-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+      }
+
+      /* Dynamically convert Table into Gorgeous Cards */
+      .table-wrap {
+        border: none;
+        box-shadow: none;
+        background: transparent;
+      }
+
+      .res-info {
+        border-radius: var(--radius-sm);
+        margin-bottom: 8px;
+        border: 1px solid var(--border);
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100% !important;
+      }
+
+      thead {
+        display: none !important; /* Hide headers on mobile */
+      }
+
+      tr {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      tr.active-row {
+        border-color: var(--accent);
+        background: var(--accent-light) !important;
+      }
+
+      td {
+        border: none !important;
+        padding: 6px 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        text-align: right !important;
+        font-size: 12.5px;
+      }
+
+      /* Generate labels dynamically from data-label attributes */
+      td::before {
+        content: attr(data-label);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-align: left;
+      }
+
+      /* Style first-child (Business Name) as card header */
+      td:first-child {
+        padding-bottom: 8px !important;
+        border-bottom: 1px dashed var(--border) !important;
+        margin-bottom: 8px;
+        display: block !important;
+        text-align: left !important;
+      }
+
+      td:first-child::before {
+        display: none !important;
+      }
+
+      td:last-child {
+        display: none !important; /* Hide direct action button on mobile (whole card is clickable) */
+      }
+
+      .bname {
+        font-size: 15px;
+        color: var(--text-main);
+      }
+
+      .bphone {
+        margin-top: 4px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+        align-items: stretch;
+        text-align: center;
+      }
+
+      .header-logo {
+        justify-content: center;
+      }
+
+      .header-actions {
+        justify-content: space-between;
+      }
+      
+      .filter-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      
+      .filter-label {
+        margin-bottom: 2px;
+      }
+    }
   </style>
 </head>
 
@@ -1275,31 +1445,39 @@
 
           <div class="filter-row">
             <span class="filter-label">WEBSITE:</span>
-            <button class="chip active" id="wAll" onclick="setF('web','all')">All</button>
-            <button class="chip" id="wNo" onclick="setF('web','no')">&#10005; Missing Website</button>
-            <button class="chip" id="wYes" onclick="setF('web','yes')">&#10003; Has Website</button>
+            <div class="chips-container">
+              <button class="chip active" id="wAll" onclick="setF('web','all')">All</button>
+              <button class="chip" id="wNo" onclick="setF('web','no')">&#10005; Missing Website</button>
+              <button class="chip" id="wYes" onclick="setF('web','yes')">&#10003; Has Website</button>
+            </div>
           </div>
           <div class="filter-row">
             <span class="filter-label">GOOGLE MAPS:</span>
-            <button class="chip active" id="gAll" onclick="setF('gbp','all')">All Listings</button>
-            <button class="chip" id="gUnclaimed" onclick="setF('gbp','unclaimed')">&#9888; Unclaimed Profile</button>
-            <button class="chip" id="gReviews" onclick="setF('gbp','reviews')">&#9733; Needs Reviews</button>
-            <button class="chip" id="gOk" onclick="setF('gbp','ok')">&#10003; Optimized</button>
+            <div class="chips-container">
+              <button class="chip active" id="gAll" onclick="setF('gbp','all')">All Listings</button>
+              <button class="chip" id="gUnclaimed" onclick="setF('gbp','unclaimed')">&#9888; Unclaimed Profile</button>
+              <button class="chip" id="gReviews" onclick="setF('gbp','reviews')">&#9733; Needs Reviews</button>
+              <button class="chip" id="gOk" onclick="setF('gbp','ok')">&#10003; Optimized</button>
+            </div>
           </div>
           <div class="filter-row">
             <span class="filter-label">TICKET SIZE:</span>
-            <button class="chip active" id="szAll" onclick="setF('size','all')">All Scales</button>
-            <button class="chip" id="szSmall" onclick="setF('size','Small')">Small Shop</button>
-            <button class="chip" id="szMedium" onclick="setF('size','Medium')">Medium Enterprise</button>
-            <button class="chip" id="szLarge" onclick="setF('size','Large')">Large Enterprise</button>
+            <div class="chips-container">
+              <button class="chip active" id="szAll" onclick="setF('size','all')">All Scales</button>
+              <button class="chip" id="szSmall" onclick="setF('size','Small')">Small Shop</button>
+              <button class="chip" id="szMedium" onclick="setF('size','Medium')">Medium Enterprise</button>
+              <button class="chip" id="szLarge" onclick="setF('size','Large')">Large Enterprise</button>
+            </div>
           </div>
           <div class="filter-row">
             <span class="filter-label">OUTREACH:</span>
-            <button class="chip active" id="stAll" onclick="setF('status','all')">All Leads</button>
-            <button class="chip" id="stPend" onclick="setF('status','Pending')">Ready to Call</button>
-            <button class="chip" id="stInter" onclick="setF('status','Interested')">Interested 🔥</button>
-            <button class="chip" id="stCallb" onclick="setF('status','Callback')">Callbacks 📅</button>
-            <button class="chip" id="stDone" onclick="setF('status','Done')">No Ans/Other</button>
+            <div class="chips-container">
+              <button class="chip active" id="stAll" onclick="setF('status','all')">All Leads</button>
+              <button class="chip" id="stPend" onclick="setF('status','Pending')">Ready to Call</button>
+              <button class="chip" id="stInter" onclick="setF('status','Interested')">Interested 🔥</button>
+              <button class="chip" id="stCallb" onclick="setF('status','Callback')">Callbacks 📅</button>
+              <button class="chip" id="stDone" onclick="setF('status','Done')">No Ans/Other</button>
+            </div>
           </div>
         </div>
       </div>
@@ -2194,14 +2372,14 @@
         }
 
         tr.setAttribute("onclick", "selectLead(" + l._idx + ", event)");
-        tr.innerHTML = '<td><div class="bname">' + l.name + '</div></td>'
-          + '<td style="color:var(--text-muted);font-size:12px">' + l.type + '</td>'
-          + '<td style="font-size:12px; font-weight:500">' + l.city + '<span class="tier-badge tier' + tier + '">T' + tier + '</span></td>'
-          + '<td style="color:var(--text-muted);font-size:12px">' + l.area + '</td>'
-          + '<td><div style="font-weight:500">' + l.contact + '</div><div class="bphone">' + l.phone + '</div></td>'
-          + '<td><span class="badge ' + (l.hasWebsite ? 'b-yes' : 'b-no') + '">' + (l.hasWebsite ? '✓ Yes' : '✕ No') + '</span></td>'
-          + '<td><span class="badge ' + gc + '">' + l.gbp + '</span></td>'
-          + '<td>' + scode + '</td>'
+        tr.innerHTML = '<td data-label="Business"><div class="bname">' + l.name + '</div></td>'
+          + '<td data-label="Niche" style="color:var(--text-muted);font-size:12px">' + l.type + '</td>'
+          + '<td data-label="City" style="font-size:12px; font-weight:500">' + l.city + '<span class="tier-badge tier' + tier + '">T' + tier + '</span></td>'
+          + '<td data-label="Area" style="color:var(--text-muted);font-size:12px">' + l.area + '</td>'
+          + '<td data-label="Contact"><div><div style="font-weight:500">' + l.contact + '</div><div class="bphone">' + l.phone + '</div></div></td>'
+          + '<td data-label="Website"><span class="badge ' + (l.hasWebsite ? 'b-yes' : 'b-no') + '">' + (l.hasWebsite ? '✓ Yes' : '✕ No') + '</span></td>'
+          + '<td data-label="Listing"><span class="badge ' + gc + '">' + l.gbp + '</span></td>'
+          + '<td data-label="Outreach">' + scode + '</td>'
           + '<td><button class="row-action-btn" title="Open Sales Center">&#128188;</button></td>';
 
         tb.appendChild(tr);
