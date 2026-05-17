@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telecaller Portal & Sales CRM — CodeCrafters Agency</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Premium Light Theme */
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --border: #E2E8F0;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --text-sub: #94A3B8;
+      --accent: #2563EB;
+      --accent-light: #EFF6FF;
+      --sidebar-bg: #FFFFFF;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+
+      /* Status Colors */
+      --green-bg: #ECFDF5;
+      --green-text: #059669;
+      --blue-bg: #EFF6FF;
+      --blue-text: #2563EB;
+      --orange-bg: #FFFBEB;
+      --orange-text: #D97706;
+      --red-bg: #FEF2F2;
+      --red-text: #DC2626;
+      --purple-bg: #F5F3FF;
+      --purple-text: #7C3AED;
+      --teal-bg: #F0FDFA;
+      --teal-text: #0D9488;
+
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark-mode {
+      /* Cyberpunk / High-end Dark Theme */
+      --bg: #0B0F19;
+      --card: #151D30;
+      --border: #243049;
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --text-sub: #64748B;
+      --accent: #3B82F6;
+      --accent-light: #1E293B;
+      --sidebar-bg: #111827;
+      --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+      --green-bg: #064E3B;
+      --green-text: #34D399;
+      --blue-bg: #1E3A8A;
+      --blue-text: #93C5FD;
+      --orange-bg: #78350F;
+      --orange-text: #FBBF24;
+      --red-bg: #7F1D1D;
+      --red-text: #FCA5A5;
+      --purple-bg: #4C1D95;
+      --purple-text: #C084FC;
+      --teal-bg: #115E59;
+      --teal-text: #99F6E4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    /* Header Section */
+    .header {
+      background: #0B0F19;
+      color: #FFFFFF;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E293B;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .header-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF, #94A3B8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: #64748B;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .agent-badge {
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #F1F5F9;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .agent-avatar {
+      width: 20px;
+      height: 20px;
+      background: #3B82F6;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #94A3B8;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      color: #FFFFFF;
+      border-color: #475569;
+      background: #273549;
+    }
+
+    /* Layout */
+    .workspace-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      min-height: calc(100vh - 70px);
+      transition: var(--transition);
+    }
+
+    @media(max-width: 1200px) {
+      .workspace-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-sidebar {
+        position: fixed;
+        right: -100%;
+        top: 70px;
+        bottom: 0;
+        width: 420px;
+        z-index: 1000;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15) !important;
+        transition: right 0.3s ease;
+      }
+
+      .workspace-sidebar.active {
+        right: 0;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .workspace-sidebar {
+        width: 100%;
+      }
+    }
+
+    .workspace-main {
+      padding: 24px 32px;
+      overflow-y: auto;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+
+    .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Grid Form */
+    .fgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+
+    .ff {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .fl {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    select,
+    input[type=number],
+    input[type=text],
+    input[type=datetime-local],
+    textarea {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      color: var(--text-main);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      width: 100%;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      background: var(--card);
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      padding: 10px 18px;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: #1D4ED8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .btn-danger {
+      background: var(--red-bg);
+      color: var(--red-text);
+      border: 1px solid transparent;
+    }
+
+    .btn-danger:hover {
+      background: #FECACA;
+      color: #B91C1C;
+    }
+
+    .btn-xs {
+      padding: 6px 12px;
+      font-size: 11px;
+      border-radius: 6px;
+    }
+
+    .sbar {
+      font-size: 11px;
+      color: var(--green-text);
+      min-height: 18px;
+      margin-top: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--border);
+    }
+
+    .stat.stat-total::before { background: var(--accent); }
+    .stat.stat-called::before { background: var(--green-text); }
+    .stat.stat-callback::before { background: var(--orange-text); }
+    .stat.stat-pending::before { background: var(--text-sub); }
+    .stat.stat-noweb::before { background: var(--red-text); }
+
+    .stat-num {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Calling Progress Widget */
+    .progress-widget {
+      display: none;
+      margin-bottom: 18px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3B82F6, #10B981);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-text-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Filter Section */
+    .filter-section {
+      display: none;
+      margin-bottom: 18px;
+    }
+
+    .quick-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    @media(max-width: 768px) {
+      .quick-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap input {
+      padding-left: 36px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-sub);
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .filter-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: .05em;
+      min-width: 100px;
+      text-transform: uppercase;
+    }
+
+    .chip {
+      font-size: 11.5px;
+      padding: 5px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chip:hover {
+      background: var(--border);
+      color: var(--text-main);
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Table Styles */
+    .table-wrap {
+      display: none;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: var(--card);
+    }
+
+    .res-info {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 12px 18px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--card);
+      text-align: left;
+    }
+
+    th {
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      transition: var(--transition);
+      text-transform: uppercase;
+    }
+
+    th:hover {
+      color: var(--text-main);
+      background: var(--border);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--text-main);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr.active-row td {
+      background: var(--accent-light) !important;
+    }
+
+    tr:hover td {
+      background: var(--bg);
+      cursor: pointer;
+    }
+
+    .bname {
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text-main);
+    }
+
+    .bphone {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 99px;
+      font-weight: 600;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .b-med { background: var(--green-bg); color: var(--green-text); }
+    .b-crm { background: var(--blue-bg); color: var(--blue-text); }
+    .b-web { background: var(--orange-bg); color: var(--orange-text); }
+    .b-yes { background: var(--green-bg); color: var(--green-text); }
+    .b-no { background: var(--red-bg); color: var(--red-text); }
+
+    /* Custom Status Badges */
+    .b-pending { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+    .b-interested { background: var(--green-bg); color: var(--green-text); }
+    .b-callback { background: var(--orange-bg); color: var(--orange-text); }
+    .b-busy { background: var(--blue-bg); color: var(--blue-text); }
+    .b-rejected { background: var(--red-bg); color: var(--red-text); }
+    .b-emailed { background: var(--purple-bg); color: var(--purple-text); }
+    .b-whatsapp { background: var(--teal-bg); color: var(--teal-text); }
+
+    .b-small { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+    .b-medium { background: var(--blue-bg); color: var(--blue-text); }
+    .b-large { background: var(--purple-bg); color: var(--purple-text); }
+    .b-claimed { background: var(--green-bg); color: var(--green-text); }
+    .b-unclaimed { background: var(--red-bg); color: var(--red-text); }
+    .b-reviews { background: var(--orange-bg); color: var(--orange-text); }
+
+    .tier-badge {
+      display: inline-block;
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .tier1 { background: var(--text-main); color: var(--bg); }
+    .tier2 { background: var(--blue-bg); color: var(--blue-text); }
+    .tier3 { background: var(--orange-bg); color: var(--orange-text); }
+
+    .row-action-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .row-action-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* Outreach Workspace Sidebar */
+    .workspace-sidebar {
+      background: var(--sidebar-bg);
+      border-left: 1px solid var(--border);
+      padding: 24px;
+      overflow-y: auto;
+      position: sticky;
+      top: 70px;
+      height: calc(100vh - 70px);
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .sidebar-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .sidebar-close:hover {
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .empty-sidebar {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 10px 0;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 14px;
+      opacity: 0.5;
+    }
+
+    .empty-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 12.5px;
+      line-height: 1.4;
+      max-width: 280px;
+      margin-bottom: 20px;
+    }
+
+    .lead-title-area {
+      margin-bottom: 16px;
+    }
+
+    .lead-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .lead-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .lead-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+    }
+
+    .info-val {
+      font-weight: 600;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .info-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Live Timer Card */
+    .timer-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .timer-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .timer-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* Log outcomes grid */
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .outcome-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .outcome-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .outcome-btn.active-interested { background: var(--green-bg); color: var(--green-text); border-color: var(--green-text); }
+    .outcome-btn.active-callback { background: var(--orange-bg); color: var(--orange-text); border-color: var(--orange-text); }
+    .outcome-btn.active-busy { background: var(--blue-bg); color: var(--blue-text); border-color: var(--blue-text); }
+    .outcome-btn.active-rejected { background: var(--red-bg); color: var(--red-text); border-color: var(--red-text); }
+
+    .action-deck {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .deck-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 12px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .deck-btn:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .deck-btn.active-status {
+      background: var(--green-bg);
+      color: var(--green-text);
+      border-color: #A7F3D0;
+    }
+
+    .deck-btn.active-email {
+      background: var(--purple-bg);
+      color: var(--purple-text);
+      border-color: #DDD6FE;
+    }
+
+    .deck-btn-icon {
+      font-size: 16px;
+    }
+
+    /* Callback Reminders list in empty state */
+    .callback-list-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      margin-top: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .callback-item {
+      padding: 8px;
+      border-bottom: 1px dashed var(--border);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .callback-item:hover {
+      background: var(--card);
+    }
+
+    .callback-item:last-child {
+      border-bottom: none;
+    }
+
+    .callback-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .callback-time-lbl {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--orange-text);
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .callback-biz {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .callback-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Interactive Script Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .tab:hover {
+      color: var(--text-main);
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .script-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-size: 12.5px;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .script-step {
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .script-step:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .step-lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .email-meta {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      padding: 8px 12px;
+      border-bottom: none;
+      font-size: 11.5px;
+    }
+
+    .email-meta div {
+      margin-bottom: 4px;
+    }
+
+    .email-meta div:last-child {
+      margin-bottom: 0;
+    }
+
+    .email-textarea {
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      font-family: inherit;
+      font-size: 12px;
+      height: 140px;
+      resize: none;
+      line-height: 1.4;
+      background: var(--bg);
+    }
+
+    .note-textarea {
+      font-size: 12.5px;
+      height: 70px;
+      resize: none;
+      line-height: 1.4;
+      background: var(--bg);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 11px;
+      color: var(--text-sub);
+      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-icon">&#9889;</div>
+      <div class="header-title-wrap">
+        <span class="header-title">CodeCrafters Telecaller &amp; Sales CRM</span>
+        <span class="header-subtitle">Outreach Portal v4.0</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="agent-badge">
+        <div class="agent-avatar" id="agentInitial">R</div>
+        <span id="agentName" onclick="editAgentName()" style="cursor:pointer; font-weight:600;" title="Click to edit name">Ronak Jain</span>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeBtnText">🌙 Dark Mode</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="workspace-layout">
+
+    <!-- Left Side: Lead Generation and Database -->
+    <div class="workspace-main">
+
+      <!-- lead gen section -->
+      <div class="card">
+        <div class="card-title">PROSPECTING ENGINE</div>
+        <div class="fgrid">
+          <div class="ff">
+            <span class="fl">TARGET PRODUCT</span>
+            <select id="prod" onchange="updateSubtypes()">
+              <option value="all">All Solutions</option>
+              <option value="med">Mediva360 &mdash; Clinics</option>
+              <option value="crm">CRM &mdash; Business SaaS</option>
+              <option value="web">Web Design &mdash; CodeCrafters</option>
+            </select>
+          </div>
+          <div class="ff">
+            <span class="fl">SPECIFIC NICHE / SUB-TYPE</span>
+            <select id="subtype">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <div class="ff">
+            <span class="fl">STATE / REGION</span>
+            <select id="state" onchange="fillCities()"></select>
+          </div>
+          <div class="ff">
+            <span class="fl">CITY / DISTRICT</span>
+            <select id="city" onchange="fillAreas()"></select>
+          </div>
+          <div class="ff">
+            <span class="fl">NEIGHBORHOOD / AREA</span>
+            <select id="area"></select>
+          </div>
+          <div class="ff">
+            <span class="fl">LEADS QUANTITY</span>
+            <input type="number" id="cnt" value="50" min="5" max="150" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="generate()">&#9889; Run Lead Scraper</button>
+          <button class="btn btn-secondary" id="csvbtn" onclick="doCSV()" disabled>&#11015; Export Leads CSV</button>
+          <button class="btn btn-danger" onclick="clearAll()">&#10005; Wipe Database</button>
+        </div>
+        <div class="sbar" id="sbar"></div>
+      </div>
+
+      <!-- CRM Statistics dashboard -->
+      <div class="stats-grid" id="statsRow">
+        <div class="stat stat-total">
+          <div class="stat-num" id="s0">0</div>
+          <div class="stat-label">Total Leads</div>
+        </div>
+        <div class="stat stat-called">
+          <div class="stat-num" id="s1">0</div>
+          <div class="stat-label">Interested 🔥</div>
+        </div>
+        <div class="stat stat-callback">
+          <div class="stat-num" id="s1_e">0</div>
+          <div class="stat-label">Callbacks 📅</div>
+        </div>
+        <div class="stat stat-pending">
+          <div class="stat-num" id="s2">0</div>
+          <div class="stat-label">Ready to Call</div>
+        </div>
+        <div class="stat stat-noweb">
+          <div class="stat-num" id="s3">0</div>
+          <div class="stat-label">No Website ⚠️</div>
+        </div>
+      </div>
+
+      <!-- Call progress bar widget -->
+      <div class="card progress-widget" id="progressWidget">
+        <div class="progress-text-row">
+          <span>DAILY OUTREACH TARGET</span>
+          <span id="progressStats">0 / 30 Calls Done (0%)</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+      </div>
+
+      <!-- Search & Filter deck -->
+      <div class="filter-section" id="filterSection">
+        <div class="card">
+          <div class="card-title">FILTER &amp; SEGMENTATION</div>
+          <div class="quick-row">
+            <div class="search-wrap">
+              <span class="search-icon">&#128269;</span>
+              <input type="text" id="searchBox" placeholder="Quick search name, contact, area, phone..."
+                oninput="applyFilters()" />
+            </div>
+            <select id="typeFilter" onchange="applyFilters()">
+              <option value="">All Niches</option>
+            </select>
+            <select id="prodFilter" onchange="applyFilters()">
+              <option value="">All Solutions</option>
+              <option value="Mediva360">Mediva360</option>
+              <option value="CRM Software">CRM Software</option>
+              <option value="Website">Website Development</option>
+            </select>
+          </div>
+
+          <div class="filter-row">
+            <span class="filter-label">WEBSITE:</span>
+            <button class="chip active" id="wAll" onclick="setF('web','all')">All</button>
+            <button class="chip" id="wNo" onclick="setF('web','no')">&#10005; Missing Website</button>
+            <button class="chip" id="wYes" onclick="setF('web','yes')">&#10003; Has Website</button>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">GOOGLE MAPS:</span>
+            <button class="chip active" id="gAll" onclick="setF('gbp','all')">All Listings</button>
+            <button class="chip" id="gUnclaimed" onclick="setF('gbp','unclaimed')">&#9888; Unclaimed Profile</button>
+            <button class="chip" id="gReviews" onclick="setF('gbp','reviews')">&#9733; Needs Reviews</button>
+            <button class="chip" id="gOk" onclick="setF('gbp','ok')">&#10003; Optimized</button>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">TICKET SIZE:</span>
+            <button class="chip active" id="szAll" onclick="setF('size','all')">All Scales</button>
+            <button class="chip" id="szSmall" onclick="setF('size','Small')">Small Shop</button>
+            <button class="chip" id="szMedium" onclick="setF('size','Medium')">Medium Enterprise</button>
+            <button class="chip" id="szLarge" onclick="setF('size','Large')">Large Enterprise</button>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">OUTREACH:</span>
+            <button class="chip active" id="stAll" onclick="setF('status','all')">All Leads</button>
+            <button class="chip" id="stPend" onclick="setF('status','Pending')">Ready to Call</button>
+            <button class="chip" id="stInter" onclick="setF('status','Interested')">Interested 🔥</button>
+            <button class="chip" id="stCallb" onclick="setF('status','Callback')">Callbacks 📅</button>
+            <button class="chip" id="stDone" onclick="setF('status','Done')">No Ans/Other</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- lead table -->
+      <div class="table-wrap" id="twrap">
+        <div class="res-info" id="resInfo"></div>
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('name')" style="width:22%">Business Name &#8645;</th>
+              <th onclick="sortBy('type')" style="width:14%">Niche &#8645;</th>
+              <th onclick="sortBy('city')" style="width:10%">City &#8645;</th>
+              <th onclick="sortBy('area')" style="width:10%">Area &#8645;</th>
+              <th style="width:18%">Decision Maker</th>
+              <th onclick="sortBy('hasWebsite')" style="width:8%">Website &#8645;</th>
+              <th onclick="sortBy('gbp')" style="width:10%">Google Listing &#8645;</th>
+              <th onclick="sortBy('status')" style="width:10%">Outreach &#8645;</th>
+              <th style="width:5%">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tb"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Right Side: Outreach Workspace Sidebar Panel -->
+    <div class="workspace-sidebar" id="outreachSidebar">
+      
+      <!-- Empty state / Dashboard panel -->
+      <div id="sidebarEmptyState" class="empty-sidebar">
+        <div class="empty-icon">💼</div>
+        <div class="empty-title">Sales Outreach Desk</div>
+        <div class="empty-desc">Select a prospect from the pool to load scripts, launch WhatsApp/Gmail, track call times, and log notes.</div>
+        
+        <!-- Callback List widget for empty state -->
+        <div id="upcomingCallbacksSection" style="display:none; width:100%;">
+          <span class="section-label" style="text-align:left;">📅 UPCOMING CALLBACKS TODAY</span>
+          <div class="callback-list-card" id="upcomingCallbacksList">
+            <!-- items generated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Active lead details panel -->
+      <div id="sidebarActiveState" style="display: none;">
+        <div class="sidebar-header">
+          <div class="lead-title-area">
+            <div class="lead-name" id="sideLeadName">Sunrise Dental Clinic</div>
+            <div class="lead-sub">
+              <span class="badge b-med" id="sideLeadProd">Mediva360</span>
+              <span class="tier-badge tier1" id="sideLeadTier">Tier 1</span>
+              <span id="sideLeadType" style="font-weight:600">Dental Clinic</span>
+            </div>
+          </div>
+          <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+        </div>
+
+        <!-- Live Dialer & Timer -->
+        <div class="sidebar-section">
+          <span class="section-label">📞 Live Dialer &amp; Timer</span>
+          <div class="timer-card">
+            <div class="timer-display" id="callTimer">00:00</div>
+            <div class="timer-actions">
+              <button class="btn btn-primary btn-xs" id="startTimerBtn" onclick="toggleTimer()">Start Timer</button>
+              <button class="btn btn-secondary btn-xs" id="resetTimerBtn" onclick="resetTimer()" disabled>Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outreach actions -->
+        <div class="sidebar-section">
+          <span class="section-label">Log Call Outcome</span>
+          <div class="outcome-grid">
+            <button class="outcome-btn" id="btnStatusInterested" onclick="changeStatus('Interested')">🔥 Interested</button>
+            <button class="outcome-btn" id="btnStatusCallback" onclick="changeStatus('Callback')">📅 Callback</button>
+            <button class="outcome-btn" id="btnStatusBusy" onclick="changeStatus('Busy')">🔇 Busy / NA</button>
+            <button class="outcome-btn" id="btnStatusRejected" onclick="changeStatus('Not Interested')">✕ Rejected</button>
+          </div>
+
+          <!-- Callback time picker drawer -->
+          <div id="callbackSchedulerDrawer" style="display:none; margin-top:10px; padding:10px; border:1px dashed var(--border); border-radius:var(--radius-sm); background:var(--bg);">
+            <span class="fl" style="font-size:10px; margin-bottom:4px; display:block;">Select Callback Time:</span>
+            <input type="datetime-local" id="callbackDateTime" onchange="saveCallbackTime()" style="padding:6px; font-size:12px;">
+          </div>
+        </div>
+
+        <!-- Lead Dossier -->
+        <div class="sidebar-section">
+          <span class="section-label">Lead Information</span>
+          <div class="lead-info-grid">
+            <div class="info-item">
+              <div class="info-val" id="sideContact" style="color:var(--text-main)">Dr. Rajesh Kumar</div>
+              <div class="info-lbl">Contact Person</div>
+            </div>
+            <div class="info-item">
+              <div class="info-val" id="sidePhone"><a href="tel:" id="sidePhoneLink"
+                  style="color:var(--accent); text-decoration:none;">9988998899</a></div>
+              <div class="info-lbl">Phone Number</div>
+            </div>
+            <div class="info-item" style="grid-column: span 2;">
+              <div class="info-val" id="sideEmail" style="color:var(--text-main)">contact@sunrisedental.com</div>
+              <div class="info-lbl">Email Address</div>
+            </div>
+            <div class="info-item">
+              <div class="info-val" id="sideArea">Andheri West</div>
+              <div class="info-lbl">Area/Locality</div>
+            </div>
+            <div class="info-item">
+              <div class="info-val" id="sideGbp">Unclaimed ⚠️</div>
+              <div class="info-lbl">Google Listing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Copywriting Tabs -->
+        <div class="sidebar-section">
+          <span class="section-label">🤖 Outreach Sales Assistant</span>
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab('call-tab')">Call Script</div>
+            <div class="tab" onclick="switchTab('email-tab')">Gmail Template</div>
+            <div class="tab" onclick="switchTab('wa-tab')">WhatsApp</div>
+          </div>
+
+          <!-- Call Script Tab -->
+          <div class="tab-panel active" id="call-tab">
+            <div class="script-box">
+              <div class="script-step">
+                <span class="step-lbl">1. Hook &amp; Verify Identity</span>
+                <p id="scriptHook">"Hello, could I speak with Dr. Rajesh? I am calling about Sunrise Dental Clinic in
+                  Andheri West."</p>
+              </div>
+              <div class="script-step">
+                <span class="step-lbl">2. The Problem Statement</span>
+                <p id="scriptProblem">"We were mapping local healthcare providers in Mumbai, and noticed Sunrise Dental
+                  Clinic is missing an active appointment website. Competitors in Andheri are gaining patients online
+                  who would normally go to you."</p>
+              </div>
+              <div class="script-step">
+                <span class="step-lbl">3. Pitching Solution (CodeCrafters)</span>
+                <p id="scriptSolution">"We run CodeCrafters.co.in. We can launch a premium dental website pre-integrated
+                  with Mediva360 CRM so patients can book directly from their phone, sending automated booking
+                  confirmations on WhatsApp."</p>
+              </div>
+              <div class="script-step">
+                <span class="step-lbl">4. Close to Demo Call</span>
+                <p>"We are offering a local Dentist launch package with zero up-front fee this week. Would you have 5
+                  minutes for a live mobile demo tomorrow morning?"</p>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-xs" style="width:100%" onclick="copyScriptText()">📋 Copy Script
+              Prompt</button>
+          </div>
+
+          <!-- Gmail Tab -->
+          <div class="tab-panel" id="email-tab">
+            <div class="email-meta">
+              <div><strong>To:</strong> <span id="mailToText">contact@sunrisedental.com</span></div>
+              <div><strong>Subject:</strong> <span id="mailSubText">Patient booking proposal for Sunrise Dental Clinic</span></div>
+            </div>
+            <textarea class="email-textarea" id="mailBodyText"></textarea>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px">
+              <button class="btn btn-primary btn-xs" onclick="composeGmailWeb()">✉️ Launch Gmail</button>
+              <button class="btn btn-secondary btn-xs" onclick="composeMailto()">✉️ Mailto Link</button>
+            </div>
+            <button class="btn btn-secondary btn-xs" style="width:100%; margin-top:6px" onclick="copyEmailBody()">📋
+              Copy Email Text</button>
+          </div>
+
+          <!-- WhatsApp Tab -->
+          <div class="tab-panel" id="wa-tab">
+            <textarea class="email-textarea" style="height:100px; margin-bottom:8px;" id="waMsgText"></textarea>
+            <button class="btn btn-primary btn-xs" style="width:100%" onclick="openWhatsAppChat()">💬 Send WhatsApp Message</button>
+          </div>
+        </div>
+
+        <!-- Notes logging -->
+        <div class="sidebar-section">
+          <span class="section-label">Outreach &amp; Call Notes</span>
+          <textarea class="note-textarea" id="sideNotes"
+            placeholder="Write logs here (e.g. Speak with receptionist, callback Tuesday)..."
+            oninput="saveCurrentNote()"></textarea>
+          <span id="saveIndicator" style="font-size:10px; color:var(--text-sub); display:block; margin-top:2px;">📝 Notes are auto-saved in browser memory.</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    CodeCrafters Telecaller &amp; Sales CRM v4.0 &middot; 100+ Cities &middot; LocalStorage CRM Database &middot;
+    codecrafters.co.in
+  </div>
+
+  <script>
+    var D = {
+      "Maharashtra": {
+        "Mumbai": ["Andheri West", "Andheri East", "Bandra West", "Borivali", "Dadar", "Thane", "Kurla", "Goregaon", "Malad", "Kandivali", "Powai", "Ghatkopar", "Mulund", "Chembur", "Vikhroli", "Vile Parle", "Santacruz"],
+        "Pune": ["Kothrud", "Wakad", "Hinjewadi", "Viman Nagar", "Hadapsar", "Aundh", "Baner", "Shivajinagar", "Kharadi", "Pimple Saudagar", "Koregaon Park", "Camp", "Magarpatta", "Chinchwad", "Kondhwa", "Katraj"],
+        "Nagpur": ["Sitabuldi", "Dharampeth", "Ramdaspeth", "Sadar", "Pratap Nagar", "Manewada", "Laxmi Nagar", "Bajaj Nagar", "Amravati Road"],
+        "Nashik": ["Gangapur Road", "Panchvati", "College Road", "Satpur", "Cidco", "Dwarka", "Indira Nagar", "Mahatma Nagar"],
+        "Aurangabad": ["Cidco", "Garkheda", "Jalna Road", "Samarth Nagar", "Cantonment", "Osmanpura"],
+        "Solapur": ["Hotgi Road", "Vijapur Road", "Railway Lines", "Kumthe Nagar", "Station Road"],
+        "Kolhapur": ["Rajarampuri", "Shivaji Park", "Tarabai Park", "Kasba Bawda", "Rajopeth"],
+        "Amravati": ["Rajkamal Chowk", "Jaistambh Square", "Gajanan Nagar", "Shivneri Chowk"]
+      },
+      "Gujarat": {
+        "Ahmedabad": ["Navrangpura", "Satellite", "Bopal", "SG Highway", "Vastrapur", "Maninagar", "Chandkheda", "Prahlad Nagar", "Bodakdev", "Gota", "Nikol", "Naranpura", "Shyamal", "CG Road", "Thaltej", "Ambawadi"],
+        "Surat": ["Adajan", "Vesu", "Piplod", "Katargam", "Varachha", "Rander", "Udhna", "Citylight", "Athwa", "Pal", "Bhatar"],
+        "Vadodara": ["Alkapuri", "Fatehgunj", "Gotri", "Makarpura", "Karelibaug", "Manjalpur", "Akota", "Vasna"],
+        "Rajkot": ["Kalavad Road", "Gondal Road", "Yagnik Road", "150 Ft Ring Road", "Amin Marg", "Mavdi", "Raiya Road"],
+        "Bhavnagar": ["Waghawadi Road", "Crescent Circle", "Kalanala", "Nilambag", "Ghogha Circle"],
+        "Jamnagar": ["Teen Batti", "Digvijay Plot", "Bedi Gate", "Indira Marg", "Girnar Colony"],
+        "Gandhinagar": ["Sector 1", "Sector 11", "Sector 21", "Infocity", "Kudasan"],
+        "Anand": ["Anand Town", "Vallabh Vidyanagar", "Karamsad", "Station Road", "Grid Road"],
+        "Nadiad": ["Nadiad Town Centre", "Station Road", "College Road", "Santram Road"],
+        "Bharuch": ["Station Road", "Kasak", "Zadeshwar", "Ankleshwar", "GIDC Bharuch"],
+        "Morbi": ["GIDC Morbi", "Station Road", "Ravapar Road", "Shapar", "Wankaner Road"],
+        "Navsari": ["Lunsikui", "Station Road", "Dudhia Talav", "Khergam Road"]
+      },
+      "Madhya Pradesh": {
+        "Indore": ["Vijay Nagar", "Palasia", "AB Road", "New Palasia", "LIG Colony", "Sapna Sangeeta", "MR 9", "Scheme 54", "Bhawarkua", "Rajwada", "Geeta Bhawan", "Nipania", "Super Corridor"],
+        "Bhopal": ["MP Nagar", "Arera Colony", "Kolar Road", "Hoshangabad Road", "Ayodhya Bypass", "Bairagarh", "Shyamla Hills", "Lalghati", "TT Nagar", "New Market", "Govindpura"],
+        "Gwalior": ["City Center", "Lashkar", "Morar", "Thatipur", "Hazira", "Maharaj Bada", "Jayendraganj"],
+        "Jabalpur": ["Napier Town", "Wright Town", "Civil Lines", "Garha", "Adhartal", "Vijay Nagar", "Gwarighat Road"],
+        "Ujjain": ["Freeganj", "Mahakaleshwar Road", "Dewas Road", "Nanakheda", "Tower Chowk", "Subhash Nagar"],
+        "Rewa": ["Civil Lines", "Station Road", "Jail Road", "Indira Nagar", "Gandhi Nagar"],
+        "Sagar": ["Civil Lines", "Makroniya", "Station Road", "Bus Stand Area"],
+        "Satna": ["Satna Town", "Civil Lines", "Rewa Road"],
+        "Ratlam": ["Station Road", "Sailana Road", "Delhi Gate", "Mhow Neemuch Road"],
+        "Dewas": ["Station Road", "AB Road", "GIDC Area", "Tonk Khurd Road"],
+        "Chhindwara": ["Parasia Road", "Civil Lines", "Nagpur Road", "Sausar Road"],
+        "Khandwa": ["Station Road", "Indore Road", "Civil Lines", "Burhanpur Road"]
+      },
+      "Rajasthan": {
+        "Jaipur": ["Vaishali Nagar", "Mansarovar", "C-Scheme", "Malviya Nagar", "Tonk Road", "Ajmer Road", "Jagatpura", "Sanganer", "Nirman Nagar", "Pratap Nagar", "Civil Lines", "Sodala", "Shyam Nagar", "Durgapura"],
+        "Jodhpur": ["Ratanada", "Sardarpura", "Paota", "Shastri Nagar", "Pal Road", "Jhanwar Road", "Chopasni Road", "Residency Road"],
+        "Udaipur": ["Hiran Magri", "Shobhagpura", "Fatehpura", "Sukhadia Circle", "Sector 4", "Madhuban", "Pratap Nagar", "Chetak Circle"],
+        "Kota": ["Vigyan Nagar", "Talwandi", "DC Nagar", "Gumanpura", "Rangbari", "Mahaveer Nagar"],
+        "Ajmer": ["Vaishali Nagar", "Nasirabad Road", "Anna Sagar", "Station Road", "Beawar Road", "Madar Gate"],
+        "Bikaner": ["Rani Bazar", "Sadul Ganj", "Shivbari Road", "Ganga Shahar", "Karni Nagar"],
+        "Alwar": ["Company Bagh", "Civil Lines", "Vijay Mandir Road", "Netaji Subhash Nagar"],
+        "Bharatpur": ["Bayana Road", "Civil Lines", "Mathura Gate", "Kumher Road"],
+        "Sikar": ["Station Road", "Civil Lines", "Fatehpur Road", "Laxmangarh Road"],
+        "Bhilwara": ["Pur Road", "Shastri Nagar", "Station Road", "Gulabpura Road"],
+        "Sri Ganganagar": ["Station Road", "6 No. Scheme", "Civil Lines", "Suratgarh Road"]
+      },
+      "Karnataka": {
+        "Bengaluru": ["Koramangala", "Indiranagar", "Whitefield", "HSR Layout", "JP Nagar", "Jayanagar", "Marathahalli", "Electronic City", "Rajajinagar", "Malleshwaram", "Banashankari", "Bellandur", "Sarjapur Road", "Hebbal", "Yelahanka", "BTM Layout", "Basavangudi"],
+        "Mysuru": ["Saraswathipuram", "Vijayanagar", "Bannimantap", "Hebbal", "Kuvempunagar", "Nazarbad", "Gokulam", "Jayalakshmipuram"],
+        "Hubli": ["Vidyanagar", "Gokul Road", "Navanagar", "Keshwapur", "Deshpande Nagar", "Old Hubli"],
+        "Mangaluru": ["Hampankatta", "Falnir", "Bejai", "Kankanady", "Kadri", "Balmatta", "Pandeshwar"],
+        "Belagavi": ["Tilakwadi", "Camp", "Hindwadi", "Shivaji Nagar", "Shahapur", "Savagaon Road"],
+        "Davanagere": ["P.J.Extension", "Vinobanagar", "Anjaneya Layout", "Avaragere Road"],
+        "Ballari": ["Gandhinagar", "Nehru Nagar", "Bellary Road", "Civil Station"],
+        "Tumakuru": ["SS Puram", "B.H.Road", "BEL Layout", "Sira Road"],
+        "Shivamogga": ["Nehru Nagar", "Durgigudi", "Vinoba Nagar", "Sagar Road"],
+        "Udupi": ["Manipal", "City Centre", "Kunjibettu", "Ajjarkad", "Car Street"]
+      },
+      "Tamil Nadu": {
+        "Chennai": ["T Nagar", "Velachery", "Anna Nagar", "Tambaram", "Adyar", "Porur", "Nungambakkam", "Ambattur", "Mylapore", "Guindy", "Sholinganallur", "Chromepet", "OMR", "Kilpauk", "Perambur"],
+        "Coimbatore": ["RS Puram", "Peelamedu", "Ganapathy", "Saibaba Colony", "Race Course", "Gandhipuram", "Singanallur", "Avinashi Road", "Sowripalayam"],
+        "Madurai": ["Anna Nagar", "KK Nagar", "Bibi Kulam", "Tallakulam", "Iyer Bungalow", "Alagar Kovil Road", "Palanganatham"],
+        "Tiruchirappalli": ["Thillai Nagar", "K.K.Nagar", "Ariyamangalam", "Srirangam", "Woraiyur", "Puthur"],
+        "Salem": ["Fairlands", "Shevapet", "Ammapet", "Swarnapuri", "Suramangalam", "Five Roads"],
+        "Tirunelveli": ["Palayamkottai", "Melapalayam", "Vannarpet", "NGO Colony"],
+        "Erode": ["Periyar Nagar", "Sidco", "Bhavani Road", "Collectorate"],
+        "Tiruppur": ["Kangeyam Road", "Palladam Road", "Avinashi Road", "Kumaran Road", "Rayapuram"],
+        "Vellore": ["Katpadi", "Gandhi Nagar", "Sathuvachari", "CMC Area", "Bagayam"],
+        "Thanjavur": ["Medical College Road", "Nanjikottai Road", "Kumbakonam Road", "Saliyamangalam"]
+      },
+      "Delhi NCR": {
+        "New Delhi": ["Connaught Place", "Lajpat Nagar", "Karol Bagh", "Dwarka", "Rohini", "Saket", "Vasant Kunj", "Pitampura", "Janakpuri", "Shahdara", "Rajouri Garden", "Mayur Vihar", "Paschim Vihar"],
+        "Noida": ["Sector 18", "Sector 62", "Sector 63", "Sector 137", "Greater Noida", "Sector 50", "Sector 15", "Expressway"],
+        "Gurgaon": ["DLF Phase 1", "Sohna Road", "Golf Course Road", "MG Road", "Sector 56", "Sector 14", "Udyog Vihar", "Cyber City", "South City"],
+        "Faridabad": ["Sector 15", "Sector 16", "NIT", "Old Faridabad", "NHPC Chowk", "Ballabhgarh", "Neharpar"],
+        "Ghaziabad": ["Vaishali", "Indirapuram", "Raj Nagar", "Kaushambi", "Vijay Nagar", "Sahibabad"]
+      },
+      "Uttar Pradesh": {
+        "Lucknow": ["Hazratganj", "Gomti Nagar", "Indira Nagar", "Aliganj", "Alambagh", "Vikas Nagar", "Mahanagar", "Chinhat", "Faizabad Road", "Vrindavan Yojna"],
+        "Kanpur": ["Civil Lines", "Kidwai Nagar", "Swaroop Nagar", "Vikas Nagar", "Arya Nagar", "Kakadeo", "Kalyanpur", "Govind Nagar"],
+        "Agra": ["Sanjay Place", "Civil Lines", "Sikandra", "Fatehabad Road", "Kamla Nagar", "Shahganj"],
+        "Varanasi": ["Sigra", "Lanka", "Assi", "BHU Area", "Sarnath", "Nadesar", "Bhelupur", "Mahmoorganj"],
+        "Prayagraj": ["Civil Lines", "Tagore Town", "Allapur", "Naini", "George Town"],
+        "Meerut": ["Shastri Nagar", "Gandhi Bagh", "Ganga Nagar", "Pallavpuram", "Sadar Bazar"],
+        "Bareilly": ["Civil Lines", "Subash Nagar", "Rampur Garden", "Railway Road"],
+        "Aligarh": ["Ramghat Road", "Quarsi", "Dodhpur", "Centre Point", "Marris Road"],
+        "Moradabad": ["Civil Lines", "Kanth Road", "Delhi Road", "Ram Ganga Vihar"],
+        "Mathura": ["Civil Lines", "Dampier Nagar", "Vrindavan Road", "Masani Bypass"]
+      },
+      "Punjab": {
+        "Ludhiana": ["Model Town", "Sarabha Nagar", "BRS Nagar", "Civil Lines", "Pakhowal Road", "Dugri", "Ferozepur Road", "Haibowal"],
+        "Amritsar": ["Majitha Road", "Lawrence Road", "Ranjit Avenue", "GT Road", "Green Avenue", "Alpha International City"],
+        "Chandigarh": ["Sector 17", "Sector 22", "Sector 35", "Sector 9", "Sector 44", "Mani Majra"],
+        "Jalandhar": ["Model Town", "New Model Town", "Pathankot Road", "GT Road", "Urban Estate", "Basti Sheikh"],
+        "Patiala": ["Leela Bhawan", "New Leela Bhawan", "Urban Estate", "Model Town", "Nabha Road"],
+        "Bathinda": ["Civil Lines", "Amrik Singh Road", "Bibi Wala Road", "Goniana Road"],
+        "Mohali": ["Phase 1", "Phase 2", "Phase 3B1", "Phase 5", "Phase 7", "Phase 10", "IT City Road"],
+        "Phagwara": ["GT Road", "Hoshiarpur Road", "Bus Stand Area", "Civil Hospital Road"],
+        "Moga": ["Civil Lines", "GT Road", "Ferozepur Road", "Baghapurana Road"]
+      },
+      "Telangana": {
+        "Hyderabad": ["Banjara Hills", "Jubilee Hills", "Madhapur", "HITEC City", "Kukatpally", "Secunderabad", "Ameerpet", "SR Nagar", "LB Nagar", "Dilsukhnagar", "Kompally", "Miyapur", "Gachibowli", "Kondapur", "Manikonda"],
+        "Warangal": ["Hanamkonda", "Kazipet", "Subedari", "Naimnagar", "Hanmakonda Road"],
+        "Nizamabad": ["Civil Lines", "Jakranpally Road", "Nizamabad Town", "Armoor Road"],
+        "Khammam": ["Gandhi Chowk", "Subedari", "Wyra Road", "Balaji Nagar"],
+        "Karimnagar": ["Jyothi Nagar", "Vidyaranyapuri", "Elgandal Road", "Mukarampura"],
+        "Ramagundam": ["NTPC Colony", "Industrial Area", "Karimnagar Road", "Godavarikhani"]
+      },
+      "Andhra Pradesh": {
+        "Visakhapatnam": ["Dwaraka Nagar", "Madhurawada", "MVP Colony", "Gajuwaka", "Rushikonda", "Seethammadhara", "NAD Junction"],
+        "Vijayawada": ["Governorpet", "Moghalrajpuram", "Benz Circle", "Auto Nagar", "Gunadala", "Patamata"],
+        "Tirupati": ["Renigunta Road", "RC Road", "Leela Mahal", "Korlagunta", "Gandhi Road"],
+        "Guntur": ["Brodipet", "Arundelpet", "Gorantla", "Amaravathi Road", "Nallapadu"],
+        "Nellore": ["Dargamitta", "Grand Trunk Road", "Vedayapalem", "Trunk Road"],
+        "Kakinada": ["Main Road", "Jagannaickpur", "Suryaraopeta", "Bhanugudi Junction"],
+        "Rajahmundry": ["Innespeta", "T.Nagar", "Morampudi", "Collector Office Road"]
+      },
+      "West Bengal": {
+        "Kolkata": ["Salt Lake", "New Town", "Park Street", "Behala", "Dum Dum", "Howrah", "Barasat", "Jadavpur", "Tollygunge", "Kasba", "Garia", "Ballygunge"],
+        "Durgapur": ["City Centre", "Bidhannagar", "Benachity", "Nachan Road", "A-Zone"],
+        "Siliguri": ["Sevoke Road", "Hill Cart Road", "Champasari", "Pradhan Nagar", "Hakimpara"],
+        "Asansol": ["GT Road", "Burnpur", "Raniganj", "Hirapur", "Barakar"],
+        "Bardhaman": ["Curzon Gate", "GTR Area", "Natunpara", "Kalna Road"],
+        "Malda": ["English Bazar", "Town Station Road", "Rabindra Avenue", "Gour Road"]
+      },
+      "Haryana": {
+        "Gurgaon": ["DLF Phase 1", "Sohna Road", "MG Road", "Sector 56", "Cyber City", "South City", "Golf Course Extension"],
+        "Faridabad": ["Sector 15", "NIT", "Old Faridabad", "NHPC Chowk", "Neharpar", "Sector 46"],
+        "Ambala": ["Ambala Cantt", "Ambala City", "Baldev Nagar", "Model Town", "Nicholson Road"],
+        "Rohtak": ["Civil Lines", "Delhi Road", "Model Town", "Sector 1", "Sector 14"],
+        "Hisar": ["Urban Estate", "Red Square Market", "Barsi Gate", "Jail Road", "Hansi Road"],
+        "Karnal": ["Model Town", "Sector 6", "Kunjpura Road", "GT Road", "Gharaunda Road"],
+        "Panipat": ["Model Town", "GT Road", "Sector 13", "Sanoli Road", "Textile Colony"]
+      },
+      "Chhattisgarh": {
+        "Raipur": ["Shankar Nagar", "Telibandha", "Pandri", "Devendra Nagar", "Avanti Vihar", "GE Road", "Tatibandh", "Fafadih"],
+        "Bhilai": ["Sector 1", "Sector 6", "Sector 9", "Supela", "Civic Centre", "Durg Road"],
+        "Bilaspur": ["Civil Lines", "Sadar Bazar", "Vyapar Vihar", "Station Road", "Masturi Road"],
+        "Korba": ["Urga", "CSEB Colony", "Sector 1", "Jamnipali", "Transport Nagar"],
+        "Durg": ["Station Road", "Nehru Nagar", "Maitri Bagh Road", "Bhilai Nagar"],
+        "Jagdalpur": ["Civil Lines", "MG Road", "Station Road", "Chitrakoot Road"]
+      },
+      "Odisha": {
+        "Bhubaneswar": ["Saheed Nagar", "Nayapalli", "Patia", "IRC Village", "Chandrasekharpur", "Kharavela Nagar", "Damana", "Dumduma"],
+        "Cuttack": ["Badambadi", "Mangalabag", "CDA", "Buxi Bazar", "Dolamundai"],
+        "Rourkela": ["Uditnagar", "Chhend", "Sector 19", "Civic Centre", "Shaktinagar"],
+        "Berhampur": ["Kabisuryanagar", "Ambapua", "Ramnagar", "Gopalpur Road"],
+        "Sambalpur": ["Nayapara", "Ainthapali", "Budharaja", "Modipara", "College Road"]
+      }
+    };
+
+    var TIER = {
+      "Mumbai": "1", "Pune": "1", "New Delhi": "1", "Bengaluru": "1", "Hyderabad": "1", "Chennai": "1", "Kolkata": "1", "Ahmedabad": "1", "Noida": "1", "Gurgaon": "1",
+      "Indore": "2", "Bhopal": "2", "Nagpur": "2", "Surat": "2", "Vadodara": "2", "Jaipur": "2", "Lucknow": "2", "Kanpur": "2", "Coimbatore": "2", "Visakhapatnam": "2", "Varanasi": "2", "Chandigarh": "2", "Ludhiana": "2", "Jalandhar": "2", "Faridabad": "2", "Ghaziabad": "2", "Nashik": "2", "Mysuru": "2", "Rajkot": "2", "Madurai": "2", "Bhubaneswar": "2", "Raipur": "2", "Vijayawada": "2", "Amritsar": "2", "Mohali": "2", "Agra": "2"
+    };
+
+    var MED_TYPES = ["Dental Clinic", "General Clinic", "Eye Clinic", "Diagnostic Centre", "Physiotherapy Centre", "Nursing Home", "Polyclinic", "ENT Clinic", "Skin Clinic", "Paediatric Clinic", "Orthopaedic Clinic", "Gynaecology Clinic", "Pathology Lab", "Cardiology Clinic", "Homoeopathy Clinic", "Ayurvedic Clinic", "Multispeciality Clinic", "X-Ray & Ultrasound Centre", "Diabetology Clinic", "Hair & Dermatology Clinic"];
+    var CRM_TYPES = ["Retail Shop", "Garment Store", "Coaching Institute", "Real Estate Agency", "Automobile Showroom", "Hardware Store", "Supermarket", "Travel Agency", "Jewellery Store", "Electronics Shop", "Furniture Store", "Medical Store", "Mobile Shop", "Footwear Store", "Optical Store", "Bakery", "Grocery Store", "Building Materials", "Stationery Store", "Crockery Store"];
+    var WEB_TYPES = ["Restaurant", "Boutique", "Beauty Parlour", "Gym & Fitness Centre", "Logistics Company", "Printing Press", "Event Management", "Catering Services", "Photography Studio", "Interior Designer", "Consultancy Firm", "Tours & Travels", "Construction Firm", "Packaging Company", "Export Business", "CA Firm", "Law Office", "Architecture Firm", "Fashion Designer", "Wedding Planner"];
+
+    var MED_PRE = ["City", "Metro", "Prime", "Health", "Care", "Life", "Wellness", "Medicare", "Cure", "Sunrise", "Green", "Active", "Family", "Total", "New", "Apex", "Star", "Shree", "Aarogya", "Swasth", "Jeevan", "Aastha", "Healing", "Dhanvantari"];
+    var CRM_PRE = ["New", "City", "Modern", "Royal", "Shree", "Laxmi", "Ganesh", "National", "Popular", "Quality", "Star", "Supreme", "Global", "United", "Vision", "Perfect", "Prime", "Bright", "Om", "Sai", "Balaji", "Krishna", "Hari", "Prabhu"];
+    var WEB_PRE = ["Star", "Grand", "Modern", "City", "Classic", "Premier", "Elite", "Fresh", "Quick", "Golden", "Silver", "Smart", "Urban", "Bright", "Dynamic", "Alpha", "Radiant", "Creative", "Sharp", "Bold", "Pixel", "Digital", "NextGen", "Local"];
+
+    var FIRST = ["Rajesh", "Priya", "Amit", "Sunita", "Vikram", "Meena", "Suresh", "Anita", "Mahesh", "Kavita", "Ravi", "Pooja", "Arun", "Neha", "Sanjay", "Rekha", "Deepak", "Nikhil", "Swati", "Rahul", "Nisha", "Ajay", "Divya", "Rohit", "Vivek", "Seema", "Manish", "Shilpa", "Kunal", "Sneha", "Arjun", "Priyanka", "Ashok", "Sarita", "Kiran", "Vinod", "Smita", "Prakash", "Anjali", "Sunil", "Rakesh", "Geeta", "Naveen", "Shreya", "Sachin", "Alka", "Dinesh", "Varsha", "Hemant", "Pallavi"];
+    var LAST = ["Sharma", "Patel", "Gupta", "Singh", "Joshi", "Shah", "Mehta", "Verma", "Kumar", "Yadav", "Desai", "Nair", "Iyer", "Reddy", "Jain", "Agarwal", "Mishra", "Srivastava", "Tiwari", "Pandey", "Kapoor", "Malhotra", "Bose", "Rao", "Kulkarni", "Patil", "Naik", "Pillai", "Garg", "Saxena", "Choudhary", "Banerjee", "Chatterjee", "Murthy", "Hegde", "Shetty", "Naidu", "Bhatt", "Trivedi", "Chawla"];
+
+    var leads = [];
+    var activeLeadIndex = -1;
+    var sortCol = '';
+    var sortDir = 1;
+
+    // Filter criteria
+    var fWeb = 'all';
+    var fGbp = 'all';
+    var fSize = 'all';
+    var fStatus = 'all';
+
+    // Timer Variables
+    var timerInterval = null;
+    var secondsElapsed = 0;
+    var timerRunning = false;
+
+    function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+    function randPhone() {
+      return pick([6, 7, 8, 9]) + '' + Array.from({ length: 9 }, function () { return Math.floor(Math.random() * 10); }).join('');
+    }
+
+    function generateEmail(bname, contact, hasWeb) {
+      var cleanBname = bname.toLowerCase().replace(/[^a-z0-9]/g, '');
+      var cleanContact = contact.toLowerCase().replace(/^(dr|mr|mrs|ms)\.?\s+/, '').replace(/[^a-z0-9]/g, '');
+      var domains = ['gmail.com', 'yahoo.com', 'outlook.com'];
+      var bizDomains = [cleanBname + '.in', cleanBname + '.com', cleanBname + '.co.in'];
+
+      if (hasWeb) {
+        return 'info@' + pick(bizDomains);
+      } else {
+        return Math.random() < 0.6 ? cleanContact + '@' + pick(domains) : 'contact@' + pick(bizDomains);
+      }
+    }
+
+    function toggleTheme() {
+      var isDark = document.body.classList.toggle('dark-mode');
+      document.getElementById('themeBtnText').textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem('cc_theme', isDark ? 'dark' : 'light');
+    }
+
+    function loadThemeSettings() {
+      var savedTheme = localStorage.getItem('cc_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeBtnText').textContent = "☀️ Light Mode";
+      }
+    }
+
+    // Agent Name Management
+    function editAgentName() {
+      var currentName = document.getElementById('agentName').textContent;
+      var newName = prompt("Enter Agent Name:", currentName);
+      if (newName && newName.trim() !== "") {
+        document.getElementById('agentName').textContent = newName.trim();
+        document.getElementById('agentInitial').textContent = newName.trim().charAt(0).toUpperCase();
+        localStorage.setItem('cc_agent_name', newName.trim());
+      }
+    }
+
+    function loadAgentName() {
+      var savedName = localStorage.getItem('cc_agent_name');
+      if (savedName) {
+        document.getElementById('agentName').textContent = savedName;
+        document.getElementById('agentInitial').textContent = savedName.charAt(0).toUpperCase();
+      }
+    }
+
+    function fillStates() {
+      var sel = document.getElementById('state');
+      sel.innerHTML = '';
+      Object.keys(D).forEach(function (s) { var o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+      fillCities();
+    }
+
+    function fillCities() {
+      var s = document.getElementById('state').value, c = document.getElementById('city');
+      c.innerHTML = '';
+      Object.keys(D[s] || {}).forEach(function (x) { var o = document.createElement('option'); o.value = x; o.textContent = x; c.appendChild(o); });
+      fillAreas();
+    }
+
+    function fillAreas() {
+      var s = document.getElementById('state').value, city = document.getElementById('city').value, a = document.getElementById('area');
+      a.innerHTML = '<option value="">All Areas</option>';
+      (D[s][city] || []).forEach(function (x) { var o = document.createElement('option'); o.value = x; o.textContent = x; a.appendChild(o); });
+    }
+
+    function updateSubtypes() {
+      var prod = document.getElementById('prod').value;
+      var sub = document.getElementById('subtype');
+      sub.innerHTML = '<option value="">All Categories</option>';
+
+      var list = [];
+      if (prod === 'med') list = MED_TYPES;
+      else if (prod === 'crm') list = CRM_TYPES;
+      else if (prod === 'web') list = WEB_TYPES;
+      else {
+        list = MED_TYPES.concat(CRM_TYPES).concat(WEB_TYPES);
+      }
+
+      var uniqueList = list.filter(function (v, i, a) { return a.indexOf(v) === i; }).sort();
+      uniqueList.forEach(function (item) {
+        var o = document.createElement('option');
+        o.value = item;
+        o.textContent = item;
+        sub.appendChild(o);
+      });
+    }
+
+    // Call Duration Stopwatch
+    function toggleTimer() {
+      var startBtn = document.getElementById('startTimerBtn');
+      var resetBtn = document.getElementById('resetTimerBtn');
+      
+      if (!timerRunning) {
+        // Start Stopwatch
+        timerRunning = true;
+        startBtn.textContent = "Stop Call";
+        startBtn.className = "btn btn-danger btn-xs";
+        resetBtn.disabled = true;
+        
+        timerInterval = setInterval(function() {
+          secondsElapsed++;
+          var m = Math.floor(secondsElapsed / 60);
+          var s = secondsElapsed % 60;
+          document.getElementById('callTimer').textContent = 
+            (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+        }, 1000);
+      } else {
+        // Stop Stopwatch
+        timerRunning = false;
+        clearInterval(timerInterval);
+        startBtn.textContent = "Start Timer";
+        startBtn.className = "btn btn-primary btn-xs";
+        resetBtn.disabled = false;
+        
+        // Save duration to active lead notes / log
+        if (activeLeadIndex !== -1) {
+          var formattedTime = document.getElementById('callTimer').textContent;
+          leads[activeLeadIndex].callDuration = formattedTime;
+          
+          var noteArea = document.getElementById('sideNotes');
+          var timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          var callLogMsg = "\n[Call Logs (" + timestamp + "): Spoke for " + formattedTime + "]";
+          
+          if (noteArea.value.indexOf(callLogMsg) === -1) {
+            noteArea.value += callLogMsg;
+            saveCurrentNote();
+          }
+        }
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      secondsElapsed = 0;
+      document.getElementById('callTimer').textContent = "00:00";
+      document.getElementById('startTimerBtn').textContent = "Start Timer";
+      document.getElementById('startTimerBtn').className = "btn btn-primary btn-xs";
+      document.getElementById('resetTimerBtn').disabled = true;
+    }
+
+    // Load data from LocalStorage
+    function loadFromLocalStorage() {
+      try {
+        var storedLeads = localStorage.getItem('cc_leads');
+        var storedCalled = localStorage.getItem('cc_called');
+        var storedEmailed = localStorage.getItem('cc_emailed');
+        var storedNotes = localStorage.getItem('cc_notes');
+
+        if (storedLeads) {
+          leads = JSON.parse(storedLeads);
+          var legacyCalledSet = new Set(JSON.parse(storedCalled || '[]'));
+          var legacyEmailedSet = new Set(JSON.parse(storedEmailed || '[]'));
+          var legacyNotes = JSON.parse(storedNotes || '{}');
+
+          // Initialize/Migrate lead schema
+          leads.forEach(function (lead, idx) {
+            lead.notes = legacyNotes[idx] || lead.notes || "";
+            if (!lead.status) {
+              if (legacyCalledSet.has(idx)) {
+                lead.status = "Interested"; 
+              } else if (legacyEmailedSet.has(idx)) {
+                lead.status = "Emailed";
+              } else {
+                lead.status = "Pending";
+              }
+            }
+            if (!lead.callbackTime) lead.callbackTime = "";
+            if (!lead.callDuration) lead.callDuration = "";
+          });
+
+          // Setup Filter categories list
+          var allTypes = leads.map(function (l) { return l.type; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).sort();
+          var tf = document.getElementById('typeFilter');
+          tf.innerHTML = '<option value="">All Niches</option>';
+          allTypes.forEach(function (t) { var o = document.createElement('option'); o.value = t; o.textContent = t; tf.appendChild(o); });
+
+          // Render components
+          document.getElementById('statsRow').style.display = 'grid';
+          document.getElementById('progressWidget').style.display = 'block';
+          document.getElementById('filterSection').style.display = 'block';
+          document.getElementById('csvbtn').disabled = false;
+
+          updateStats();
+          applyFilters();
+          updateCallbackReminders();
+
+          document.getElementById('sbar').textContent = '✓ Loaded ' + leads.length + ' prospects from browser memory.';
+        }
+      } catch (e) {
+        console.error("LocalStorage load failed: ", e);
+      }
+    }
+
+    function saveToLocalStorage() {
+      try {
+        localStorage.setItem('cc_leads', JSON.stringify(leads));
+      } catch (e) {
+        console.error("LocalStorage save failed: ", e);
+      }
+    }
+
+    // Run Lead Prospecting Scraper Engine
+    function generate() {
+      var prod = document.getElementById('prod').value;
+      var state = document.getElementById('state').value;
+      var city = document.getElementById('city').value;
+      var area = document.getElementById('area').value;
+      var subtype = document.getElementById('subtype').value;
+      var cnt = Math.min(150, Math.max(5, parseInt(document.getElementById('cnt').value) || 50));
+      var areas = area ? [area] : (D[state][city] || ['Central']);
+
+      leads = [];
+      activeLeadIndex = -1;
+      closeSidebar();
+      resetTimer();
+
+      fWeb = 'all';
+      fGbp = 'all';
+      fSize = 'all';
+      fStatus = 'all';
+      sortCol = '';
+      sortDir = 1;
+
+      for (var i = 0; i < cnt; i++) {
+        var t = prod;
+        if (prod === 'all') {
+          if (subtype) {
+            if (MED_TYPES.indexOf(subtype) >= 0) t = 'med';
+            else if (CRM_TYPES.indexOf(subtype) >= 0) t = 'crm';
+            else t = 'web';
+          } else {
+            t = pick(['med', 'crm', 'web']);
+          }
+        }
+
+        var btype = "";
+        var bname = "";
+        var pre = t === 'med' ? MED_PRE : t === 'crm' ? CRM_PRE : WEB_PRE;
+        var types = t === 'med' ? MED_TYPES : t === 'crm' ? CRM_TYPES : WEB_TYPES;
+
+        if (subtype && (types.indexOf(subtype) >= 0 || prod === 'all')) {
+          btype = subtype;
+          bname = pick(pre) + ' ' + btype;
+        } else {
+          btype = pick(types);
+          bname = pick(pre) + ' ' + btype;
+        }
+
+        var barea = pick(areas);
+        var first = pick(FIRST);
+        var last = pick(LAST);
+        var title = t === 'med' ? 'Dr.' : (Math.random() > .5 ? 'Mr.' : 'Mrs.');
+        var contact = title + ' ' + first + ' ' + last;
+        var phone = randPhone();
+        var product = t === 'med' ? 'Mediva360' : t === 'crm' ? 'CRM Software' : 'Website';
+        var tier = TIER[city] || '3';
+
+        // Website Probability based on City Tier
+        var webChance = tier === '1' ? 0.45 : tier === '2' ? 0.30 : 0.15;
+        var hasWebsite = Math.random() < webChance;
+
+        // Google Business Listing status
+        var gbp = "";
+        var gbpRoll = Math.random();
+        if (hasWebsite) {
+          gbp = gbpRoll < 0.65 ? "Claimed & Optimized" : "Needs Reviews ⚠️";
+        } else {
+          gbp = gbpRoll < 0.40 ? "Claimed (No Website)" : gbpRoll < 0.85 ? "Unclaimed ⚠️" : "Needs Reviews ⚠️";
+        }
+
+        var sizeRoll = Math.random();
+        var size = sizeRoll < 0.60 ? 'Small' : sizeRoll < 0.88 ? 'Medium' : 'Large';
+        var email = generateEmail(bname, contact, hasWebsite);
+
+        leads.push({
+          name: bname,
+          type: btype,
+          city: city,
+          area: barea,
+          contact: contact,
+          phone: phone,
+          email: email,
+          product: product,
+          hasWebsite: hasWebsite,
+          gbp: gbp,
+          size: size,
+          status: "Pending",
+          callbackTime: "",
+          callDuration: "",
+          notes: ""
+        });
+      }
+
+      var allTypes = leads.map(function (l) { return l.type; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).sort();
+      var tf = document.getElementById('typeFilter');
+      tf.innerHTML = '<option value="">All Niches</option>';
+      allTypes.forEach(function (t) { var o = document.createElement('option'); o.value = t; o.textContent = t; tf.appendChild(o); });
+
+      resetChips();
+      document.getElementById('searchBox').value = '';
+      document.getElementById('prodFilter').value = '';
+      document.getElementById('typeFilter').value = '';
+
+      document.getElementById('statsRow').style.display = 'grid';
+      document.getElementById('progressWidget').style.display = 'block';
+      document.getElementById('filterSection').style.display = 'block';
+      document.getElementById('csvbtn').disabled = false;
+
+      saveToLocalStorage();
+      updateStats();
+      applyFilters();
+      updateCallbackReminders();
+
+      var tier = TIER[city] || '3';
+      var noWeb = leads.filter(function (l) { return !l.hasWebsite; }).length;
+      document.getElementById('sbar').textContent = '✓ ' + leads.length + ' leads generated for ' + (area || city) + ' (Tier ' + tier + ') · ' + noWeb + ' missing websites.';
+    }
+
+    function resetChips() {
+      ['wAll', 'wNo', 'wYes'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+      document.getElementById('wAll').classList.add('active');
+
+      ['gAll', 'gUnclaimed', 'gReviews', 'gOk'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+      document.getElementById('gAll').classList.add('active');
+
+      ['szAll', 'szSmall', 'szMedium', 'szLarge'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+      document.getElementById('szAll').classList.add('active');
+
+      ['stAll', 'stPend', 'stInter', 'stCallb', 'stDone'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+      document.getElementById('stAll').classList.add('active');
+    }
+
+    function updateStats() {
+      var total = leads.length;
+      var interested = leads.filter(function (l) { return l.status === 'Interested'; }).length;
+      var callback = leads.filter(function (l) { return l.status === 'Callback'; }).length;
+      var noWeb = leads.filter(function (l) { return !l.hasWebsite; }).length;
+      var pending = leads.filter(function (l) { return l.status === 'Pending'; }).length;
+
+      document.getElementById('s0').textContent = total;
+      document.getElementById('s1').textContent = interested;
+      document.getElementById('s1_e').textContent = callback;
+      document.getElementById('s2').textContent = pending;
+      document.getElementById('s3').textContent = noWeb;
+
+      // Update Target Progress bar (Target: 30 calls)
+      var completedCalls = leads.filter(function (l) { return l.status !== 'Pending'; }).length;
+      var percentage = Math.min(100, Math.floor((completedCalls / 30) * 100));
+      document.getElementById('progressBarFill').style.width = percentage + '%';
+      document.getElementById('progressStats').textContent = completedCalls + ' / 30 Calls Done (' + percentage + '%)';
+    }
+
+    // Show callback alerts in the sidebar empty state
+    function updateCallbackReminders() {
+      var callbacks = leads.map(function(l, i) { return Object.assign({}, l, {_idx: i}); })
+                            .filter(function(l) { return l.status === 'Callback' && l.callbackTime !== ""; });
+      
+      var section = document.getElementById('upcomingCallbacksSection');
+      var container = document.getElementById('upcomingCallbacksList');
+      
+      if (callbacks.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+      
+      section.style.display = 'block';
+      container.innerHTML = '';
+      
+      // Sort by soonest callback time
+      callbacks.sort(function(a, b) {
+        return new Date(a.callbackTime) - new Date(b.callbackTime);
+      });
+      
+      callbacks.forEach(function(l) {
+        var formattedTime = new Date(l.callbackTime).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+        var div = document.createElement('div');
+        div.className = 'callback-item';
+        div.setAttribute('onclick', 'selectLead(' + l._idx + ')');
+        div.innerHTML = '<div class="callback-meta">' +
+                          '<span class="callback-time-lbl">📅 ' + formattedTime + '</span>' +
+                          '<span class="callback-biz">' + l.name + '</span>' +
+                          '<span style="font-size:10px; color:var(--text-muted)">' + l.contact + ' &middot; ' + l.phone + '</span>' +
+                        '</div>' +
+                        '<button class="callback-btn">View</button>';
+        container.appendChild(div);
+      });
+    }
+
+    function setF(group, val) {
+      if (group === 'web') {
+        fWeb = val;
+        var map = { all: 'wAll', no: 'wNo', yes: 'wYes' };
+        ['wAll', 'wNo', 'wYes'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+        document.getElementById(map[val]).classList.add('active');
+      }
+      else if (group === 'gbp') {
+        fGbp = val;
+        var map = { all: 'gAll', unclaimed: 'gUnclaimed', reviews: 'gReviews', ok: 'gOk' };
+        ['gAll', 'gUnclaimed', 'gReviews', 'gOk'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+        document.getElementById(map[val]).classList.add('active');
+      }
+      else if (group === 'size') {
+        fSize = val;
+        var map = { all: 'szAll', Small: 'szSmall', Medium: 'szMedium', Large: 'szLarge' };
+        ['szAll', 'szSmall', 'szMedium', 'szLarge'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+        document.getElementById(map[val]).classList.add('active');
+      }
+      else if (group === 'status') {
+        fStatus = val;
+        var map = { all: 'stAll', Pending: 'stPend', Interested: 'stInter', Callback: 'stCallb', Done: 'stDone' };
+        ['stAll', 'stPend', 'stInter', 'stCallb', 'stDone'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
+        document.getElementById(map[val]).classList.add('active');
+      }
+      applyFilters();
+    }
+
+    function sortBy(col) {
+      if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+      applyFilters();
+    }
+
+    function applyFilters() {
+      var search = document.getElementById('searchBox').value.toLowerCase();
+      var typeF = document.getElementById('typeFilter').value;
+      var prodF = document.getElementById('prodFilter').value;
+
+      var filtered = leads.map(function (l, i) { return Object.assign({}, l, { _idx: i }); }).filter(function (l) {
+        if (search && l.name.toLowerCase().indexOf(search) < 0 && l.area.toLowerCase().indexOf(search) < 0 && l.type.toLowerCase().indexOf(search) < 0 && l.contact.toLowerCase().indexOf(search) < 0 && l.phone.indexOf(search) < 0) return false;
+
+        if (typeF && l.type !== typeF) return false;
+        if (prodF && l.product !== prodF) return false;
+
+        if (fWeb === 'no' && l.hasWebsite) return false;
+        if (fWeb === 'yes' && !l.hasWebsite) return false;
+
+        if (fGbp === 'unclaimed' && l.gbp.indexOf("Unclaimed") < 0) return false;
+        if (fGbp === 'reviews' && l.gbp.indexOf("Reviews") < 0) return false;
+        if (fGbp === 'ok' && l.gbp.indexOf("Optimized") < 0) return false;
+
+        if (fSize !== 'all' && l.size !== fSize) return false;
+
+        if (fStatus === 'Pending' && l.status !== 'Pending') return false;
+        if (fStatus === 'Interested' && l.status !== 'Interested') return false;
+        if (fStatus === 'Callback' && l.status !== 'Callback') return false;
+        if (fStatus === 'Done' && (l.status === 'Pending' || l.status === 'Interested' || l.status === 'Callback')) return false;
+
+        return true;
+      });
+
+      if (sortCol) {
+        filtered.sort(function (a, b) {
+          var av = a[sortCol], bv = b[sortCol];
+          if (typeof av === 'boolean') { av = av ? 1 : 0; bv = bv ? 1 : 0; }
+          if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+          return (av - bv) * sortDir;
+        });
+      }
+      renderTable(filtered);
+    }
+
+    function renderTable(filtered) {
+      var tb = document.getElementById('tb');
+      tb.innerHTML = '';
+
+      if (!filtered.length) {
+        tb.innerHTML = '<tr><td colspan="9"><div class="no-results">No prospects found matching your segmented filters.</div></td></tr>';
+        document.getElementById('resInfo').textContent = '0 results matched';
+        document.getElementById('twrap').style.display = 'block';
+        return;
+      }
+
+      filtered.forEach(function (l) {
+        var pc = l.product === 'Mediva360' ? 'b-med' : l.product === 'CRM Software' ? 'b-crm' : 'b-web';
+        var tier = TIER[l.city] || '3';
+        var gc = l.gbp.indexOf("Unclaimed") >= 0 ? "b-unclaimed" : l.gbp.indexOf("Reviews") >= 0 ? "b-reviews" : "b-claimed";
+
+        // Generate matching status label
+        var scode = '<span class="badge b-pending">Pending</span>';
+        if (l.status === 'Interested') scode = '<span class="badge b-interested">🔥 Interested</span>';
+        else if (l.status === 'Callback') {
+          var timeText = "";
+          if (l.callbackTime) {
+            timeText = " (" + new Date(l.callbackTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
+          }
+          scode = '<span class="badge b-callback">📅 Callback' + timeText + '</span>';
+        }
+        else if (l.status === 'Busy') scode = '<span class="badge b-busy">🔇 Busy / NA</span>';
+        else if (l.status === 'Not Interested') scode = '<span class="badge b-rejected">✕ Rejected</span>';
+        else if (l.status === 'Emailed') scode = '<span class="badge b-emailed">✉️ Emailed</span>';
+        else if (l.status === 'WhatsApp') scode = '<span class="badge b-whatsapp">💬 WhatsApp Sent</span>';
+
+        var isSelectedRow = (activeLeadIndex === l._idx) ? 'class="active-row"' : '';
+
+        var tr = document.createElement('tr');
+        if (isSelectedRow) {
+          tr.className = "active-row";
+        }
+
+        tr.setAttribute("onclick", "selectLead(" + l._idx + ", event)");
+        tr.innerHTML = '<td><div class="bname">' + l.name + '</div></td>'
+          + '<td style="color:var(--text-muted);font-size:12px">' + l.type + '</td>'
+          + '<td style="font-size:12px; font-weight:500">' + l.city + '<span class="tier-badge tier' + tier + '">T' + tier + '</span></td>'
+          + '<td style="color:var(--text-muted);font-size:12px">' + l.area + '</td>'
+          + '<td><div style="font-weight:500">' + l.contact + '</div><div class="bphone">' + l.phone + '</div></td>'
+          + '<td><span class="badge ' + (l.hasWebsite ? 'b-yes' : 'b-no') + '">' + (l.hasWebsite ? '✓ Yes' : '✕ No') + '</span></td>'
+          + '<td><span class="badge ' + gc + '">' + l.gbp + '</span></td>'
+          + '<td>' + scode + '</td>'
+          + '<td><button class="row-action-btn" title="Open Sales Center">&#128188;</button></td>';
+
+        tb.appendChild(tr);
+      });
+
+      document.getElementById('resInfo').textContent = 'Segmented ' + filtered.length + ' of ' + leads.length + ' leads in Pool';
+      document.getElementById('twrap').style.display = 'block';
+    }
+
+    function selectLead(idx, event) {
+      activeLeadIndex = idx;
+      var lead = leads[idx];
+
+      var rows = document.querySelectorAll("#tb tr");
+      rows.forEach(function (row) {
+        row.classList.remove("active-row");
+      });
+
+      var target = event ? event.target : null;
+      if (target) {
+        var tr = target.closest("tr");
+        if (tr) tr.classList.add("active-row");
+      }
+
+      document.getElementById('sidebarEmptyState').style.display = 'none';
+      document.getElementById('sidebarActiveState').style.display = 'block';
+      document.getElementById('outreachSidebar').classList.add('active');
+
+      resetTimer();
+
+      document.getElementById('sideLeadName').textContent = lead.name;
+
+      var pBadge = document.getElementById('sideLeadProd');
+      pBadge.textContent = lead.product;
+      pBadge.className = "badge " + (lead.product === 'Mediva360' ? 'b-med' : lead.product === 'CRM Software' ? 'b-crm' : 'b-web');
+
+      var tier = TIER[lead.city] || '3';
+      var tBadge = document.getElementById('sideLeadTier');
+      tBadge.textContent = "Tier " + tier;
+      tBadge.className = "tier-badge tier" + tier;
+
+      document.getElementById('sideLeadType').textContent = lead.type;
+      document.getElementById('sideContact').textContent = lead.contact;
+
+      var phoneText = document.getElementById('sidePhone');
+      phoneText.innerHTML = '<a href="tel:' + lead.phone + '" id="sidePhoneLink" style="color:var(--accent); text-decoration:none; font-family:\'JetBrains Mono\'">' + lead.phone + '</a>';
+
+      document.getElementById('sideEmail').textContent = lead.email;
+      document.getElementById('sideArea').textContent = lead.area + ', ' + lead.city;
+      document.getElementById('sideGbp').textContent = lead.gbp;
+
+      // Update Log Outcomes Active styling
+      updateOutcomeButtons(lead.status);
+
+      // Load callback schedule
+      if (lead.status === 'Callback') {
+        document.getElementById('callbackSchedulerDrawer').style.display = 'block';
+        document.getElementById('callbackDateTime').value = lead.callbackTime || "";
+      } else {
+        document.getElementById('callbackSchedulerDrawer').style.display = 'none';
+        document.getElementById('callbackDateTime').value = "";
+      }
+
+      document.getElementById('sideNotes').value = lead.notes || "";
+      buildOutreachContent(lead);
+    }
+
+    function updateOutcomeButtons(status) {
+      // Reset active classes
+      var btns = ['btnStatusInterested', 'btnStatusCallback', 'btnStatusBusy', 'btnStatusRejected'];
+      btns.forEach(function(b) {
+        document.getElementById(b).className = 'outcome-btn';
+      });
+
+      if (status === 'Interested') {
+        document.getElementById('btnStatusInterested').className = 'outcome-btn active-interested';
+      } else if (status === 'Callback') {
+        document.getElementById('btnStatusCallback').className = 'outcome-btn active-callback';
+      } else if (status === 'Busy') {
+        document.getElementById('btnStatusBusy').className = 'outcome-btn active-busy';
+      } else if (status === 'Not Interested') {
+        document.getElementById('btnStatusRejected').className = 'outcome-btn active-rejected';
+      }
+    }
+
+    function changeStatus(newStatus) {
+      if (activeLeadIndex === -1) return;
+      
+      leads[activeLeadIndex].status = newStatus;
+      
+      if (newStatus === 'Callback') {
+        document.getElementById('callbackSchedulerDrawer').style.display = 'block';
+      } else {
+        document.getElementById('callbackSchedulerDrawer').style.display = 'none';
+        leads[activeLeadIndex].callbackTime = "";
+      }
+
+      updateOutcomeButtons(newStatus);
+      saveToLocalStorage();
+      updateStats();
+      applyFilters();
+      updateCallbackReminders();
+    }
+
+    function saveCallbackTime() {
+      if (activeLeadIndex === -1) return;
+      var timeVal = document.getElementById('callbackDateTime').value;
+      leads[activeLeadIndex].callbackTime = timeVal;
+      
+      // Add custom callback note log
+      if (timeVal) {
+        var formatted = new Date(timeVal).toLocaleString();
+        var noteArea = document.getElementById('sideNotes');
+        var logMsg = "\n[Callback scheduled for " + formatted + "]";
+        if (noteArea.value.indexOf(logMsg) === -1) {
+          noteArea.value += logMsg;
+          saveCurrentNote();
+        }
+      }
+      
+      saveToLocalStorage();
+      applyFilters();
+      updateCallbackReminders();
+    }
+
+    function closeSidebar() {
+      document.getElementById('outreachSidebar').classList.remove('active');
+      activeLeadIndex = -1;
+      resetTimer();
+      applyFilters();
+      updateCallbackReminders();
+      document.getElementById('sidebarEmptyState').style.display = 'flex';
+      document.getElementById('sidebarActiveState').style.display = 'none';
+    }
+
+    function saveCurrentNote() {
+      if (activeLeadIndex === -1) return;
+      var noteText = document.getElementById('sideNotes').value;
+      leads[activeLeadIndex].notes = noteText;
+      saveToLocalStorage();
+    }
+
+    function buildOutreachContent(lead) {
+      var area = lead.area;
+      var contact = lead.contact;
+      var bname = lead.name;
+      var agent = document.getElementById('agentName').textContent;
+
+      var hook = "";
+      var problem = "";
+      var solution = "";
+      var waMessage = "";
+
+      if (lead.product === 'Mediva360') {
+        hook = '"Hello! Could I speak with ' + contact + '? I\'m calling from CodeCrafters Agency regarding ' + bname + ' in ' + area + '."';
+
+        if (!lead.hasWebsite) {
+          problem = '"We were mapping specialist healthcare providers in ' + lead.city + ', and noticed ' + bname + ' is losing patient bookings due to having no active online appointment website. Competitors in ' + area + ' are gaining local patients online who would normally go to you."';
+          solution = '"We specialize in launching premium Medical websites pre-integrated with Mediva360—a complete patient booking CRM. Patients can book directly from their phone, receive automated appointment reminders on WhatsApp, and your reception can handle billing in 2 clicks. We can launch your complete clinic system in 5-7 days."';
+        } else {
+          problem = '"I visited your clinic website and wanted to check how you manage digital patient records, prescriptions, and billing. Many clinics lose hours of staff time syncing systems or face clinic no-shows."';
+          solution = '"Mediva360 acts as a smart engine that plugs into your existing site. It gives you a clean dental/medical EHR chart, automates patient recalls, and sends automated WhatsApp reminders to reduce no-shows by 40%."';
+        }
+
+        waMessage = "Hello " + contact + "! Hope you are doing well. I came across " + bname + " in " + area + " and wanted to share how we help local specialist clinics automate doctor appointment scheduling and patient reminders to reduce no-shows by 40%. Let me know if you would be open to a quick 5-min demo! - CodeCrafters Agency (codecrafters.co.in)";
+
+      } else if (lead.product === 'Website') {
+        hook = '"Hi, can I speak to the business owner or manager of ' + bname + ' in ' + area + '?"';
+
+        if (!lead.hasWebsite) {
+          problem = '"I came across your business listing on Google Maps for ' + bname + ' in ' + area + ' and noticed that you don\'t have a website link. With 85% of people looking online before buying, you are losing high-ticket customers in ' + area + ' to competitors who have professional websites."';
+          solution = '"Our agency CodeCrafters (codecrafters.co.in) specializes in launching lightning-fast, high-converting websites starting at competitive prices. We build you a stunning mobile site, optimize your Google maps listing, and add forms to capture booking inquiries directly."';
+        } else {
+          problem = '"I visited your website for ' + bname + ' and noticed it takes several seconds to load on mobile, and doesn\'t have clear buttons for customers to call or WhatsApp you instantly."';
+          solution = '"CodeCrafters focuses on high-performance web optimization. We can redesign your online storefront, boost its page speed to under 1.5 seconds, and build local SEO hooks so you rank #1 on Google searches in ' + area + '."';
+        }
+
+        waMessage = "Hello! I saw your business " + bname + " in " + area + " on Google Maps. I noticed you don't have a website listed, which might be costing you local customers. We build modern, high-speed websites starting at highly competitive prices. Let me know if we can do a quick call! - codecrafters.co.in";
+
+      } else {
+        hook = '"Hello! Is the owner of ' + bname + ' available? I\'m calling regarding your customer billing and sales tracking."';
+        problem = '"Many ' + lead.type + ' businesses in ' + area + ' struggle with tracking daily payments, managing inventory stock, and sending outstanding balance alerts to regular customers."';
+        solution = '"We provide a robust local Business CRM SaaS. It lets you automate GST invoices, track cash flow on a mobile app, and automatically alert customers via WhatsApp when invoices are due, saving hours of manual billing work."';
+
+        waMessage = "Hi there! We help local retail and service shops in " + area + " manage customer databases, automated billing, and stock tracking. Would you be open to seeing a brief demo of our Business CRM? - CodeCrafters Agency";
+      }
+
+      document.getElementById('scriptHook').textContent = hook;
+      document.getElementById('scriptProblem').textContent = problem;
+      document.getElementById('scriptSolution').textContent = solution;
+      document.getElementById('waMsgText').value = waMessage;
+
+      buildEmailDraft(lead);
+    }
+
+    function buildEmailDraft(lead) {
+      var subject = "";
+      var body = "";
+      var bizName = lead.name;
+      var area = lead.area;
+      var contact = lead.contact;
+      var agent = document.getElementById('agentName').textContent;
+
+      if (lead.product === 'Mediva360') {
+        subject = "Smart Patient CRM & Booking portal proposal - " + bizName;
+        body = "Hi " + contact + ",\n\n" +
+          "I hope you are doing well.\n\n" +
+          "My name is " + agent + " from CodeCrafters (codecrafters.co.in). I was mapping leading clinics in " + area + " and came across " + bizName + ".\n\n" +
+          "We recently launched Mediva360—a modern, cloud-based CRM designed specifically to help local clinics and practitioners automate patient scheduling. Since you run a clinic, Mediva360 can help your practice:\n" +
+          "• Launch an automated booking button on your website/Google listing\n" +
+          "• Send automated WhatsApp appointment reminders (reduces no-shows by 40%)\n" +
+          "• Maintain digital patient charts and records securely\n" +
+          "• Generate instant e-prescriptions & retail invoices\n\n" +
+          "Since " + bizName + " is one of the top clinics in " + area + ", we would love to offer you a free 14-day trial and a personalized walkthrough.\n\n" +
+          "Would you be open to a brief 5-minute call tomorrow at 11 AM to see a live demo?\n\n" +
+          "Best regards,\n\n" +
+          agent + "\n" +
+          "CodeCrafters Sales Team\n" +
+          "Website: https://codecrafters.co.in\n" +
+          "Email: sales@codecrafters.co.in";
+      } else if (lead.product === 'Website') {
+        if (!lead.hasWebsite) {
+          subject = "Proposal: Launching digital presence for " + bizName + " in " + area;
+          body = "Hi " + contact + ",\n\n" +
+            "I hope this email finds you well.\n\n" +
+            "I was searching for local businesses in " + area + " and came across " + bizName + " on Google Maps. I noticed you don't have an active website online yet.\n\n" +
+            "Currently, over 85% of customers search on Google before choosing a local service. Without a website, local competitors are capturing all the digital search traffic that belongs to you.\n\n" +
+            "At CodeCrafters (codecrafters.co.in), we specialize in launching premium, mobile-responsive websites that load instantly and rank #1 on local searches.\n\n" +
+            "For the " + area + " region this month, we are running a local business promotion:\n" +
+            "• A custom-branded responsive business website\n" +
+            "• Google Business Profile claiming & local SEO optimization\n" +
+            "• Integrated WhatsApp booking forms\n" +
+            "• 1 Year free secure hosting\n\n" +
+            "Would you be open to a quick 5-minute call tomorrow to see how we can help you double your online customer inquiries?\n\n" +
+            "Best regards,\n\n" +
+            agent + "\n" +
+            "CodeCrafters Sales Team\n" +
+            "Website: https://codecrafters.co.in";
+        } else {
+          subject = "Improving website loading speed & local Google ranking for " + bizName;
+          body = "Hi " + contact + ",\n\n" +
+            "I came across " + bizName + "'s website and noticed you have a great business in " + area + ".\n\n" +
+            "However, we ran a quick diagnostic performance audit on your website and identified a few critical technical gaps that are hurting your rankings:\n" +
+            "• The mobile page speed takes over 6 seconds to load (users click away after 3 seconds)\n" +
+            "• The site lacks schema data (hurting your listing rank on Google Maps)\n" +
+            "• There is no direct, frictionless WhatsApp chat trigger\n\n" +
+            "We specialize in high-end web redesigns and technical SEO. We can double your current website inquiry rate by making your portal rank at the top of Google searches in " + area + ".\n\n" +
+            "Can we connect for a brief 5-minute call to discuss your website audit report?\n\n" +
+            "Best regards,\n\n" +
+            agent + "\n" +
+            "CodeCrafters Agency\n" +
+            "Website: https://codecrafters.co.in";
+        }
+      } else {
+        subject = "Automate customer billing & WhatsApp alerts for " + bizName;
+        body = "Hi " + contact + ",\n\n" +
+          "I am reaching out from CodeCrafters (codecrafters.co.in). We help " + lead.type + "s in " + area + " manage and grow their daily operations.\n\n" +
+          "Our Business CRM SaaS provides retail and wholesale stores a smart mobile billing and invoice tool. It lets you:\n" +
+          "• Create digital GST invoices in under 10 seconds\n" +
+          "• Send automated payment reminders via WhatsApp\n" +
+          "• Monitor real-time inventory and supplier stocks\n" +
+          "• Analyze daily sales dashboards\n\n" +
+          "Would you like to schedule a free 10-minute online walkthrough of our software?\n\n" +
+          "Best regards,\n\n" +
+          agent + "\n" +
+          "CodeCrafters Agency\n" +
+          "Website: https://codecrafters.co.in";
+      }
+
+      document.getElementById('mailToText').textContent = lead.email;
+      document.getElementById('mailSubText').textContent = subject;
+      document.getElementById('mailBodyText').value = body;
+    }
+
+    function composeGmailWeb() {
+      if (activeLeadIndex === -1) return;
+      var lead = leads[activeLeadIndex];
+      var to = lead.email;
+      var subject = document.getElementById('mailSubText').textContent;
+      var body = document.getElementById('mailBodyText').value;
+
+      var gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=" + encodeURIComponent(to) +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.open(gmailUrl, '_blank');
+
+      if (leads[activeLeadIndex].status === 'Pending') {
+        changeStatus('Emailed');
+      }
+    }
+
+    function composeMailto() {
+      if (activeLeadIndex === -1) return;
+      var lead = leads[activeLeadIndex];
+      var to = lead.email;
+      var subject = document.getElementById('mailSubText').textContent;
+      var body = document.getElementById('mailBodyText').value;
+
+      var mailtoUrl = "mailto:" + encodeURIComponent(to) +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.location.href = mailtoUrl;
+
+      if (leads[activeLeadIndex].status === 'Pending') {
+        changeStatus('Emailed');
+      }
+    }
+
+    function copyScriptText() {
+      var hook = document.getElementById('scriptHook').textContent;
+      var prob = document.getElementById('scriptProblem').textContent;
+      var sol = document.getElementById('scriptSolution').textContent;
+
+      var full = "HOOK: " + hook + "\nPROBLEM: " + prob + "\nSOLUTION: " + sol;
+      navigator.clipboard.writeText(full).then(function () {
+        alert("Call script copied to clipboard!");
+      });
+    }
+
+    function copyEmailBody() {
+      var body = document.getElementById('mailBodyText').value;
+      navigator.clipboard.writeText(body).then(function () {
+        alert("Email pitch body copied!");
+      });
+    }
+
+    function openWhatsAppChat() {
+      if (activeLeadIndex === -1) return;
+      var lead = leads[activeLeadIndex];
+      var waMessage = document.getElementById('waMsgText').value;
+      var url = "https://wa.me/91" + lead.phone + "?text=" + encodeURIComponent(waMessage);
+      window.open(url, '_blank');
+
+      if (leads[activeLeadIndex].status === 'Pending') {
+        changeStatus('WhatsApp');
+      }
+    }
+
+    function switchTab(tabId) {
+      var tabs = document.querySelectorAll(".tab");
+      tabs.forEach(function (t) {
+        t.classList.remove("active");
+      });
+
+      event.target.classList.add("active");
+
+      var panels = document.querySelectorAll(".tab-panel");
+      panels.forEach(function (p) {
+        p.classList.remove("active");
+      });
+
+      document.getElementById(tabId).classList.add("active");
+    }
+
+    function doCSV() {
+      if (!leads.length) return;
+      var rows = [['#', 'Business Name', 'Niche Type', 'City', 'Tier', 'Area', 'Contact Person', 'Phone', 'Email', 'Scale Size', 'Has Website', 'Google Listing', 'Target Product', 'Calling Status', 'Callback Scheduled', 'Call Duration', 'Notes']];
+      leads.forEach(function (l, i) {
+        var notes = l.notes ? l.notes.replace(/"/g, '""') : '';
+        rows.push([
+          i + 1,
+          '"' + l.name + '"',
+          '"' + l.type + '"',
+          l.city,
+          'T' + (TIER[l.city] || '3'),
+          '"' + l.area + '"',
+          '"' + l.contact + '"',
+          l.phone,
+          l.email,
+          l.size,
+          l.hasWebsite ? 'Yes' : 'No',
+          '"' + l.gbp + '"',
+          '"' + l.product + '"',
+          l.status,
+          '"' + l.callbackTime + '"',
+          '"' + l.callDuration + '"',
+          '"' + notes + '"'
+        ]);
+      });
+      var csv = rows.map(function (r) { return r.join(','); }).join('\n');
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      var city = document.getElementById('city').value;
+      var prod = document.getElementById('prod').value;
+      a.download = 'codecrafters_telecall_' + prod + '_' + city + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+      a.click();
+    }
+
+    function clearAll() {
+      if (!leads.length) return;
+      if (!confirm('This will wipe all leads and calling notes from browser memory. Proceed?')) return;
+      leads = [];
+      activeLeadIndex = -1;
+      closeSidebar();
+
+      localStorage.removeItem('cc_leads');
+
+      document.getElementById('tb').innerHTML = '';
+      document.getElementById('twrap').style.display = 'none';
+      document.getElementById('statsRow').style.display = 'none';
+      document.getElementById('progressWidget').style.display = 'none';
+      document.getElementById('filterSection').style.display = 'none';
+      document.getElementById('sbar').textContent = '';
+      document.getElementById('csvbtn').disabled = true;
+    }
+
+    loadThemeSettings();
+    loadAgentName();
+    fillStates();
+    updateSubtypes();
+    loadFromLocalStorage();
+  </script>
+</body>
+
+</html>

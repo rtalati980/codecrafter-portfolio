@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /telecaller.html
+Disallow: /lead-finder-app.html
 
 Sitemap: https://www.codecrafters.co.in/sitemap.xml
