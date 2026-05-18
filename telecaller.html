@@ -2115,18 +2115,34 @@
 
         if (subtype && (types.indexOf(subtype) >= 0 || prod === 'all')) {
           btype = subtype;
-          bname = pick(pre) + ' ' + btype;
         } else {
           btype = pick(types);
+        }
+
+        var nameRoll = Math.random();
+        var suffix = pick(["Pvt Ltd", "LLP", "Associates", "Group", "Partners", "Hub", "Agency", "Sons", "Point", "Zone"]);
+        var first = pick(FIRST);
+        var last = pick(LAST);
+
+        if (nameRoll < 0.40) {
+          bname = last + ' ' + btype;
+        } else if (nameRoll < 0.70) {
+          bname = pick(pre) + ' ' + btype + ' ' + suffix;
+        } else {
           bname = pick(pre) + ' ' + btype;
         }
 
         var barea = pick(areas);
-        var first = pick(FIRST);
-        var last = pick(LAST);
         var title = t === 'med' ? 'Dr.' : (Math.random() > .5 ? 'Mr.' : 'Mrs.');
         var contact = title + ' ' + first + ' ' + last;
+        
         var phone = randPhone();
+        var phoneAttempts = 0;
+        while (leads.some(function(l) { return l.phone === phone; }) && phoneAttempts < 10) {
+          phone = randPhone();
+          phoneAttempts++;
+        }
+
         var product = t === 'med' ? 'Mediva360' : t === 'crm' ? 'CRM Software' : 'Website';
         var tier = TIER[city] || '3';
 
@@ -2189,6 +2205,13 @@
       var tier = TIER[city] || '3';
       var noWeb = leads.filter(function (l) { return !l.hasWebsite; }).length;
       document.getElementById('sbar').textContent = '✓ ' + leads.length + ' leads generated for ' + (area || city) + ' (Tier ' + tier + ') · ' + noWeb + ' missing websites.';
+
+      // Auto-load and select the first new lead instantly in the calling panel!
+      if (leads.length > 0) {
+        setTimeout(function() {
+          selectLead(0);
+        }, 100);
+      }
     }
 
     function resetChips() {
